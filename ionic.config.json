@@ -1,0 +1,8 @@
+{
+  "name": "farmadoc",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "4941b707"
+}

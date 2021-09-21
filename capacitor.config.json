@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "farmadoc",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}
