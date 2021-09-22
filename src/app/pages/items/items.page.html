@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button  autoHide="false" menu="first"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Productos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!--  -->
+  
+  <ion-refresher slot="fixed" (ionRefresh)="null">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list lines="none">
+    <ion-card button>
+      <ion-card-content>
+        <div class="main-row">
+          <div class="row">
+            <ion-label class="ion-text-left ion-text-uppercase title">Product name</ion-label>
+            <ion-label class="ion-text-left ion-text-uppercase description">Description</ion-label>
+          </div>
+          <ion-label class="ion-text-left price">Bs 79</ion-label>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+  <!-- <div *ngIf="accounts.length === 0 && finishedLoadingLocal" class="msg-without-resources">
+    <ion-label>{{ emptyAccountsMessage }}</ion-label>
+  </div> -->
+  
+  <!--  -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button routerLink="/">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

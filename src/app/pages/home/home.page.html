@@ -1,0 +1,21 @@
+
+    <app-header></app-header>    
+
+    <ion-content>
+        <div class="flex-content">
+          <!-- <ion-card button *ngFor="let option of menu" (click)="redirectTo(option.path, option.reqAuth)"> -->
+            <ion-card button>
+            <ion-card-content>
+              <fa-icon [icon]="invoiceIcon"></fa-icon>
+              <ion-label class="ion-text-center ion-text-uppercase">Facturas</ion-label>
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card button routerLink="/items">
+            <ion-card-content>
+              <fa-icon [icon]="productIcon"></fa-icon>
+              <ion-label class="ion-text-center ion-text-uppercase">Productos</ion-label>
+            </ion-card-content>
+          </ion-card>
+        </div>
+    </ion-content>
