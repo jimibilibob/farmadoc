@@ -1,44 +1,51 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar *ngIf="!showSearchBar else searchBar">
     <ion-buttons slot="start">
       <ion-back-button  autoHide="false" menu="first"></ion-back-button>
     </ion-buttons>
-    <div class="main-row">
-      <div *ngIf="!showSearchBar else searchBar">
-        <ion-buttons slot="primary">
+    <!-- <div class="main-row"> -->
+ 
+          <ion-title slot="start">Productos</ion-title>
+        <ion-buttons slot="end">
           <ion-button (click)="search()">
             <ion-icon name="search-outline"></ion-icon>
           </ion-button>
         </ion-buttons>
-
-        <ion-title>Productos</ion-title>
-      </div>
       
-      <ng-template #searchBar>
-        <ion-searchbar debounce="500" placeholder="Buscar Productos"></ion-searchbar>
-      </ng-template>
-    </div>
+        <!-- </div> -->
+        
+        
+    </ion-toolbar>
 
-    
-  </ion-toolbar>
+      <ng-template #searchBar>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-back-button  autoHide="false" menu="first"></ion-back-button>
+          </ion-buttons>
+          <ion-searchbar debounce="500" placeholder="Buscar Productos"></ion-searchbar>
+              
+              
+          </ion-toolbar>
+        
+      </ng-template>
 </ion-header>
 
 <ion-content>
 
   <!--  -->
   
-  <ion-refresher slot="fixed" (ionRefresh)="null">
+  <ion-refresher slot="fixed" (ionRefresh)="getItems($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <ion-list lines="none">
-    <ion-card button>
+    <ion-card button *ngFor="let item of items">
       <ion-card-content>
         <div class="main-row">
           <div class="row">
-            <ion-label class="ion-text-left ion-text-uppercase title">Product name</ion-label>
-            <ion-label class="ion-text-left ion-text-uppercase description">Description</ion-label>
+            <ion-label class="ion-text-left ion-text-uppercase title">{{ item.name | uppercase }}</ion-label>
+            <ion-label class="ion-text-left ion-text-uppercase description">{{ item.description | uppercase }}</ion-label>
           </div>
-          <ion-label class="ion-text-left price">Bs 79</ion-label>
+          <ion-label class="ion-text-left price">{{ item.price | currency: 'Bs' : 'symbol' : '.2-2' }}</ion-label>
         </div>
       </ion-card-content>
     </ion-card>
