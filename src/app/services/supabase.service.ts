@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { catchError, map, pluck } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
 import { Item } from '../models';
@@ -76,10 +76,12 @@ export class SupabaseService {
   }
 
   async storeItem(item: Item) {
-    return await this.supabase
+    item.addUserId(this.user.id);
+    await this.supabase
     .from('items')
     .insert([
-      item,
+      item
     ]);
+    await this.getItems();
   }
 }

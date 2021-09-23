@@ -1,6 +1,9 @@
+/* eslint-disable max-len */
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Item } from 'src/app/models';
 import { SupabaseService } from 'src/app/services/supabase.service';
 
 @Component({
@@ -14,6 +17,7 @@ export class ItemFormPage implements OnInit, OnDestroy {
   subs: Subscription;
 
   constructor(
+    private router: Router,
     private supabaseService: SupabaseService
   ) {
     this.subs = new Subscription();
@@ -24,7 +28,7 @@ export class ItemFormPage implements OnInit, OnDestroy {
         ])),
         price: new FormControl('', Validators.compose([
           Validators.required,
-          Validators.pattern('d')
+          Validators.pattern('^([0-9]{0,4}((.)[0-9]{0,2}))$')
         ])),
         description: new FormControl('')
       }
@@ -40,7 +44,9 @@ export class ItemFormPage implements OnInit, OnDestroy {
 
   async createItem() {
     console.log('Form value', this.itemCreationForm.value);
-    this.supabaseService.storeItem( this.itemCreationForm.value);
+    const newItem = new Item(this.itemCreationForm.value, true);
+    await this.supabaseService.storeItem(newItem);
+    this.router.navigate(['/items']);
   }
 
   itemsSub() {

@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 export class Item {
   name: string;
   price: number;
   description: string;
+  user_id?: string;
 
   constructor(attributes?: any, matchData?: boolean) {
     if (attributes) {
@@ -20,6 +22,10 @@ export class Item {
     } else {
       this.init();
     }
+  }
+
+  addUserId(userId: string) {
+    this.user_id = userId;
   }
 
   private init() {

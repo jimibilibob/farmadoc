@@ -3,31 +3,22 @@
     <ion-buttons slot="start">
       <ion-back-button  autoHide="false" menu="first"></ion-back-button>
     </ion-buttons>
-    <!-- <div class="main-row"> -->
- 
-          <ion-title slot="start">Productos</ion-title>
-        <ion-buttons slot="end">
-          <ion-button (click)="search()">
-            <ion-icon name="search-outline"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-      
-        <!-- </div> -->
-        
-        
+    <ion-title slot="start">Productos</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="search()">
+        <ion-icon name="search-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     </ion-toolbar>
 
-      <ng-template #searchBar>
-        <ion-toolbar>
-          <ion-buttons slot="start">
-            <ion-back-button  autoHide="false" menu="first"></ion-back-button>
-          </ion-buttons>
-          <ion-searchbar debounce="500" placeholder="Buscar Productos"></ion-searchbar>
-              
-              
-          </ion-toolbar>
-        
-      </ng-template>
+    <ng-template #searchBar>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button  autoHide="false" menu="first"></ion-back-button>
+        </ion-buttons>
+        <ion-searchbar debounce="500" placeholder="Buscar Productos"></ion-searchbar>   
+        </ion-toolbar>
+    </ng-template>
 </ion-header>
 
 <ion-content>
@@ -45,7 +36,7 @@
             <ion-label class="ion-text-left ion-text-uppercase title">{{ item.name | uppercase }}</ion-label>
             <ion-label class="ion-text-left ion-text-uppercase description">{{ item.description | uppercase }}</ion-label>
           </div>
-          <ion-label class="ion-text-left price">{{ item.price | currency: 'Bs' : 'symbol' : '.2-2' }}</ion-label>
+          <ion-label class="ion-text-left price">{{ item.price | currency: 'Bs ' : 'symbol' : '.2-2' }}</ion-label>
         </div>
       </ion-card-content>
     </ion-card>
