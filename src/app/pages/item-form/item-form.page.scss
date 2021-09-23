@@ -1,0 +1,22 @@
+ion-title {
+  --color: var(--ion-color-primary);
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: small;
+}
+
+ion-label {
+  border-radius: 10px !important;
+  overflow: hidden;
+  font-size: small;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.content {
+  padding-right: 5%;
+  height: 100%;
+}
+
+ion-button {
+  margin-top: 20px;
+  padding-left: 5%;
+}

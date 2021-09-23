@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button  autoHide="false" menu="first"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Agregar Nuevo Producto</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form class="content" [formGroup]="itemCreationForm" (ngSubmit)="createItem()">
+    
+      <ion-item>
+        <ion-label position="stacked">Nombre</ion-label>
+        <ion-input placeholder="Escribe el nombre" type="text" inputmode="text" formControlName="name"></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label position="stacked">Precio</ion-label>
+        <ion-input placeholder="Bs 0.00" type="text" inputmode="numeric" formControlName="price"></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label position="stacked">Descripción</ion-label>
+        <ion-textarea placeholder="Escribe los detalles adicionales aquí" type="text" inputmode="text" formControlName="description"></ion-textarea>
+      </ion-item>
+      <ion-button expand="block" color="primary" type="submit">
+        AGREGAR
+      </ion-button>
+  </form>
+</ion-content>

@@ -13,6 +13,10 @@ const routes: Routes = [
   {
     path: 'items',
     loadChildren: () => import('./pages/items/items.module').then( m => m.ItemsPageModule)
+  },
+  {
+    path: 'item-form',
+    loadChildren: () => import('./pages/item-form/item-form.module').then( m => m.ItemFormPageModule)
   }
 ];
 @NgModule({
