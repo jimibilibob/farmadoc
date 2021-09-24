@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 export class Item {
-  name: string;
+  generic_name: string;
+  commercial_name: string;
   price: number;
   description: string;
+  provider: string;
   user_id?: string;
 
   constructor(attributes?: any, matchData?: boolean) {
@@ -29,7 +31,8 @@ export class Item {
   }
 
   private init() {
-    this.name = '';
+    this.generic_name = '';
+    this.commercial_name = '';
     this.price = 0;
     this.description = '';
   }

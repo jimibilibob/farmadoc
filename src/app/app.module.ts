@@ -12,11 +12,30 @@ import {fas} from '@fortawesome/free-solid-svg-icons';
 import {far} from '@fortawesome/free-regular-svg-icons';
 import {fab} from '@fortawesome/free-brands-svg-icons';
 import { ComponentsModule } from './components/components.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FontAwesomeModule, ComponentsModule],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatNativeDateModule,
+    MatExpansionModule,
+    FontAwesomeModule,
+    ComponentsModule,
+    BrowserAnimationsModule
+  ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })

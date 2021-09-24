@@ -16,14 +16,33 @@
   <form class="content" [formGroup]="itemCreationForm" (ngSubmit)="createItem()">
     
       <ion-item>
-        <ion-label position="stacked">Nombre</ion-label>
-        <ion-input placeholder="Escribe el nombre" type="text" inputmode="text" formControlName="name"></ion-input>
+        <ion-label position="stacked">Nombre Genérico</ion-label>
+        <ion-input placeholder="Escribe el nombre genérico" type="text" inputmode="text" formControlName="generic_name"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Nombre Comercial</ion-label>
+        <ion-input placeholder="Escribe el nombre comercial" type="text" inputmode="text" formControlName="commercial_name"></ion-input>
       </ion-item>
   
       <ion-item>
         <ion-label position="stacked">Precio</ion-label>
         <ion-input placeholder="Bs 0.00" type="number" inputmode="decimal" formControlName="price"></ion-input>
       </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Laboratorio</ion-label>
+        <ion-input placeholder="Escriba el laboratorio" type="text" inputmode="text" formControlName="provider"></ion-input>
+      </ion-item>
+
+      <div class="ion-padding">
+        <mat-form-field>
+          <mat-label>Fecha de vencimiento</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="exp_date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
   
       <ion-item>
         <ion-label position="stacked">Descripción</ion-label>
