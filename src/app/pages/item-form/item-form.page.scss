@@ -20,3 +20,40 @@ ion-button {
   margin-top: 20px;
   padding-left: 5%;
 }
+
+::ng-deep .mat-calendar-header {
+  background-color: var(--ion-color-primary);
+}
+
+::ng-deep .mat-calendar {
+  background-color: var(--ion-color-primary);
+}
+
+::ng-deep .mat-calendar-body-selected {
+  background-color: burlywood;
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: rgb(0, 0, 0) !important;
+ }
+ 
+ ::ng-deep.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: rgb(209, 209, 209) !important;
+ } 
+ 
+ ::ng-deep.mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: rgb(255, 255, 255) !important;;
+ }
+ 
+ ::ng-deep .mat-form-field-label {
+  /*change color of label*/
+  color: rgb(0, 0, 0) !important;
+ }
+ 
+ 
+ mat-datepicker-toggle {
+  color: rgb(0, 0, 0) !important;
+ }

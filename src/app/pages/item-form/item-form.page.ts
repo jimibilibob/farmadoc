@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable max-len */
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -23,13 +24,20 @@ export class ItemFormPage implements OnInit, OnDestroy {
     this.subs = new Subscription();
     this.itemCreationForm = new FormGroup(
       {
-        name: new FormControl('', Validators.compose([
+        generic_name: new FormControl('', Validators.compose([
+          Validators.required,
+        ])),
+        commercial_name: new FormControl('', Validators.compose([
+          Validators.required,
+        ])),
+        provider: new FormControl('', Validators.compose([
           Validators.required,
         ])),
         price: new FormControl('', Validators.compose([
           Validators.required,
           Validators.pattern('^([0-9]{0,4}((.)[0-9]{0,2}))$')
         ])),
+        exp_date: new FormControl(''),
         description: new FormControl('')
       }
     );

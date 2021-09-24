@@ -17,8 +17,12 @@ ion-card {
   font-size: 14px;
 }
 
+.sub-title {
+  font-size: 13px;
+}
+
 .description {
-  color: grey;
+  font-weight: lighter;
   font-size: 12px;
 }
 
@@ -33,9 +37,10 @@ ion-label {
   display: flex;
   flex-direction: column;
   margin: 10px 0 10px 0;
+  
 }
 
 .price {
-  padding-right: 20px;
+  min-width: 80px;
   border-left: 1ch;
 }
