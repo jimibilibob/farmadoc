@@ -68,7 +68,6 @@ export class ItemFormPage implements OnInit, OnDestroy {
 
   async createOrUpdateItem() {
     this.itemForm.value.exp_date = new Date(this.itemForm.value.exp_date);
-    console.log('Form value', this.itemForm.value.exp_date);
     const newItem = new Item(this.itemForm.value, true);
     if (this.isEdition) {
       await this.supabaseService.updateItem(newItem, this.selectedItem.id);
@@ -80,7 +79,6 @@ export class ItemFormPage implements OnInit, OnDestroy {
 
   itemsSub() {
     return this.supabaseService.getItemObservable().subscribe( item => {
-      console.log('Item from Subscription:', item);
       this.selectedItem = item;
     });
   }
@@ -100,7 +98,6 @@ export class ItemFormPage implements OnInit, OnDestroy {
       this.pageName = this.router.getCurrentNavigation().extras.state;
       this.isEdition = true;
       this.buttonLabel = 'Editar';
-      console.log(this.pageName);
     } else {
       this.pageName = 'Agregar Nuevo Producto';
       this.isEdition = false;

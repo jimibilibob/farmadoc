@@ -82,7 +82,8 @@ export class SupabaseService {
     const rawItems = await this.supabase
     .from('items')
     .select(`id, generic_name, commercial_name, description, price, exp_date, provider`)
-    .eq('user_id', this.user.id);
+    .eq('user_id', this.user.id)
+    .order('id');
 
     const items = rawItems.data.map( item => new Item(item, true));
     this.items.next(items);
@@ -108,7 +109,6 @@ export class SupabaseService {
   }
 
   async updateItem(item: Item, itemId: number) {
-    console.log('updateItem itemToEdit', item);
     item.addUserId(this.user.id);
     const{ error, data } = await this.supabase
     .from('items')

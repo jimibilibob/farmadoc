@@ -35,8 +35,7 @@ export class ItemsPage implements OnInit, OnDestroy {
   }
 
   search(event: CustomEvent) {
-    console.log(event);
-    of(event.detail.value)
+    const $inputSub = of(event.detail.value)
       .pipe(catchError(error =>
         of('')
         ),
@@ -45,6 +44,7 @@ export class ItemsPage implements OnInit, OnDestroy {
         debounceTime(1000),
         distinctUntilChanged())
         .subscribe(console.log);
+    this.subs.add($inputSub);
   }
 
   subItems() {
