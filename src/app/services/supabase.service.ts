@@ -40,18 +40,7 @@ export class SupabaseService {
    * @param password
    * @returns
    */
-  async signUp(user: FarmaDocUser) {
-    const {error, data} = await this.supabase.auth.signUp(user);
-    if (error) {
-      await this.toastService.presentToast({
-        message: 'Error inesperado, por favor vuelva a intentar más tarde'
-        });
-    } else {
-      await this.toastService.presentToast({
-        message: `Se le ha enviado un correo de activación de cuenta a ${user.email}`
-        });
-    }
-  }
+  signUp = async (user: FarmaDocUser) => await this.supabase.auth.signUp(user);
 
   signIn = async (user: FarmaDocUser)  => await this.supabase.auth.signIn(user);
 

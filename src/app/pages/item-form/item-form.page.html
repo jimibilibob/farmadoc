@@ -4,10 +4,6 @@
       <ion-back-button  autoHide="false" menu="first"></ion-back-button>
     </ion-buttons>
 
-    <ion-buttons slot="end" (click)="signIn()">
-      <ion-icon name="log-in-outline"></ion-icon>
-    </ion-buttons>
-
     <ion-title>{{ pageName }}</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -16,13 +12,13 @@
   <form class="content" [formGroup]="itemForm" (ngSubmit)="createOrUpdateItem()">
     
       <ion-item>
-        <ion-label position="stacked">Nombre Genérico</ion-label>
-        <ion-input placeholder="Escribe el nombre genérico" type="text" inputmode="text" formControlName="generic_name"></ion-input>
+        <ion-label position="floating">Nombre Genérico</ion-label>
+        <ion-input type="text" inputmode="text" formControlName="generic_name"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label position="stacked">Nombre Comercial</ion-label>
-        <ion-input placeholder="Escribe el nombre comercial" type="text" inputmode="text" formControlName="commercial_name"></ion-input>
+        <ion-label position="floating">Nombre Comercial</ion-label>
+        <ion-input type="text" inputmode="text" formControlName="commercial_name"></ion-input>
       </ion-item>
   
       <ion-item>

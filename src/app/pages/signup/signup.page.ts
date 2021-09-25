@@ -4,20 +4,20 @@ import { Router } from '@angular/router';
 import { SupabaseService, ToastService } from 'src/app/services';
 
 @Component({
-  selector: 'app-signin',
-  templateUrl: './signin.page.html',
-  styleUrls: ['./signin.page.scss'],
+  selector: 'app-signup',
+  templateUrl: './signup.page.html',
+  styleUrls: ['./signup.page.scss'],
 })
-export class SigninPage implements OnInit {
+export class SignupPage implements OnInit {
 
-  signginForm: FormGroup;
+  signgupForm: FormGroup;
 
   constructor(
     private toastService: ToastService,
     private router: Router,
     private supabaseService: SupabaseService
   ) {
-    this.signginForm = new FormGroup({
+    this.signgupForm = new FormGroup({
       email: new FormControl('', Validators.compose([
         Validators.required,
         Validators.email
@@ -31,27 +31,20 @@ export class SigninPage implements OnInit {
   ngOnInit() {
   }
 
-  async signIn() {
-    const {error, data} = await this.supabaseService.signIn(this.signginForm.value);
-    let message = 'Su email o su contraseña son incorrectos.';
+  async signUp() {
+    const {error, data} = await this.supabaseService.signUp(this.signgupForm.value);
+    console.log('ERROR WHILE SIGNUP:', error);
+    console.log('DATA WHILE SIGNUP:', data);
     if (error) {
-      if (error.message.includes('not confirmed')) {
-        message = 'Su email no ha sido confirmado todavía.';
-      }
       await this.toastService.presentToast({
-        message
+        message: 'Error inesperado, por favor vuelva a intentar más tarde'
         });
     } else {
-      message = 'Bienvenido(a)!';
       await this.toastService.presentToast({
-        message
+        message: `Se le ha enviado un correo de activación de cuenta a ${this.signgupForm.value.email}`,
+        duration: 5000
         });
-      this.router.navigate(['/home']);
+      this.router.navigate(['/signin']);
     }
-  }
-
-  async signUp() {
-    const signUp = this.supabaseService.signUp(this.signginForm.value);
-    console.log('SignUp response:', signUp);
   }
 }

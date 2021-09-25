@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -19,6 +19,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { registerLocaleData } from '@angular/common';
+import locale from '@angular/common/locales/es';
+
+registerLocaleData(locale, 'es');
 
 @NgModule({
   declarations: [AppComponent],
@@ -38,7 +42,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}],
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+    { provide: LOCALE_ID, useValue: 'es' },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {
