@@ -1,6 +1,7 @@
 /* eslint-disable curly */
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { of, Subscription } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { Item } from 'src/app/models/item';
 import { SupabaseService } from 'src/app/services/supabase.service';
 
@@ -13,6 +14,7 @@ export class ItemsPage implements OnInit, OnDestroy {
 
   showSearchBar: boolean;
   items: Item[];
+  filteredItems: Item[];
   subs: Subscription;
 
   constructor(
@@ -31,8 +33,17 @@ export class ItemsPage implements OnInit, OnDestroy {
     this.subs.unsubscribe();
   }
 
-  search() {
-    this.showSearchBar = true;
+  search(event: CustomEvent) {
+    console.log(event);
+    of(event.detail.value)
+      .pipe(catchError(error =>
+        of('')
+        ),
+        map( word => this.filteredItems = this.items.filter( i =>
+          i.commercial_name.includes(word) || i.generic_name.includes(word) || i.provider.includes(word))),
+        debounceTime(1000),
+        distinctUntilChanged())
+        .subscribe(console.log);
   }
 
   subItems() {
@@ -40,6 +51,7 @@ export class ItemsPage implements OnInit, OnDestroy {
       if (rawItems !== undefined) {
         console.log('Items-->', rawItems);
         this.items = rawItems;
+        this.filteredItems = this.items;
       }
     });
   }

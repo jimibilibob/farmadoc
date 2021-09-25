@@ -5,7 +5,7 @@
     </ion-buttons>
     <ion-title slot="start">Productos</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="search()">
+      <ion-button (click)="showSearchBar = true">
         <ion-icon name="search-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -16,12 +16,12 @@
         <ion-buttons slot="start">
           <ion-back-button  autoHide="false" menu="first"></ion-back-button>
         </ion-buttons>
-        <ion-searchbar debounce="500" placeholder="Buscar Productos"></ion-searchbar>   
+        <ion-searchbar debounce="500" placeholder="Buscar Productos" (ionChange)="search($event)"></ion-searchbar>   
         </ion-toolbar>
     </ng-template>
 </ion-header>
 
-<ion-content>
+<ion-content (click)="showSearchBar = false">
 
   <!--  -->
   
@@ -29,7 +29,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <ion-list lines="none">
-    <ion-card button *ngFor="let item of items">
+    <ion-card button *ngFor="let item of filteredItems">
       <ion-card-content>
         <div class="main-row">
           <div class="row">
