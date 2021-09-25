@@ -35,5 +35,6 @@ export class Item {
     this.commercial_name = '';
     this.price = 0;
     this.description = '';
+    this.provider = '';
   }
 }
