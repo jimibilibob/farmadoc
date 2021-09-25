@@ -83,16 +83,6 @@ export class ItemFormPage implements OnInit, OnDestroy {
     });
   }
 
-  async signUp() {
-    const signUp = this.supabaseService.signUp('isra.neri2@gmail.com', 'alissa');
-    console.log('SignUp response:', signUp);
-  }
-
-  async signIn() {
-    const signIn = this.supabaseService.signIn('isra.neri2@gmail.com', 'alissa');
-    console.log('SignIn response:', signIn);
-  }
-
   private setTitle() {
     if (this.router.getCurrentNavigation().extras.state) {
       this.pageName = this.router.getCurrentNavigation().extras.state;

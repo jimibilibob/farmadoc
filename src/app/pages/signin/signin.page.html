@@ -1,0 +1,35 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="primary">
+  <div class="flex-content" slot="fixed">
+    <ion-card>
+      <ion-card-header>
+        <ion-toolbar>
+          <ion-title class="ion-text-center">Inicio de sesión</ion-title>
+        </ion-toolbar>
+      </ion-card-header>
+      <ion-card-content>
+        <form [formGroup]="signginForm" (ngSubmit)="signIn()">
+          <ion-item>
+            <ion-label position="floating">Email</ion-label>
+            <ion-input type="email" formControlName="email"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Contraseña</ion-label>
+            <ion-input type="password" formControlName="password"></ion-input>
+          </ion-item>
+          <!-- <app-error-msg formName="loginForm" [control]="{email: loginForm.get('email')}">
+          </app-error-msg> -->
+
+          <ion-button expand="block" color="primary" type="submit">
+            Iniciar Sesión
+          </ion-button>
+        </form>
+      </ion-card-content>
+    </ion-card>
+    <ion-label class="signup" color="light">Aún no tienes cuenta? Crear cuenta.</ion-label>
+  </div>
+</ion-content>

@@ -1,0 +1,27 @@
+ion-content {
+  div.flex-content {
+    padding: 0 16px 0 16px;
+    height: 100% !important;
+    width: 100% !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+}
+
+ion-card {
+  min-width: 90%;
+}
+
+ion-title {
+  min-width: fit-content;
+}
+
+ion-button {
+  margin-top: 20px;
+}
+
+.signup {
+  margin-top: 100px;
+}

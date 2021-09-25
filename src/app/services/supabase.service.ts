@@ -10,6 +10,11 @@ import { environment } from '../../environments/environment';
 import { Item } from '../models';
 import { ToastService } from './common/toast.service';
 
+interface FarmaDocUser {
+  email: string;
+  password: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -35,13 +40,20 @@ export class SupabaseService {
    * @param password
    * @returns
    */
-  signUp(email: string, password: string) {
-    return this.supabase.auth.signUp({email, password});
+  async signUp(user: FarmaDocUser) {
+    const {error, data} = await this.supabase.auth.signUp(user);
+    if (error) {
+      await this.toastService.presentToast({
+        message: 'Error inesperado, por favor vuelva a intentar más tarde'
+        });
+    } else {
+      await this.toastService.presentToast({
+        message: `Se le ha enviado un correo de activación de cuenta a ${user.email}`
+        });
+    }
   }
 
-  signIn(email: string, password: string) {
-    return this.supabase.auth.signIn({email, password});
-  }
+  signIn = async (user: FarmaDocUser)  => await this.supabase.auth.signIn(user);
 
   signOut() {
     return this.supabase.auth.signOut();
