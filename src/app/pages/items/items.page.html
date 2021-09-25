@@ -30,7 +30,7 @@
   </ion-refresher>
   <ion-list lines="none">
     <ion-card button *ngFor="let item of filteredItems">
-      <ion-card-content>
+      <ion-card-content (click)="goToItemForm(item)">
         <div class="main-row">
           <div class="row">
             <ion-label class="ion-text-left ion-text-uppercase title">{{ item.generic_name | uppercase }}</ion-label>

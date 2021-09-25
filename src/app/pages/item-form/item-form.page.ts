@@ -5,7 +5,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Item } from 'src/app/models';
-import { SupabaseService } from 'src/app/services/supabase.service';
+import { SupabaseService } from 'src/app/services';
 
 @Component({
   selector: 'app-item-form',
@@ -14,15 +14,20 @@ import { SupabaseService } from 'src/app/services/supabase.service';
 })
 export class ItemFormPage implements OnInit, OnDestroy {
 
-  itemCreationForm: FormGroup;
+  pageName: any;
+  buttonLabel: any;
+  isEdition: boolean;
+  itemForm: FormGroup;
+  selectedItem: Item;
   subs: Subscription;
 
   constructor(
     private router: Router,
     private supabaseService: SupabaseService
   ) {
+    this.setTitle();
     this.subs = new Subscription();
-    this.itemCreationForm = new FormGroup(
+    this.itemForm = new FormGroup(
       {
         generic_name: new FormControl('', Validators.compose([
           Validators.required,
@@ -48,18 +53,35 @@ export class ItemFormPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subs.add(this.itemsSub());
+    const itemToEdit = {
+      generic_name: this.selectedItem.generic_name,
+      commercial_name: this.selectedItem.commercial_name,
+      description: this.selectedItem.description,
+      price: this.selectedItem.price,
+      exp_date: this.selectedItem.exp_date,
+      provider: this.selectedItem.provider,
+    };
+    if (this.isEdition) {
+      this.itemForm.setValue(itemToEdit);
+    }
   }
 
-  async createItem() {
-    console.log('Form value', this.itemCreationForm.value);
-    const newItem = new Item(this.itemCreationForm.value, true);
-    await this.supabaseService.storeItem(newItem);
+  async createOrUpdateItem() {
+    this.itemForm.value.exp_date = new Date(this.itemForm.value.exp_date);
+    console.log('Form value', this.itemForm.value.exp_date);
+    const newItem = new Item(this.itemForm.value, true);
+    if (this.isEdition) {
+      await this.supabaseService.updateItem(newItem, this.selectedItem.id);
+    } else {
+      await this.supabaseService.storeItem(newItem);
+    }
     this.router.navigate(['/items']);
   }
 
   itemsSub() {
-    return this.supabaseService.getItemsObservable().subscribe( res => {
-      console.log('Items from Subscription:', res);
+    return this.supabaseService.getItemObservable().subscribe( item => {
+      console.log('Item from Subscription:', item);
+      this.selectedItem = item;
     });
   }
 
@@ -71,5 +93,18 @@ export class ItemFormPage implements OnInit, OnDestroy {
   async signIn() {
     const signIn = this.supabaseService.signIn('isra.neri2@gmail.com', 'alissa');
     console.log('SignIn response:', signIn);
+  }
+
+  private setTitle() {
+    if (this.router.getCurrentNavigation().extras.state) {
+      this.pageName = this.router.getCurrentNavigation().extras.state;
+      this.isEdition = true;
+      this.buttonLabel = 'Editar';
+      console.log(this.pageName);
+    } else {
+      this.pageName = 'Agregar Nuevo Producto';
+      this.isEdition = false;
+      this.buttonLabel = 'Agregar';
+    }
   }
 }

@@ -8,12 +8,12 @@
       <ion-icon name="log-in-outline"></ion-icon>
     </ion-buttons>
 
-    <ion-title>Agregar Nuevo Producto</ion-title>
+    <ion-title>{{ pageName }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <form class="content" [formGroup]="itemCreationForm" (ngSubmit)="createItem()">
+  <form class="content" [formGroup]="itemForm" (ngSubmit)="createOrUpdateItem()">
     
       <ion-item>
         <ion-label position="stacked">Nombre Genérico</ion-label>
@@ -49,7 +49,7 @@
         <ion-textarea placeholder="Escribe los detalles adicionales aquí" type="text" inputmode="text" formControlName="description"></ion-textarea>
       </ion-item>
       <ion-button expand="block" color="primary" type="submit">
-        AGREGAR
+        {{ buttonLabel | uppercase }}
       </ion-button>
   </form>
 </ion-content>

@@ -17,11 +17,13 @@ export class SupabaseService {
 
   private supabase: SupabaseClient;
   private items: BehaviorSubject<Item[]>;
+  private selectedItem: BehaviorSubject<Item>;
 
   constructor(
     private toastService: ToastService
   ) {
     this.items = new BehaviorSubject<Item[]>([]);
+    this.selectedItem = new BehaviorSubject<Item>(new Item());
     this.supabase = createClient(environment.supabaseUrl, environment.supbaseKey);
   }
 
@@ -59,7 +61,7 @@ export class SupabaseService {
    *
    * @returns
    */
-  getItemsObservable(): Observable<any>{
+  getItemsObservable(): Observable<any> {
     return this.items.asObservable().pipe(
       catchError(error => {
         console.log('Error while get items:', error);
@@ -68,10 +70,18 @@ export class SupabaseService {
     );
   }
 
+  getItemObservable(): Observable<any> {
+    return this.selectedItem.asObservable();
+  }
+
+  setSelectedItem(item: Item) {
+    this.selectedItem.next(item);
+  }
+
   async getItems() {
     const rawItems = await this.supabase
     .from('items')
-    .select(`generic_name, commercial_name, description, price, exp_date, provider`)
+    .select(`id, generic_name, commercial_name, description, price, exp_date, provider`)
     .eq('user_id', this.user.id);
 
     const items = rawItems.data.map( item => new Item(item, true));
@@ -92,6 +102,26 @@ export class SupabaseService {
     } else {
       await this.toastService.presentToast({
         message: 'Producto guardado exitosamente!'
+        });
+    }
+    await this.getItems();
+  }
+
+  async updateItem(item: Item, itemId: number) {
+    console.log('updateItem itemToEdit', item);
+    item.addUserId(this.user.id);
+    const{ error, data } = await this.supabase
+    .from('items')
+    .update(
+      item
+    ).eq('id', itemId);
+    if (error) {
+      await this.toastService.presentToast({
+      message: 'Error inesperado, por favor vuelva a intentar más tarde'
+      });
+    } else {
+      await this.toastService.presentToast({
+        message: 'Producto actualizado exitosamente!'
         });
     }
     await this.getItems();

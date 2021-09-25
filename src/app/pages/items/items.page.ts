@@ -2,8 +2,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { of, Subscription } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
-import { Item } from 'src/app/models/item';
-import { SupabaseService } from 'src/app/services/supabase.service';
+import { Item } from 'src/app/models';
+import { NavService, SupabaseService } from 'src/app/services';
 
 @Component({
   selector: 'app-items',
@@ -18,7 +18,8 @@ export class ItemsPage implements OnInit, OnDestroy {
   subs: Subscription;
 
   constructor(
-    private supabaseService: SupabaseService
+    private supabaseService: SupabaseService,
+    private navService: NavService
   ) {
     this.subs = new Subscription();
     this.showSearchBar = false;
@@ -59,5 +60,10 @@ export class ItemsPage implements OnInit, OnDestroy {
   async getItems(event?: any) {
     await this.supabaseService.getItems();
     if (event) event.target.complete();
+  }
+
+  goToItemForm(item: Item) {
+    this.supabaseService.setSelectedItem(item);
+    this.navService.pushToNextScreenWithParams('/item-form', 'Editar Producto');
   }
 }
