@@ -10,6 +10,11 @@ import { environment } from '../../environments/environment';
 import { Item } from '../models';
 import { ToastService } from './common/toast.service';
 
+const EMPTY_USER = {
+  email: 'farmadoc@gmail.com',
+  password: ''
+};
+
 interface FarmaDocUser {
   email: string;
   password: string;
@@ -23,10 +28,12 @@ export class SupabaseService {
   private supabase: SupabaseClient;
   private items: BehaviorSubject<Item[]>;
   private selectedItem: BehaviorSubject<Item>;
+  private currentUser: BehaviorSubject<FarmaDocUser>;
 
   constructor(
     private toastService: ToastService
   ) {
+    this.currentUser = new BehaviorSubject<FarmaDocUser>(EMPTY_USER);
     this.items = new BehaviorSubject<Item[]>([]);
     this.selectedItem = new BehaviorSubject<Item>(new Item());
     this.supabase = createClient(environment.supabaseUrl, environment.supbaseKey);
@@ -40,12 +47,24 @@ export class SupabaseService {
    * @param password
    * @returns
    */
-  signUp = async (user: FarmaDocUser) => await this.supabase.auth.signUp(user);
+  async signUp(user: FarmaDocUser) {
+    return await this.supabase.auth.signUp(user);
+  }
 
-  signIn = async (user: FarmaDocUser)  => await this.supabase.auth.signIn(user);
+  async signIn(user: FarmaDocUser) {
+    console.log('signIn USER', user);
+    this.currentUser.next(user);
+    return await this.supabase.auth.signIn(user);
+  }
 
-  signOut() {
-    return this.supabase.auth.signOut();
+  async signOut() {
+    console.log('signout USER', EMPTY_USER);
+    await this.supabase.auth.signOut();
+    this.currentUser.next(EMPTY_USER);
+  }
+
+  getUserObservable(): Observable<FarmaDocUser> {
+    return this.currentUser.asObservable();
   }
 
   get user() {
@@ -54,6 +73,10 @@ export class SupabaseService {
 
   get session() {
     return this.supabase.auth.session();
+  }
+
+  get isUserLoggedIn() {
+    return this.session ? true : false;
   }
 
   /**

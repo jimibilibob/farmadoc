@@ -34,7 +34,7 @@ export class ItemsPage implements OnInit, OnDestroy {
     this.subs.unsubscribe();
   }
 
-  search(event: CustomEvent) {
+  search(event: any) {
     const $inputSub = of(event.detail.value)
       .pipe(catchError(error =>
         of('')

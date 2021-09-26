@@ -1,36 +1,39 @@
 
   <ion-menu side="start" content-id="main-content">
     <ion-header>
-      <ion-toolbar translucent>
-        <ion-title>Menu</ion-title>
+      <ion-toolbar translucent color="light">
+        <ion-menu-toggle>
+          <ion-item button lines="none" detail="false">
+            <ion-img slot="start" src="assets/img/farmadoc_logo.png"></ion-img>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle>
+          <div class="user-content">
+            <ion-avatar>
+              <ion-img src="assets/img/default-avatar.png"></ion-img>
+            </ion-avatar>
+            <ion-chip>
+              <ion-label>{{ currentUser?.email }}</ion-label>
+            </ion-chip>
+          </div>
+        </ion-menu-toggle>
       </ion-toolbar>
     </ion-header>
-    <ion-content>
+    <ion-content color="light">
       <ion-list>
-        <ion-item lines="none">
+        <!-- <ion-item lines="none" color="light" button>
           <ion-icon name="mail" slot="start"></ion-icon>
           <ion-label>Inbox</ion-label>
-        </ion-item>
-        <ion-item lines="none">
-          <ion-icon name="paper-plane" slot="start"></ion-icon>
-          <ion-label>Outbox</ion-label>
-        </ion-item>
-        <ion-item lines="none">
-          <ion-icon name="heart" slot="start"></ion-icon>
-          <ion-label>Favorites</ion-label>
-        </ion-item>
-        <ion-item lines="none">
-          <ion-icon name="archive" slot="start"></ion-icon>
-          <ion-label>Archived</ion-label>
-        </ion-item>
-        <ion-item lines="none">
-          <ion-icon name="trash" slot="start"></ion-icon>
-          <ion-label>Trash</ion-label>
-        </ion-item>
-        <ion-item lines="none">
-          <ion-icon name="warning" slot="start"></ion-icon>
-          <ion-label>Spam</ion-label>
-        </ion-item>
+        </ion-item> -->
       </ion-list>
     </ion-content>
+
+    <ion-footer class="ion-no-border">
+      <ion-menu-toggle (click)="logout()">
+        <ion-item color="light" lines="none" button>
+          <ion-icon name="log-out-outline" slot="start" color="primary"></ion-icon>
+          <ion-label>Cerrar Sesión</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+    </ion-footer>
   </ion-menu>
