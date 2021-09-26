@@ -52,15 +52,16 @@ export class SupabaseService {
   }
 
   async signIn(user: FarmaDocUser) {
-    console.log('signIn USER', user);
-    this.currentUser.next(user);
+    console.log('signIn USER', user.email);
+    this.currentUser.next({
+      email: user.email,
+      password: ''
+    });
     return await this.supabase.auth.signIn(user);
   }
 
   async signOut() {
-    console.log('signout USER', EMPTY_USER);
     await this.supabase.auth.signOut();
-    this.currentUser.next(EMPTY_USER);
   }
 
   getUserObservable(): Observable<FarmaDocUser> {

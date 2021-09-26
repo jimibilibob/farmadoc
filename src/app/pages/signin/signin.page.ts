@@ -46,6 +46,7 @@ export class SigninPage implements OnInit {
       await this.toastService.presentToast({
         message
         });
+      this.signginForm.reset();
       this.router.navigate(['/home']);
     }
   }

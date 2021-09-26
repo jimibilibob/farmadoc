@@ -44,6 +44,7 @@ export class SignupPage implements OnInit {
         message: `Se le ha enviado un correo de activación de cuenta a ${this.signgupForm.value.email}`,
         duration: 5000
         });
+      this.signgupForm.reset();
       this.router.navigate(['/signin']);
     }
   }

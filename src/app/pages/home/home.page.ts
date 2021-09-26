@@ -12,7 +12,6 @@ export class HomePage implements OnInit {
   productIcon = faList;
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
 }
