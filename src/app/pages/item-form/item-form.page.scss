@@ -21,6 +21,15 @@ ion-button {
   padding-left: 5%;
 }
 
+.calendar {
+  padding-left: 16px;
+}
+
+.required:after {
+  content:" *";
+  color: red;
+}
+
 ::ng-deep .mat-calendar-header {
   background-color: var(--ion-color-primary);
 }

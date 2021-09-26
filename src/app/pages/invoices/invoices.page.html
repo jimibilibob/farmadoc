@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar *ngIf="!showSearchBar else searchBar">
+    <ion-buttons slot="start">
+      <ion-back-button  autoHide="false" menu="first" routerLink="/home" ></ion-back-button>
+    </ion-buttons>
+    <ion-title slot="start">Productos</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="showSearchBar = true">
+        <ion-icon name="search-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    </ion-toolbar>
+
+    <ng-template #searchBar>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button  autoHide="false" menu="first"></ion-back-button>
+        </ion-buttons>
+        <ion-searchbar debounce="500" placeholder="Buscar Productos" (ionChange)="search($event)"></ion-searchbar>   
+        </ion-toolbar>
+    </ng-template>
+</ion-header>
+
+<ion-content (click)="showSearchBar = false">
+
+  <!--  -->
+  
+  <ion-refresher slot="fixed" (ionRefresh)="getInvoices($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list lines="none">
+    <ion-card button *ngFor="let invoice of filteredInvoices">
+      <ion-card-content (click)="goToInvoiceForm(invoice)">
+        <div class="main-row">
+          <div class="row">
+            <ion-label class="ion-text-left ion-text-uppercase title">{{ invoice.generic_name | uppercase }}</ion-label>
+            <ion-label class="ion-text-left ion-text-uppercase sub-title">{{ invoice.commercial_name | uppercase }}</ion-label>
+            <ion-label class="ion-text-left ion-text-uppercase description">{{ invoice.description | uppercase }}</ion-label>
+          </div>
+          <div class="row right-col">
+            <ion-label class="ion-text-left price" color="primary">{{ invoice.provider | uppercase }}</ion-label>
+          <ion-label class="ion-text-left price">{{ invoice.price | currency: 'Bs ' : 'symbol' : '.2-2' }}</ion-label>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+  <!-- <div *ngIf="accounts.length === 0 && finishedLoadingLocal" class="msg-without-resources">
+    <ion-label>{{ emptyAccountsMessage }}</ion-label>
+  </div> -->
+  
+  <!--  -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button routerLink="/item-form">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

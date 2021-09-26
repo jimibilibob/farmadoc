@@ -1,0 +1,8 @@
+<div class="validation-errors">
+  <ng-container *ngFor="let errorMessage of validations[formName][formControlName]">
+    <div class="error-message" *ngIf="formControl.hasError(errorMessage.type) && formControl.touched"
+      [ngClass]="{'margin-input-with-icon': marginInputWithIcon}">
+      {{ errorMessage.message }}
+    </div>
+  </ng-container>
+</div>

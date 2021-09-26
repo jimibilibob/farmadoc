@@ -12,6 +12,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { ItemFormPageRoutingModule } from './item-form-routing.module';
 
 import { ItemFormPage } from './item-form.page';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { ItemFormPage } from './item-form.page';
     MatNativeDateModule,
     MatExpansionModule,
     ItemFormPageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ComponentsModule
   ],
   declarations: [ItemFormPage]
 })

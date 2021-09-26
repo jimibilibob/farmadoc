@@ -42,7 +42,9 @@ export class ItemFormPage implements OnInit, OnDestroy {
           Validators.required,
           Validators.pattern('^([0-9]{0,4}((.)[0-9]{0,2}))$')
         ])),
-        exp_date: new FormControl(''),
+        exp_date: new FormControl('', Validators.compose([
+          Validators.required
+        ])),
         description: new FormControl('')
       }
     );
@@ -67,14 +69,21 @@ export class ItemFormPage implements OnInit, OnDestroy {
   }
 
   async createOrUpdateItem() {
-    this.itemForm.value.exp_date = new Date(this.itemForm.value.exp_date);
-    const newItem = new Item(this.itemForm.value, true);
-    if (this.isEdition) {
-      await this.supabaseService.updateItem(newItem, this.selectedItem.id);
+    if (this.itemForm.invalid) {
+      return Object.values(this.itemForm.controls).forEach(
+        formControl => {
+          formControl.markAsTouched();
+        });
     } else {
-      await this.supabaseService.storeItem(newItem);
+      this.itemForm.value.exp_date = new Date(this.itemForm.value.exp_date);
+      const newItem = new Item(this.itemForm.value, true);
+      if (this.isEdition) {
+        await this.supabaseService.updateItem(newItem, this.selectedItem.id);
+      } else {
+        await this.supabaseService.storeItem(newItem);
+      }
+      this.router.navigate(['/items']);
     }
-    this.router.navigate(['/items']);
   }
 
   itemsSub() {

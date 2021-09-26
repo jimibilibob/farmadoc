@@ -1,0 +1,10 @@
+.error-message {
+  color: var(--ion-color-danger);
+  font-size: 12px;
+  margin-left: 15px;
+  margin-top: 4px;
+
+  &.margin-input-with-icon {
+    margin-left: 40px;
+  }
+}

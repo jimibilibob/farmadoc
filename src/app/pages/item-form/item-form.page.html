@@ -3,7 +3,6 @@
     <ion-buttons slot="start">
       <ion-back-button  autoHide="false" menu="first"></ion-back-button>
     </ion-buttons>
-
     <ion-title>{{ pageName }}</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -12,33 +11,43 @@
   <form class="content" [formGroup]="itemForm" (ngSubmit)="createOrUpdateItem()">
     
       <ion-item>
-        <ion-label position="floating">Nombre Genérico</ion-label>
+        <ion-label position="floating" class="required">Nombre Genérico</ion-label>
         <ion-input type="text" inputmode="text" formControlName="generic_name"></ion-input>
       </ion-item>
+      <app-error formName="itemForm" [control]="{generic_name: itemForm.get('generic_name')}">
+      </app-error>
 
       <ion-item>
-        <ion-label position="floating">Nombre Comercial</ion-label>
+        <ion-label position="floating" class="required">Nombre Comercial</ion-label>
         <ion-input type="text" inputmode="text" formControlName="commercial_name"></ion-input>
       </ion-item>
+      <app-error formName="itemForm" [control]="{commercial_name: itemForm.get('commercial_name')}">
+      </app-error>
   
       <ion-item>
-        <ion-label position="stacked">Precio</ion-label>
+        <ion-label position="stacked" class="required">Precio</ion-label>
         <ion-input placeholder="Bs 0.00" type="number" inputmode="decimal" formControlName="price"></ion-input>
       </ion-item>
+      <app-error formName="itemForm" [control]="{price: itemForm.get('price')}">
+      </app-error>
 
       <ion-item>
-        <ion-label position="stacked">Laboratorio</ion-label>
+        <ion-label position="stacked" class="required">Laboratorio</ion-label>
         <ion-input placeholder="Escriba el laboratorio" type="text" inputmode="text" formControlName="provider"></ion-input>
       </ion-item>
+      <app-error formName="itemForm" [control]="{provider: itemForm.get('provider')}">
+      </app-error>
 
-      <div class="ion-padding">
+      <div class="calendar">
         <mat-form-field>
-          <mat-label>Fecha de vencimiento</mat-label>
+          <mat-label class="required">Fecha de vencimiento</mat-label>
           <input matInput [matDatepicker]="picker" formControlName="exp_date">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </div>
+      <app-error formName="itemForm" [control]="{exp_date: itemForm.get('exp_date')}">
+      </app-error>
   
       <ion-item>
         <ion-label position="stacked">Descripción</ion-label>

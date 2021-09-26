@@ -40,7 +40,9 @@ export class ItemsPage implements OnInit, OnDestroy {
         of('')
         ),
         map( word => this.filteredItems = this.items.filter( i =>
-          i.commercial_name.includes(word) || i.generic_name.includes(word) || i.provider.includes(word))),
+          i.commercial_name.toLocaleLowerCase().includes(word) ||
+          i.generic_name.toLocaleLowerCase().includes(word) ||
+          i.provider.toLocaleLowerCase().includes(word))),
         debounceTime(1000),
         distinctUntilChanged())
         .subscribe(console.log);

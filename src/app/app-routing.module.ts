@@ -25,6 +25,10 @@ const routes: Routes = [
     path: 'signup',
     loadChildren: () => import('./pages/signup/signup.module').then( m => m.SignupPageModule),
     canActivate: [NotloggedinGuard]
+  },
+  {
+    path: 'invoices',
+    loadChildren: () => import('./pages/invoices/invoices.module').then( m => m.InvoicesPageModule)
   }
 ];
 @NgModule({
