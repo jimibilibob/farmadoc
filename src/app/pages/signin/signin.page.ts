@@ -10,14 +10,14 @@ import { SupabaseService, ToastService } from 'src/app/services';
 })
 export class SigninPage implements OnInit {
 
-  signginForm: FormGroup;
+  signinForm: FormGroup;
 
   constructor(
     private toastService: ToastService,
     private router: Router,
     private supabaseService: SupabaseService
   ) {
-    this.signginForm = new FormGroup({
+    this.signinForm = new FormGroup({
       email: new FormControl('', Validators.compose([
         Validators.required,
         Validators.email
@@ -32,27 +32,34 @@ export class SigninPage implements OnInit {
   }
 
   async signIn() {
-    const {error, data} = await this.supabaseService.signIn(this.signginForm.value);
-    let message = 'Su email o su contraseña son incorrectos.';
-    if (error) {
-      if (error.message.includes('not confirmed')) {
-        message = 'Su email no ha sido confirmado todavía.';
-      }
-      await this.toastService.presentToast({
-        message
+    if (this.signinForm.invalid) {
+      return Object.values(this.signinForm.controls).forEach(
+        formControl => {
+          formControl.markAsTouched();
         });
     } else {
-      message = 'Bienvenido(a)!';
-      await this.toastService.presentToast({
-        message
-        });
-      this.signginForm.reset();
-      this.router.navigate(['/home']);
+      const {error, data} = await this.supabaseService.signIn(this.signinForm.value);
+      let message = 'Su email o su contraseña son incorrectos.';
+      if (error) {
+        if (error.message.includes('not confirmed')) {
+          message = 'Su email no ha sido confirmado todavía.';
+        }
+        await this.toastService.presentToast({
+          message
+          });
+      } else {
+        message = 'Bienvenido(a)!';
+        await this.toastService.presentToast({
+          message
+          });
+        this.signinForm.reset();
+        this.router.navigate(['/home']);
+      }
     }
   }
 
   async signUp() {
-    const signUp = this.supabaseService.signUp(this.signginForm.value);
+    const signUp = this.supabaseService.signUp(this.signinForm.value);
     console.log('SignUp response:', signUp);
   }
 }

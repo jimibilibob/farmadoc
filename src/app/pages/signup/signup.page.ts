@@ -10,20 +10,22 @@ import { SupabaseService, ToastService } from 'src/app/services';
 })
 export class SignupPage implements OnInit {
 
-  signgupForm: FormGroup;
+  signupForm: FormGroup;
 
   constructor(
     private toastService: ToastService,
     private router: Router,
     private supabaseService: SupabaseService
   ) {
-    this.signgupForm = new FormGroup({
+    this.signupForm = new FormGroup({
       email: new FormControl('', Validators.compose([
         Validators.required,
         Validators.email
       ])),
       password: new FormControl('', Validators.compose([
-        Validators.required
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(30)
       ]))
     });
   }
@@ -32,20 +34,27 @@ export class SignupPage implements OnInit {
   }
 
   async signUp() {
-    const {error, data} = await this.supabaseService.signUp(this.signgupForm.value);
-    console.log('ERROR WHILE SIGNUP:', error);
-    console.log('DATA WHILE SIGNUP:', data);
-    if (error) {
-      await this.toastService.presentToast({
-        message: 'Error inesperado, por favor vuelva a intentar más tarde'
+    if (this.signupForm.invalid) {
+      return Object.values(this.signupForm.controls).forEach(
+        formControl => {
+          formControl.markAsTouched();
         });
     } else {
-      await this.toastService.presentToast({
-        message: `Se le ha enviado un correo de activación de cuenta a ${this.signgupForm.value.email}`,
-        duration: 5000
-        });
-      this.signgupForm.reset();
-      this.router.navigate(['/signin']);
+      const {error, data} = await this.supabaseService.signUp(this.signupForm.value);
+      console.log('ERROR WHILE SIGNUP:', error);
+      console.log('DATA WHILE SIGNUP:', data);
+      if (error) {
+        await this.toastService.presentToast({
+          message: 'Error inesperado, por favor vuelva a intentar más tarde'
+          });
+      } else {
+        await this.toastService.presentToast({
+          message: `Se le ha enviado un correo de activación de cuenta a ${this.signupForm.value.email}`,
+          duration: 5000
+          });
+        this.signupForm.reset();
+        this.router.navigate(['/signin']);
+      }
     }
   }
 }

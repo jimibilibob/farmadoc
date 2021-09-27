@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { itemFormValidations } from 'src/app/constants';
+import { itemFormValidations, signinFormValidations, signupFormValidations } from 'src/app/constants';
 
 @Component({
   selector: 'app-error',
@@ -22,6 +22,8 @@ export class ErrorComponent implements OnInit {
     this.formControl = new FormControl();
     this.validations = {
       itemForm: itemFormValidations,
+      signinForm: signinFormValidations,
+      signupForm: signupFormValidations
     };
   }
 

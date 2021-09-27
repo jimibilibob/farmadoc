@@ -7,17 +7,20 @@
           <ion-title class="ion-text-center">Crear Cuenta</ion-title>
       </ion-card-header>
       <ion-card-content>
-        <form [formGroup]="signgupForm" (ngSubmit)="signUp()">
+        <form [formGroup]="signupForm" (ngSubmit)="signUp()">
           <ion-item>
             <ion-label position="floating">Email</ion-label>
             <ion-input type="email" formControlName="email"></ion-input>
           </ion-item>
+          <app-error formName="signupForm" [control]="{email: signupForm.get('email')}">
+          </app-error>
+
           <ion-item>
             <ion-label position="floating">Contraseña</ion-label>
             <ion-input type="password" formControlName="password"></ion-input>
           </ion-item>
-          <!-- <app-error-msg formName="loginForm" [control]="{email: loginForm.get('email')}">
-          </app-error-msg> -->
+          <app-error formName="signupForm" [control]="{password: signupForm.get('password')}">
+          </app-error>
 
           <ion-button expand="block" color="primary" type="submit">
             Crear Cuenta
