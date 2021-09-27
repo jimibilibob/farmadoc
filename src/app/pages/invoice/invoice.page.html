@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button  autoHide="false" menu="first"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Agregar Nueva Factura</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form class="content" [formGroup]="invoiceForm" (ngSubmit)="createOrUpdateInvoice()">
+    
+      <ion-item>
+        <ion-label position="floating" class="required">Nombre Genérico</ion-label>
+        <ion-input type="text" inputmode="text" formControlName="generic_name"></ion-input>
+      </ion-item>
+      <app-error formName="invoiceForm" [control]="{generic_name: invoiceForm.get('generic_name')}">
+      </app-error>
+
+      <ion-item>
+        <ion-label position="floating" class="required">Nombre Comercial</ion-label>
+        <ion-input type="text" inputmode="text" formControlName="commercial_name"></ion-input>
+      </ion-item>
+      <app-error formName="invoiceForm" [control]="{commercial_name: invoiceForm.get('commercial_name')}">
+      </app-error>
+  
+      <ion-item>
+        <ion-label position="stacked" class="required">Precio</ion-label>
+        <ion-input placeholder="Bs 0.00" type="number" inputmode="decimal" formControlName="price"></ion-input>
+      </ion-item>
+      <app-error formName="invoiceForm" [control]="{price: invoiceForm.get('price')}">
+      </app-error>
+
+      <ion-item>
+        <ion-label position="stacked" class="required">Laboratorio</ion-label>
+        <ion-input placeholder="Escriba el laboratorio" type="text" inputmode="text" formControlName="provider"></ion-input>
+      </ion-item>
+      <app-error formName="invoiceForm" [control]="{provider: invoiceForm.get('provider')}">
+      </app-error>
+
+      <!-- <div class="calendar">
+        <mat-form-field>
+          <mat-label class="required">Fecha de vencimiento</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="exp_date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div> -->
+      <app-error formName="invoiceForm" [control]="{exp_date: invoiceForm.get('exp_date')}">
+      </app-error>
+  
+      <ion-item>
+        <ion-label position="stacked">Descripción</ion-label>
+        <ion-textarea placeholder="Escribe los detalles adicionales aquí" type="text" inputmode="text" formControlName="description"></ion-textarea>
+      </ion-item>
+      <ion-button expand="block" color="primary" type="submit">
+        {{ buttonLabel | uppercase }}
+      </ion-button>
+  </form>
+</ion-content>

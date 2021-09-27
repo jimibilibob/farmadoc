@@ -58,8 +58,8 @@ export class SigninPage implements OnInit {
     }
   }
 
-  async signUp() {
-    const signUp = this.supabaseService.signUp(this.signinForm.value);
-    console.log('SignUp response:', signUp);
+  async goToSignup() {
+    this.router.navigate(['/signup']);
+    this.signinForm.reset();
   }
 }

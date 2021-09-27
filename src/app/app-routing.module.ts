@@ -4,9 +4,13 @@ import { LoggedinGuard, NotloggedinGuard } from './guards';
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  },
+  {
     path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
-    canActivate: [LoggedinGuard]
+    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
   },
   {
     path: 'items',
@@ -29,6 +33,10 @@ const routes: Routes = [
   {
     path: 'invoices',
     loadChildren: () => import('./pages/invoices/invoices.module').then( m => m.InvoicesPageModule)
+  },
+  {
+    path: 'invoice',
+    loadChildren: () => import('./pages/invoice/invoice.module').then( m => m.InvoicePageModule)
   }
 ];
 @NgModule({

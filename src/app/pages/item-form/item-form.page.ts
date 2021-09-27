@@ -96,7 +96,7 @@ export class ItemFormPage implements OnInit, OnDestroy {
     if (this.router.getCurrentNavigation().extras.state) {
       this.pageName = this.router.getCurrentNavigation().extras.state;
       this.isEdition = true;
-      this.buttonLabel = 'Editar';
+      this.buttonLabel = 'Guardar Cambios';
     } else {
       this.pageName = 'Agregar Nuevo Producto';
       this.isEdition = false;

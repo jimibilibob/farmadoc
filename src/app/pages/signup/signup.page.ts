@@ -49,12 +49,17 @@ export class SignupPage implements OnInit {
           });
       } else {
         await this.toastService.presentToast({
-          message: `Se le ha enviado un correo de activación de cuenta a ${this.signupForm.value.email}`,
+          message: `Bienvenido!`,
           duration: 5000
           });
-        this.signupForm.reset();
-        this.router.navigate(['/signin']);
-      }
+          this.router.navigate(['/home']);
+        }
+      this.signupForm.reset();
     }
+  }
+
+  async goToSignin() {
+    this.router.navigate(['/signin']);
+    this.signupForm.reset();
   }
 }

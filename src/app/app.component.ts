@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SupabaseService } from './services';
 
@@ -13,6 +14,7 @@ export class AppComponent implements OnInit, OnDestroy{
   subs: Subscription;
 
   constructor(
+    private router: Router,
     private supabaseService: SupabaseService
   ) {
     this.subs = new Subscription();
@@ -20,6 +22,11 @@ export class AppComponent implements OnInit, OnDestroy{
 
   ngOnInit() {
     this.subs.add(this.userSub());
+    if (this.supabaseService.session) {
+      this.router.navigate(['/home']);
+    } else {
+      this.router.navigate(['/signin']);
+    }
   }
 
   ngOnDestroy() {
