@@ -5,7 +5,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Item } from 'src/app/models';
-import { SupabaseService } from 'src/app/services';
+import { ItemService } from 'src/app/services';
 
 @Component({
   selector: 'app-item-form',
@@ -23,7 +23,7 @@ export class ItemFormPage implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private supabaseService: SupabaseService
+    private itemService: ItemService
   ) {
     this.setTitle();
     this.subs = new Subscription();
@@ -78,16 +78,16 @@ export class ItemFormPage implements OnInit, OnDestroy {
       this.itemForm.value.exp_date = new Date(this.itemForm.value.exp_date);
       const newItem = new Item(this.itemForm.value, true);
       if (this.isEdition) {
-        await this.supabaseService.updateItem(newItem, this.selectedItem.id);
+        await this.itemService.updateItem(newItem, this.selectedItem.id);
       } else {
-        await this.supabaseService.storeItem(newItem);
+        await this.itemService.storeItem(newItem);
       }
       this.router.navigate(['/items']);
     }
   }
 
   itemsSub() {
-    return this.supabaseService.getItemObservable().subscribe( item => {
+    return this.itemService.getItemObservable().subscribe( item => {
       this.selectedItem = item;
     });
   }

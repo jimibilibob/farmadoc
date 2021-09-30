@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { of, Subscription } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { Item } from 'src/app/models';
-import { NavService, SupabaseService } from 'src/app/services';
+import { ItemService, NavService } from 'src/app/services';
 
 @Component({
   selector: 'app-items',
@@ -22,7 +22,7 @@ export class ItemsPage implements OnInit, OnDestroy {
   subs: Subscription;
 
   constructor(
-    private supabaseService: SupabaseService,
+    private itemService: ItemService,
     private navService: NavService,
     private router: Router
   ) {
@@ -60,7 +60,7 @@ export class ItemsPage implements OnInit, OnDestroy {
   }
 
   subItems() {
-    return this.supabaseService.getItemsObservable().subscribe( rawItems => {
+    return this.itemService.getItemsObservable().subscribe( rawItems => {
       if (rawItems !== undefined) {
         console.log('Items-->', rawItems);
         this.items = rawItems;
@@ -70,12 +70,12 @@ export class ItemsPage implements OnInit, OnDestroy {
   }
 
   async getItems(event?: any) {
-    await this.supabaseService.getItems();
+    await this.itemService.getItems();
     if (event) event.target.complete();
   }
 
   onItemCardClick(item: Item) {
-    this.supabaseService.setSelectedItem(item);
+    this.itemService.setSelectedItem(item);
     if (this.navParams) {
       this.isSelectingItems = true;
       this.router.navigate(['/invoice']);

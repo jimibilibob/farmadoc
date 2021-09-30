@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SupabaseService, ToastService } from 'src/app/services';
+import { AuthService, ToastService } from 'src/app/services';
 
 @Component({
   selector: 'app-signup',
@@ -15,7 +15,7 @@ export class SignupPage implements OnInit {
   constructor(
     private toastService: ToastService,
     private router: Router,
-    private supabaseService: SupabaseService
+    private authService: AuthService
   ) {
     this.signupForm = new FormGroup({
       email: new FormControl('', Validators.compose([
@@ -40,7 +40,7 @@ export class SignupPage implements OnInit {
           formControl.markAsTouched();
         });
     } else {
-      const {error, data} = await this.supabaseService.signUp(this.signupForm.value);
+      const {error, data} = await this.authService.signUp(this.signupForm.value);
       console.log('ERROR WHILE SIGNUP:', error);
       console.log('DATA WHILE SIGNUP:', data);
       if (error) {

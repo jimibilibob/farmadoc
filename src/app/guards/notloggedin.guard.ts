@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { SupabaseService } from '../services';
+import { AuthService } from '../services';
 
 @Injectable({
   providedIn: 'root'
@@ -9,13 +9,13 @@ import { SupabaseService } from '../services';
 export class NotloggedinGuard implements CanActivate {
 
   constructor(
-    private supabaseService: SupabaseService
+    private authService: AuthService
   ) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      if (!this.supabaseService.isUserLoggedIn) {
+      if (!this.authService.isUserLoggedIn) {
         return true;
       }
       return false;

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SupabaseService, ToastService } from 'src/app/services';
+import { AuthService, ToastService } from 'src/app/services';
 
 @Component({
   selector: 'app-signin',
@@ -15,7 +15,7 @@ export class SigninPage implements OnInit {
   constructor(
     private toastService: ToastService,
     private router: Router,
-    private supabaseService: SupabaseService
+    private authService: AuthService
   ) {
     this.signinForm = new FormGroup({
       email: new FormControl('', Validators.compose([
@@ -38,7 +38,7 @@ export class SigninPage implements OnInit {
           formControl.markAsTouched();
         });
     } else {
-      const {error, data} = await this.supabaseService.signIn(this.signinForm.value);
+      const {error, data} = await this.authService.signIn(this.signinForm.value);
       let message = 'Su email o su contraseña son incorrectos.';
       if (error) {
         if (error.message.includes('not confirmed')) {

@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SupabaseService } from 'src/app/services';
+import { AuthService } from 'src/app/services';
 
 @Component({
   selector: 'app-side-menu',
@@ -13,7 +13,7 @@ export class SideMenuComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private supabaseService: SupabaseService
+    private authService: AuthService
   ) {}
 
   ngOnInit() {}
@@ -21,7 +21,7 @@ export class SideMenuComponent implements OnInit, OnDestroy {
   ngOnDestroy() {}
 
   async logout() {
-    await this.supabaseService.signOut();
+    await this.authService.signOut();
     this.router.navigate(['/signin']);
   }
 }

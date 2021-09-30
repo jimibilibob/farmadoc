@@ -4,7 +4,7 @@ import {faFileInvoice} from '@fortawesome/free-solid-svg-icons';
 import { of, Subscription } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { Invoice } from 'src/app/models';
-import { NavService, SupabaseService } from 'src/app/services';
+import { InvoiceService, NavService } from 'src/app/services';
 
 @Component({
   selector: 'app-invoices',
@@ -21,7 +21,7 @@ export class InvoicesPage implements OnInit {
 
   constructor(
     private navService: NavService,
-    private supabaseService: SupabaseService
+    private invoiceService: InvoiceService
   ) {
     this.showSearchBar = false;
     this.subs = new Subscription();
@@ -33,7 +33,7 @@ export class InvoicesPage implements OnInit {
   }
 
   async getInvoices(event?: any) {
-    await this.supabaseService.getInvoices();
+    await this.invoiceService.getInvoices();
     if (event) event.target.complete();
   }
 
@@ -54,12 +54,12 @@ export class InvoicesPage implements OnInit {
   }
 
   goToInvoiceForm(invoice: any) {
-    this.supabaseService.setSelectedInvoice(invoice);
+    this.invoiceService.setSelectedInvoice(invoice);
     this.navService.pushToNextScreenWithParams('/invoice', 'Editar Factura');
   }
 
   private invoicesSub() {
-    this.supabaseService.getInvoicesObservable().subscribe( res => {
+    this.invoiceService.getInvoicesObservable().subscribe( res => {
       console.log('FACTURAS:', res);
       this.invoices = res;
       this.filteredInvoices = res;

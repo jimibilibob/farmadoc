@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { faPills } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
-import { NavService, SupabaseService } from 'src/app/services';
+import { InvoiceService, NavService } from 'src/app/services';
 import { Invoice } from 'src/app/models';
 
 @Component({
@@ -24,7 +24,7 @@ export class InvoicePage implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private navService: NavService,
-    private supabaseService: SupabaseService
+    private invoiceService: InvoiceService
   ) {
     this.subs = new Subscription();
     this.invoiceForm = new FormGroup({
@@ -51,7 +51,7 @@ export class InvoicePage implements OnInit, OnDestroy {
   }
 
   private invoiceSub(): Subscription {
-    return this.supabaseService.getSelectedInvoiceObservable().subscribe( res => {
+    return this.invoiceService.getSelectedInvoiceObservable().subscribe( res => {
       console.log(res);
       this.selectedInvoice = res;
     });
