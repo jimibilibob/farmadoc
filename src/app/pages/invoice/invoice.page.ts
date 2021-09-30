@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { faPills } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
-import { SupabaseService } from 'src/app/services';
+import { NavService, SupabaseService } from 'src/app/services';
 import { Invoice } from 'src/app/models';
 
 @Component({
@@ -23,6 +23,7 @@ export class InvoicePage implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
+    private navService: NavService,
     private supabaseService: SupabaseService
   ) {
     this.subs = new Subscription();
@@ -46,7 +47,7 @@ export class InvoicePage implements OnInit, OnDestroy {
   }
 
   goToItems() {
-    this.router.navigate(['/items']);
+    this.navService.pushToNextScreenWithParams('/items', 'Seleccione un Producto');
   }
 
   private invoiceSub(): Subscription {

@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar *ngIf="!showSearchBar else searchBar">
-    <ion-buttons slot="start">
-      <ion-back-button  autoHide="false" menu="first" routerLink="/home" ></ion-back-button>
+    <ion-buttons slot="start" (click)="onBackButton()">
+      <ion-back-button  autoHide="false" menu="first"></ion-back-button>
     </ion-buttons>
-    <ion-title slot="start">Productos</ion-title>
+    <ion-title slot="start">{{ pageName }}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="showSearchBar = true">
         <ion-icon name="search-outline"></ion-icon>
@@ -30,7 +30,7 @@
   </ion-refresher>
   <ion-list lines="none">
     <ion-card button *ngFor="let item of filteredItems">
-      <ion-card-content (click)="goToItemForm(item)">
+      <ion-card-content (click)="onItemCardClick(item)">
         <div class="main-row">
           <div class="row">
             <ion-label class="ion-text-left ion-text-uppercase title">{{ item.generic_name | uppercase }}</ion-label>

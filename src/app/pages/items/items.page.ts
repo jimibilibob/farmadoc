@@ -1,5 +1,6 @@
 /* eslint-disable curly */
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { of, Subscription } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { Item } from 'src/app/models';
@@ -15,14 +16,20 @@ export class ItemsPage implements OnInit, OnDestroy {
   showSearchBar: boolean;
   items: Item[];
   filteredItems: Item[];
+  pageName: any;
+  isSelectingItems: boolean;
+  navParams: any;
   subs: Subscription;
 
   constructor(
     private supabaseService: SupabaseService,
-    private navService: NavService
+    private navService: NavService,
+    private router: Router
   ) {
     this.subs = new Subscription();
+    this.isSelectingItems = false;
     this.showSearchBar = false;
+    this.setTitle();
    }
 
   async ngOnInit() {
@@ -67,8 +74,22 @@ export class ItemsPage implements OnInit, OnDestroy {
     if (event) event.target.complete();
   }
 
-  goToItemForm(item: Item) {
+  onItemCardClick(item: Item) {
     this.supabaseService.setSelectedItem(item);
-    this.navService.pushToNextScreenWithParams('/item-form', 'Editar Producto');
+    if (this.navParams) {
+      this.isSelectingItems = true;
+      this.router.navigate(['/invoice']);
+    } else {
+      this.navService.pushToNextScreenWithParams('/item-form', 'Editar Producto');
+    }
+  }
+
+  onBackButton() {
+    this.router.navigate( [ this.isSelectingItems ? '/invoice' : '/home' ] );
+  }
+
+  private setTitle() {
+    this.navParams = this.router.getCurrentNavigation().extras.state;
+    this.pageName = this.navParams ?? 'Productos';
   }
 }
