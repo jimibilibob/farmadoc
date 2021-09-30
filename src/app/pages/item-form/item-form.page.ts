@@ -93,8 +93,9 @@ export class ItemFormPage implements OnInit, OnDestroy {
   }
 
   private setTitle() {
-    if (this.router.getCurrentNavigation().extras.state) {
-      this.pageName = this.router.getCurrentNavigation().extras.state;
+    const navParams = this.router.getCurrentNavigation().extras.state;
+    if (navParams) {
+      this.pageName = navParams;
       this.isEdition = true;
       this.buttonLabel = 'Guardar Cambios';
     } else {

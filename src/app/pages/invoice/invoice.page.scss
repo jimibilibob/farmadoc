@@ -1,0 +1,9 @@
+.detail {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  fa-icon {
+    zoom: 2;
+    color: var(--ion-color-primary);
+  }
+}

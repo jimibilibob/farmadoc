@@ -17,8 +17,21 @@ ion-card {
   font-size: 14px;
 }
 
+.title-row {
+  padding-left: 20px;
+  display: flex;
+  flex-direction: row;
+  background-color: rgb(240, 240, 240);
+}
+
+fa-icon {
+  zoom: 2;
+  color: var(--ion-color-primary);
+}
+
 .sub-title {
-  font-size: 13px;
+  font-size: 15px;
+  font-weight: bolder;
 }
 
 .description {
@@ -31,6 +44,10 @@ ion-card {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+}
+
+.row {
+  padding-left: 15px;
 }
 
 ion-label {

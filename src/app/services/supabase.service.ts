@@ -7,7 +7,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
-import { Item } from '../models';
+import { Invoice, Item } from '../models';
 import { ToastService } from './common/toast.service';
 
 const EMPTY_USER = {
@@ -26,9 +26,11 @@ interface FarmaDocUser {
 export class SupabaseService {
 
   private supabase: SupabaseClient;
+  private currentUser: BehaviorSubject<FarmaDocUser>;
   private items: BehaviorSubject<Item[]>;
   private selectedItem: BehaviorSubject<Item>;
-  private currentUser: BehaviorSubject<FarmaDocUser>;
+  private invoices: BehaviorSubject<Invoice[]>;
+  private selectedInvoice: BehaviorSubject<Invoice>;
 
   constructor(
     private toastService: ToastService
@@ -36,6 +38,8 @@ export class SupabaseService {
     this.currentUser = new BehaviorSubject<FarmaDocUser>(EMPTY_USER);
     this.items = new BehaviorSubject<Item[]>([]);
     this.selectedItem = new BehaviorSubject<Item>(new Item());
+    this.invoices = new BehaviorSubject<Invoice[]>([]);
+    this.selectedInvoice = new BehaviorSubject<Invoice>(new Invoice());
     this.supabase = createClient(environment.supabaseUrl, environment.supbaseKey);
   }
 
@@ -86,6 +90,14 @@ export class SupabaseService {
    *
    * @returns
    */
+  // TODO: Use thid method and check
+  searchItems(items: Item[], word: string) {
+    return items.filter( i =>
+      i.commercial_name.toLocaleLowerCase().includes(word) ||
+      i.generic_name.toLocaleLowerCase().includes(word) ||
+      i.provider.toLocaleLowerCase().includes(word));
+  }
+
   getItemsObservable(): Observable<any> {
     return this.items.asObservable().pipe(
       catchError(error => {
@@ -151,4 +163,91 @@ export class SupabaseService {
     }
     await this.getItems();
   }
+
+  /**
+   *
+   * Invoice methods
+   */
+  // searchInvoices(invoices: Invoice[], word: string) {
+  // return invoices.filter( invoice =>
+  //   invoice.name.toLocaleLowerCase().includes(word) ||
+  //   this.searchItems(invoice.items, word).length > 0);
+  // }
+  getSelectedInvoiceObservable(): Observable<Invoice> {
+    return this.selectedInvoice.asObservable();
+  }
+
+  setSelectedInvoice(invoice: Invoice) {
+    this.selectedInvoice.next(invoice);
+  }
+
+  getInvoicesObservable(): Observable<Invoice[]> {
+    return this.invoices.asObservable().pipe(
+      catchError(error => {
+        console.log('Error while get items:', error);
+        return of([]);
+      })
+    );
+  }
+
+  async getInvoices() {
+  const rawInvoices = await this.supabase
+  .from('invoices')
+  .select(`id,
+    name,
+    total,
+    items:invoice_item(
+      id, invoice_id, item_id, price, discount, units, total_sub
+    ),
+    created_at`)
+  .eq('user_id', this.user.id)
+  .order('id');
+
+  const invoices = rawInvoices.data.map( invoice => {
+    console.log(invoice);
+    return new Invoice(invoice, true);
+  });
+  this.invoices.next(invoices);
+  }
+
+  // TODO: Check this method
+  async storeInvoice(invoice: Invoice) {
+    invoice.addUserId(this.user.id);
+    const{ error, data } = await this.supabase
+    .from('invoice')
+    .insert([
+      invoice
+    ]);
+    if (error) {
+      await this.toastService.presentToast({
+      message: 'Error inesperado, por favor vuelva a intentar más tarde'
+      });
+    } else {
+      await this.toastService.presentToast({
+        message: 'Factura guardada exitosamente!'
+        });
+    }
+    await this.getInvoices();
+  }
+
+  // TODO: Check this method
+  async updateInvoice(invoice: Invoice, invoiceId: number) {
+    invoice.addUserId(this.user.id);
+    const{ error, data } = await this.supabase
+    .from('invoices')
+    .update(
+      invoice
+    ).eq('id', invoiceId);
+    if (error) {
+      await this.toastService.presentToast({
+      message: 'Error inesperado, por favor vuelva a intentar más tarde'
+      });
+    } else {
+      await this.toastService.presentToast({
+        message: 'Factura actualizada exitosamente!'
+        });
+    }
+    await this.getInvoices();
+  }
+
 }

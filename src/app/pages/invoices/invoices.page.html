@@ -29,20 +29,25 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <ion-list lines="none">
-    <ion-card button *ngFor="let invoice of filteredInvoices">
-      <ion-card-content (click)="goToInvoiceForm(invoice)">
-        <div class="main-row">
-          <div class="row">
-            <ion-label class="ion-text-left ion-text-uppercase title">{{ invoice.generic_name | uppercase }}</ion-label>
-            <ion-label class="ion-text-left ion-text-uppercase sub-title">{{ invoice.commercial_name | uppercase }}</ion-label>
-            <ion-label class="ion-text-left ion-text-uppercase description">{{ invoice.description | uppercase }}</ion-label>
-          </div>
-          <div class="row right-col">
-            <ion-label class="ion-text-left price" color="primary">{{ invoice.provider | uppercase }}</ion-label>
-          <ion-label class="ion-text-left price">{{ invoice.price | currency: 'Bs ' : 'symbol' : '.2-2' }}</ion-label>
-          </div>
+    <ion-card button *ngFor="let invoice of filteredInvoices" (click)="goToInvoiceForm(null)">
+
+      <div class="title-row">
+        <fa-icon [icon]="invoiceIcon" color="danger"></fa-icon>
+        <ion-label class="ion-text-left ion-text-uppercase ion-padding-start title">{{ invoice.created_at | date }}</ion-label>
+      </div>
+      <ion-card-content (click)="null">
+      <div class="main-row">
+        <div class="row">
+          <ion-label class="ion-text-left ion-text-uppercase sub-title">{{ invoice.name }}</ion-label>
+          <!-- <ion-label class="ion-text-center ion-text-uppercase description">{{ invoice.id }}</ion-label> -->
         </div>
-      </ion-card-content>
+        <div class="row right-col">
+          <ion-label class="ion-text-left price" color="primary">{{ invoice.total | currency: 'Bs' }}</ion-label>
+        <!-- <ion-label class="ion-text-left price"></ion-label> -->
+        </div>
+      </div>
+    </ion-card-content>
+
     </ion-card>
   </ion-list>
   <!-- <div *ngIf="accounts.length === 0 && finishedLoadingLocal" class="msg-without-resources">
@@ -51,7 +56,7 @@
   
   <!--  -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button routerLink="/item-form">
+      <ion-fab-button routerLink="/invoice">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
