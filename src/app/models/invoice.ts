@@ -32,10 +32,6 @@ export class Invoice {
     }
   }
 
-  addItems(invoiceItems: InvoiceItems[]) {
-    this.items = invoiceItems;
-  }
-
   addUserId(userId: string) {
     this.user_id = userId;
   }

@@ -1,6 +1,12 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Item } from '.';
 
-/* eslint-disable @typescript-eslint/naming-convention */
+interface Details {
+  commercial_name: string;
+  generic_name: string;
+  description: string;
+}
+
 export class InvoiceItems {
   id: number;
   invoice_id: string;
@@ -9,6 +15,7 @@ export class InvoiceItems {
   discount: number;
   units: number;
   total_sub: number;
+  details: Details;
   user_id?: string;
 
   constructor(attributes?: any, matchData?: boolean) {
@@ -42,5 +49,6 @@ export class InvoiceItems {
     this.discount = 0;
     this.units = 0;
     this.total_sub = null;
+    this.details = null;
   }
 }

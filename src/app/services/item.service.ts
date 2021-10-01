@@ -22,8 +22,8 @@ export class ItemService {
     this.selectedItem = new BehaviorSubject<Item>(new Item());
    }
 
-   // TODO: Use thid method and check
   searchItems(items: Item[], word: string) {
+    word = word.toLocaleLowerCase();
     return items.filter( i =>
       i.commercial_name.toLocaleLowerCase().includes(word) ||
       i.generic_name.toLocaleLowerCase().includes(word) ||

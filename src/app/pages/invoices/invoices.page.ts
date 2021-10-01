@@ -1,5 +1,5 @@
 /* eslint-disable curly */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {faFileInvoice} from '@fortawesome/free-solid-svg-icons';
 import { of, Subscription } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
@@ -11,7 +11,7 @@ import { InvoiceService, NavService } from 'src/app/services';
   templateUrl: './invoices.page.html',
   styleUrls: ['./invoices.page.scss'],
 })
-export class InvoicesPage implements OnInit {
+export class InvoicesPage implements OnInit, OnDestroy {
 
   showSearchBar: boolean;
   invoices: Invoice[];
@@ -32,6 +32,10 @@ export class InvoicesPage implements OnInit {
     this.subs.add(this.invoicesSub());
   }
 
+  async ngOnDestroy() {
+    this.subs.unsubscribe();
+  }
+
   async getInvoices(event?: any) {
     await this.invoiceService.getInvoices();
     if (event) event.target.complete();
@@ -42,11 +46,9 @@ export class InvoicesPage implements OnInit {
     .pipe(catchError(error =>
       of('')
       ),
-      map( (word: string) => {
-        word = word.toLowerCase();
-        return this.filteredInvoices = this.invoices.filter( inv =>
-          inv.name.toLocaleLowerCase().includes(word) ); // Look for InvoiceItems too
-      }),
+      map( (word: string) =>
+         this.filteredInvoices = this.invoiceService.searchInvoices(this.invoices, word)
+      ),
       debounceTime(1000),
       distinctUntilChanged())
       .subscribe(console.log);
@@ -59,7 +61,7 @@ export class InvoicesPage implements OnInit {
   }
 
   private invoicesSub() {
-    this.invoiceService.getInvoicesObservable().subscribe( res => {
+    return this.invoiceService.getInvoicesObservable().subscribe( res => {
       console.log('FACTURAS:', res);
       this.invoices = res;
       this.filteredInvoices = res;

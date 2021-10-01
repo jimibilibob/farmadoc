@@ -46,13 +46,9 @@ export class ItemsPage implements OnInit, OnDestroy {
       .pipe(catchError(error =>
         of('')
         ),
-        map( (word: string) => {
-          word = word.toLowerCase();
-          return this.filteredItems = this.items.filter( i =>
-            i.commercial_name.toLocaleLowerCase().includes(word) ||
-            i.generic_name.toLocaleLowerCase().includes(word) ||
-            i.provider.toLocaleLowerCase().includes(word));
-        }),
+        map( (word: string) =>
+          this.filteredItems = this.itemService.searchItems(this.items, word)
+        ),
         debounceTime(1000),
         distinctUntilChanged())
         .subscribe(console.log);

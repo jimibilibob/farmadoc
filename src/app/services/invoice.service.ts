@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthService, ToastService } from '.';
-import { Invoice } from '../models';
+import { Invoice, InvoiceItems } from '../models';
 import { StaticSupabase } from './common/static_supabase';
 
 @Injectable({
@@ -19,6 +19,14 @@ export class InvoiceService {
   ) {
     this.invoices = new BehaviorSubject<Invoice[]>([]);
     this.selectedInvoice = new BehaviorSubject<Invoice>(new Invoice());
+  }
+
+  searchInvoices(invoices: Invoice[], word: string) {
+    word = word.toLocaleLowerCase();
+    return invoices.filter( inv =>
+      inv.name.toLocaleLowerCase().includes(word) ||
+      this.searchInvoiceItems(inv.items, word).length > 0
+      );
   }
 
   getSelectedInvoiceObservable(): Observable<Invoice> {
@@ -45,7 +53,20 @@ export class InvoiceService {
     name,
     total,
     items:invoice_item(
-      id, invoice_id, item_id, price, discount, units, total_sub
+      id,
+      invoice_id,
+      item_id,
+      price,
+      discount,
+      units,
+      total_sub,
+      details:items(
+        id,
+        provider,
+        commercial_name,
+        generic_name,
+        description
+      )
     ),
     created_at`)
   .eq('user_id', this.authService.user.id)
@@ -96,5 +117,12 @@ export class InvoiceService {
         });
     }
     await this.getInvoices();
+  }
+
+  private searchInvoiceItems(invoiceItems: InvoiceItems[], word: string) {
+    return invoiceItems.filter( iitem =>
+      iitem.details.commercial_name.toLocaleLowerCase().includes(word) ||
+      iitem.details.generic_name.toLocaleLowerCase().includes(word) ||
+      iitem.details.description.toLocaleLowerCase().includes(word) );
   }
 }
