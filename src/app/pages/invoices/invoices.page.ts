@@ -1,6 +1,6 @@
 /* eslint-disable curly */
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import {faFileInvoice} from '@fortawesome/free-solid-svg-icons';
+import { faFileInvoice } from '@fortawesome/free-solid-svg-icons';
 import { of, Subscription } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { Invoice } from 'src/app/models';
@@ -57,7 +57,7 @@ export class InvoicesPage implements OnInit, OnDestroy {
 
   goToInvoiceForm(invoice: any) {
     this.invoiceService.setSelectedInvoice(invoice);
-    this.navService.pushToNextScreenWithParams('/invoice', 'Editar Factura');
+    this.navService.pushToNextScreenWithParams('/invoice', 'Factura');
   }
 
   private invoicesSub() {

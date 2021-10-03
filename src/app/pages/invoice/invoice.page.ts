@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { faPills } from '@fortawesome/free-solid-svg-icons';
+import { faPills, faCalendarDay } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 import { InvoiceService, NavService } from 'src/app/services';
 import { Invoice } from 'src/app/models';
@@ -20,12 +20,14 @@ export class InvoicePage implements OnInit, OnDestroy {
   isEdition: boolean;
   pageName: any;
   itemIcon = faPills;
+  calendarIcon = faCalendarDay;
 
   constructor(
     private router: Router,
     private navService: NavService,
     private invoiceService: InvoiceService
   ) {
+    this.selectedInvoice = new Invoice();
     this.subs = new Subscription();
     this.invoiceForm = new FormGroup({
       name: new FormControl(''),

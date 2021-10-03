@@ -18,6 +18,8 @@ ion-card {
 }
 
 .title-row {
+  align-items: center;
+  min-height: 50px;
   padding-left: 20px;
   display: flex;
   flex-direction: row;

@@ -29,7 +29,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <ion-list lines="none">
-    <ion-card button *ngFor="let invoice of filteredInvoices" (click)="goToInvoiceForm(null)">
+    <ion-card button *ngFor="let invoice of filteredInvoices" (click)="goToInvoiceForm(invoice)">
 
       <div class="title-row">
         <fa-icon [icon]="invoiceIcon" color="danger"></fa-icon>

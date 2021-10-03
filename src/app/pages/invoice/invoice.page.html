@@ -9,51 +9,61 @@
 
 <ion-content class="ion-padding">
   <form class="content" [formGroup]="invoiceForm" (ngSubmit)="createOrUpdateInvoice()">
-    
-        <!-- <ion-card-header>
-          <ion-card-subtitle>Awesome Subtitle</ion-card-subtitle>
-          <ion-card-title>Awesome Title</ion-card-title>
-        </ion-card-header> -->
-        <ion-card>
-          <ion-item>
-            <ion-label position="floating" class="required">Proovedor</ion-label>
-            <ion-input type="text" inputmode="text" formControlName="name"></ion-input>
-          </ion-item>
-        </ion-card>
 
-      <ion-card>
-        <ion-item class="ion-padding-right">
-          <ion-label position="fixed" class="required">Productos</ion-label>
-        </ion-item>
-        <!-- NG FOR -->
-          <ion-item lines="none">
-            <ion-label slot="start">Product A</ion-label>
-            <ion-icon slot="end" name="trash-outline" color="danger"></ion-icon>
-          </ion-item>
-          <ion-item lines="none">
-            <div class="detail" slot="start">
-              <fa-icon [icon]="itemIcon" color="danger"></fa-icon>
-              <ion-label class="ion-text-left ion-text-uppercase ion-padding-start title">10 x Bs 40.00</ion-label>
-            </div>
-            <ion-label slot="end">Bs 1200.00</ion-label>
-          </ion-item>
-          <ion-item lines="full">
-            <ion-label slot="start">Descuento (0.00)</ion-label>
-            <ion-label slot="end">Bs 0.00</ion-label>
-          </ion-item>
+    <ion-card>
+      <div class="title-row">
+        <fa-icon [icon]="calendarIcon" color="danger"></fa-icon>
+        <ion-label class="ion-text-left ion-text-uppercase ion-padding-start">{{ selectedInvoice.created_at | date }}</ion-label>
+      </div>
+      <ion-item lines="none">
+        <ion-label position="stacked" class="required">Proovedor</ion-label>
+        <ion-input class="name" type="text" inputmode="text" formControlName="name" value="Disable" readonly>{{ selectedInvoice.name | uppercase }}</ion-input>
+      </ion-item>
+    </ion-card>
 
+    <ion-card>
+      
+      <div class="title-row">
+        <ion-label class="products-title">PRODUCTOS</ion-label>
+      </div>
 
-        <ion-item lines="full">
-          <ion-label slot="start">Total</ion-label>
-          <ion-label slot="end">Bs 0.00</ion-label>
-        </ion-item>
-        <ion-item button (click)="goToItems()">
-          <ion-label class="ion-text-center" color="primary">+ Agregar Productos</ion-label>
-        </ion-item>
-      </ion-card>
+    <div *ngFor="let item of selectedInvoice.items">
+      <ion-item lines="none">
+        <div class="card-section">
+          <ion-label slot="start" class="name">{{ item.details.commercial_name | uppercase }}</ion-label>
+          <ion-icon slot="end" name="trash-outline" color="danger"></ion-icon>
+        </div>
+      </ion-item>
+      <ion-item lines="none">
+        <div class="card-section">
+          <div class="detail" slot="start">
+            <fa-icon [icon]="itemIcon" color="danger"></fa-icon>
+            <ion-label class="ion-text-left ion-text-uppercase ion-padding-start">{{ item.units }} x {{ item.price | currency: 'Bs ': 'symbol': '.2-2' }}</ion-label>
+          </div>
+          <ion-label slot="end">{{ item.units * item.price | currency: 'Bs ': 'symbol': '.2-2'}}</ion-label>
+        </div>
+      </ion-item>
+      <ion-item lines="full">
+        <div class="card-section">
+          <ion-label>Descuento ({{ item.discount | percent }})</ion-label>
+          <ion-label>{{ item.units * item.price * item.discount | currency: 'Bs': 'symbol': '.2-2' }}</ion-label>
+        </div>
+      </ion-item>
+    </div>
 
-      <ion-button expand="block" color="primary" type="submit">
-        {{ buttonLabel | uppercase }}
-      </ion-button>
+    <ion-item lines="full" class="name">
+      <div class="card-section total">
+        <ion-label slot="start">TOTAL</ion-label>
+        <ion-label slot="end">{{ selectedInvoice.total| currency: 'Bs': 'symbol': '.2-2' }}</ion-label>
+      </div>
+    </ion-item>
+    <ion-item button (click)="goToItems()">
+      <ion-label class="ion-text-center" color="primary">+ Agregar Productos</ion-label>
+      </ion-item>
+    </ion-card>
+
+    <ion-button expand="block" color="primary" type="submit">
+      {{ buttonLabel | uppercase }}
+    </ion-button>
   </form>
 </ion-content>
