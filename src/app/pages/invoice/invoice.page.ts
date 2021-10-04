@@ -17,7 +17,7 @@ export class InvoicePage implements OnInit, OnDestroy {
   selectedInvoice: Invoice;
   subs: Subscription;
   buttonLabel: string;
-  isEdition: boolean;
+  isInfo: boolean;
   pageName: any;
   itemIcon = faPills;
   calendarIcon = faCalendarDay;
@@ -63,12 +63,13 @@ export class InvoicePage implements OnInit, OnDestroy {
     const navParams = this.router.getCurrentNavigation().extras.state;
     if (navParams) {
       this.pageName = navParams;
-      this.isEdition = true;
+      this.isInfo = true;
       this.buttonLabel = 'Guardar Cambios';
     } else {
       this.pageName = 'Agregar Nueva Factura';
-      this.isEdition = false;
+      this.isInfo = false;
       this.buttonLabel = 'Agregar Factura';
     }
+    console.log('IS INFO BOOLEAN SETTITLE:', this.isInfo);
   }
 }

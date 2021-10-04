@@ -1,5 +1,6 @@
 /* eslint-disable curly */
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { faFileInvoice } from '@fortawesome/free-solid-svg-icons';
 import { of, Subscription } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
@@ -21,6 +22,7 @@ export class InvoicesPage implements OnInit, OnDestroy {
 
   constructor(
     private navService: NavService,
+    private router: Router,
     private invoiceService: InvoiceService
   ) {
     this.showSearchBar = false;
@@ -55,9 +57,14 @@ export class InvoicesPage implements OnInit, OnDestroy {
     this.subs.add($inputSub);
   }
 
-  goToInvoiceForm(invoice: any) {
+  goToInvoiceDetails(invoice: any) {
     this.invoiceService.setSelectedInvoice(invoice);
-    this.navService.pushToNextScreenWithParams('/invoice', 'Factura');
+    this.navService.pushToNextScreenWithParams('/invoice', 'Detalles de la Factura');
+  }
+
+  goToInvoiceForm() {
+    this.invoiceService.setSelectedInvoice(new Invoice());
+    this.router.navigate(['/invoice']);
   }
 
   private invoicesSub() {

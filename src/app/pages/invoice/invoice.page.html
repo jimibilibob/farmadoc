@@ -15,10 +15,18 @@
         <fa-icon [icon]="calendarIcon" color="danger"></fa-icon>
         <ion-label class="ion-text-left ion-text-uppercase ion-padding-start">{{ selectedInvoice.created_at | date }}</ion-label>
       </div>
-      <ion-item lines="none">
+      <ion-item lines="none" *ngIf="isInfo else enableInput">
         <ion-label position="stacked" class="required">Proovedor</ion-label>
         <ion-input class="name" type="text" inputmode="text" formControlName="name" value="Disable" readonly>{{ selectedInvoice.name | uppercase }}</ion-input>
       </ion-item>
+
+      <ng-template #enableInput>
+        <ion-item lines="none">
+          <ion-label position="stacked" class="required">Proovedor</ion-label>
+          <ion-input class="name" type="text" inputmode="text" formControlName="name"></ion-input>
+        </ion-item>
+      </ng-template>
+      
     </ion-card>
 
     <ion-card>
@@ -57,12 +65,12 @@
         <ion-label slot="end">{{ selectedInvoice.total| currency: 'Bs': 'symbol': '.2-2' }}</ion-label>
       </div>
     </ion-item>
-    <ion-item button (click)="goToItems()">
+    <ion-item button (click)="goToItems()" *ngIf="!isInfo">
       <ion-label class="ion-text-center" color="primary">+ Agregar Productos</ion-label>
       </ion-item>
     </ion-card>
 
-    <ion-button expand="block" color="primary" type="submit">
+    <ion-button expand="block" color="primary" type="submit" *ngIf="!isInfo">
       {{ buttonLabel | uppercase }}
     </ion-button>
   </form>
