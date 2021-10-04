@@ -70,6 +70,5 @@ export class InvoicePage implements OnInit, OnDestroy {
       this.isInfo = false;
       this.buttonLabel = 'Agregar Factura';
     }
-    console.log('IS INFO BOOLEAN SETTITLE:', this.isInfo);
   }
 }

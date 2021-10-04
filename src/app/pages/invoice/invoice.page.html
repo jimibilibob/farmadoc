@@ -39,7 +39,7 @@
       <ion-item lines="none">
         <div class="card-section">
           <ion-label slot="start" class="name">{{ item.details.commercial_name | uppercase }}</ion-label>
-          <ion-icon slot="end" name="trash-outline" color="danger"></ion-icon>
+          <ion-icon slot="end" name="trash-outline" color="danger" *ngIf="!isInfo"></ion-icon>
         </div>
       </ion-item>
       <ion-item lines="none">

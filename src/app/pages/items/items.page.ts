@@ -77,11 +77,13 @@ export class ItemsPage implements OnInit, OnDestroy {
       this.router.navigate(['/invoice']);
     } else {
       this.navService.pushToNextScreenWithParams('/item-form', 'Editar Producto');
+      this.isSelectingItems = false;
     }
   }
 
   onBackButton() {
-    this.router.navigate( [ this.isSelectingItems ? '/invoice' : '/home' ] );
+    console.log('On back button', this.isSelectingItems);
+    this.router.navigate( [ this.navParams ? '/invoice' : '/home' ] );
   }
 
   private setTitle() {

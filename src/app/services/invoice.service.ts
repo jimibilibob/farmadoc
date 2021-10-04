@@ -119,6 +119,24 @@ export class InvoiceService {
     await this.getInvoices();
   }
 
+  async storeInvoiceItems(invoiceItems: InvoiceItems[]) {
+    const{ error, data } = await StaticSupabase.supabaseClient
+    .from('invoice_item')
+    .insert(
+      invoiceItems
+    );
+    if (error) {
+      await this.toastService.presentToast({
+      message: 'Error inesperado, por favor vuelva a intentar más tarde'
+      });
+    } else {
+      await this.toastService.presentToast({
+        message: 'Factura guardada exitosamente!'
+        });
+    }
+    await this.getInvoices();
+  }
+
   private searchInvoiceItems(invoiceItems: InvoiceItems[], word: string) {
     return invoiceItems.filter( iitem =>
       iitem.details.commercial_name.toLocaleLowerCase().includes(word) ||
