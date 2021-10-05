@@ -37,6 +37,14 @@ const routes: Routes = [
   {
     path: 'invoice',
     loadChildren: () => import('./pages/invoice/invoice.module').then( m => m.InvoicePageModule)
+  },
+  {
+    path: 'invoice-creation',
+    loadChildren: () => import('./pages/invoice-creation/invoice-creation.module').then( m => m.InvoiceCreationPageModule)
+  },
+  {
+    path: 'selected-item',
+    loadChildren: () => import('./pages/selected-item-form/selected-item-form.module').then( m => m.SelectedItemFormPageModule)
   }
 ];
 @NgModule({

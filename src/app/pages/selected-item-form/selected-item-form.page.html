@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button  autoHide="false" menu="first"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalles del Producto</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form class="content" [formGroup]="selectedItemForm" (ngSubmit)="null">
+
+    <ion-card>
+      
+      <div class="title-row">
+        <ion-label class="products-title">{{ selectedItem.commercial_name | uppercase }}</ion-label>
+      </div>
+
+      <ion-item lines="none">
+        <ion-label position="stacked" class="required">Laboratorio</ion-label>
+        <ion-input class="name" type="text" inputmode="text" readonly>{{ selectedItem.provider | uppercase}}</ion-input>
+      </ion-item>
+
+      <ion-item lines="none">
+        <div class="card-section">
+          <ion-label slot="end">{{ selectedItem.generic_name | uppercase }}</ion-label>
+        </div>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label position="stacked">Precio (Bs): </ion-label>
+        <ion-input class="name" type="text" inputmode="numeric" formControlName="price"></ion-input>
+      </ion-item>
+      <app-error formName="selectedItemForm" [control]="{price: selectedItemForm.get('price')}">
+      </app-error>
+
+      <ion-item lines="full">
+        <ion-label position="stacked">Unidades: </ion-label>
+        <ion-input class="name" type="text" inputmode="numeric" formControlName="units"></ion-input>
+      </ion-item>
+      <app-error formName="selectedItemForm" [control]="{units: selectedItemForm.get('units')}">
+      </app-error>
+
+      <ion-item lines="full" class="name">
+        <div class="card-section total">
+          <ion-label slot="start">TOTAL</ion-label>
+          <ion-label slot="end">{{ selectedItemForm.value.units * selectedItemForm.value.price | currency: 'Bs': 'symbol': '.2-2' }}</ion-label>
+        </div>
+      </ion-item>
+    </ion-card>
+
+    <ion-button expand="block" color="primary" type="submit">
+      Agregar Item
+    </ion-button>
+  </form>
+</ion-content>

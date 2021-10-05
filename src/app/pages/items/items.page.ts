@@ -74,7 +74,7 @@ export class ItemsPage implements OnInit, OnDestroy {
     this.itemService.setSelectedItem(item);
     if (this.navParams) {
       this.isSelectingItems = true;
-      this.router.navigate(['/invoice']);
+      this.router.navigate(['/selected-item']);
     } else {
       this.navService.pushToNextScreenWithParams('/item-form', 'Editar Producto');
       this.isSelectingItems = false;

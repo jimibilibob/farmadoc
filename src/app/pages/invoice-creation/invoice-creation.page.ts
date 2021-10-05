@@ -1,21 +1,20 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Subscription } from 'rxjs';
-import { faPills, faCalendarDay } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
-import { InvoiceService, ItemService, NavService } from 'src/app/services';
-import { Invoice, Item } from 'src/app/models';
+import { faCalendarDay, faPills } from '@fortawesome/free-solid-svg-icons';
+import { Subscription } from 'rxjs';
+import { Invoice } from 'src/app/models';
+import { InvoiceService, NavService } from 'src/app/services';
 
 @Component({
-  selector: 'app-invoice',
-  templateUrl: './invoice.page.html',
-  styleUrls: ['./invoice.page.scss'],
+  selector: 'app-invoice-creation',
+  templateUrl: './invoice-creation.page.html',
+  styleUrls: ['./invoice-creation.page.scss'],
 })
-export class InvoicePage implements OnInit, OnDestroy {
+export class InvoiceCreationPage implements OnInit, OnDestroy {
 
   invoiceForm: FormGroup;
   selectedInvoice: Invoice;
-  selectedItem: Item;
   subs: Subscription;
   buttonLabel: string;
   isInfo: boolean;
@@ -26,8 +25,7 @@ export class InvoicePage implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private navService: NavService,
-    private invoiceService: InvoiceService,
-    private itemService: ItemService
+    private invoiceService: InvoiceService
   ) {
     this.selectedInvoice = new Invoice();
     this.subs = new Subscription();
@@ -61,13 +59,6 @@ export class InvoicePage implements OnInit, OnDestroy {
     });
   }
 
-  private itemSub(): Subscription {
-    return this.itemService.getItemObservable().subscribe( item => {
-      this.selectedItem = item;
-      // TODO: Cast item into InvoiceItems type and add it to invoice.items
-    });
-  }
-
   private setTitle() {
     const navParams = this.router.getCurrentNavigation().extras.state;
     if (navParams) {
@@ -80,4 +71,5 @@ export class InvoicePage implements OnInit, OnDestroy {
       this.buttonLabel = 'Agregar Factura';
     }
   }
+
 }

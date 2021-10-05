@@ -12,6 +12,7 @@ export class InvoiceService {
 
   private invoices: BehaviorSubject<Invoice[]>;
   private selectedInvoice: BehaviorSubject<Invoice>;
+  private itemToAdd: BehaviorSubject<InvoiceItems>;
 
   constructor(
     private toastService: ToastService,
@@ -35,6 +36,14 @@ export class InvoiceService {
 
   setSelectedInvoice(invoice: Invoice) {
     this.selectedInvoice.next(invoice);
+  }
+
+  getItemToAdd(): Observable<InvoiceItems> {
+    return this.itemToAdd.asObservable();
+  }
+
+  setItemToAdd(itemToAdd: InvoiceItems) {
+    this.itemToAdd.next(itemToAdd);
   }
 
   getInvoicesObservable(): Observable<Invoice[]> {
