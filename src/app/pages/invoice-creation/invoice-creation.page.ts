@@ -27,8 +27,7 @@ export class InvoiceCreationPage implements OnInit, OnDestroy {
     this.selectedInvoice = new Invoice();
     this.subs = new Subscription();
     this.invoiceForm = new FormGroup({
-      name: new FormControl(''),
-      items: new FormControl(''),
+      name: new FormControl('')
     });
   }
 
@@ -40,8 +39,18 @@ export class InvoiceCreationPage implements OnInit, OnDestroy {
     this.subs.unsubscribe();
   }
 
-  createOrUpdateInvoice() {
-
+  async createInvoice() {
+    if (this.invoiceForm.invalid) {
+      return Object.values(this.invoiceForm.controls).forEach(
+        formControl => {
+          formControl.markAsTouched();
+        });
+    } else {
+      this.invoiceForm.value.exp_date = new Date(this.invoiceForm.value.exp_date);
+      this.selectedInvoice.name = this.invoiceForm.value.name;
+      await this.invoiceService.storeInvoice(this.selectedInvoice);
+      this.router.navigate(['/invoices']);
+    }
   }
 
   goToItems() {

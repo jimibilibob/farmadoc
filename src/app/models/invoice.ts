@@ -58,6 +58,12 @@ export class Invoice {
     });
   }
 
+  purgeAttr() {
+    delete this.id;
+    delete this.items;
+    delete this.created_at;
+  }
+
   private init() {
     this.id = 0;
     this.name = '';

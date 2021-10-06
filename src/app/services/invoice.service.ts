@@ -90,12 +90,43 @@ export class InvoiceService {
 
   // TODO: Check this method
   async storeInvoice(invoice: Invoice) {
+    const invoiceItems = invoice.items;
     invoice.addUserId(this.authService.user.id);
+    invoice.purgeAttr();
+    console.log(invoice);
     const{ error, data } = await StaticSupabase.supabaseClient
-    .from('invoice')
-    .insert([
+    .from('invoices')
+    .upsert([
       invoice
     ]);
+    if (error) {
+      await this.toastService.presentToast({
+      message: 'Error inesperado, por favor vuelva a intentar más tarde'
+      });
+    } else {
+      console.log('UPSERT INVOICE:', data);
+      await this.storeInvoiceItems(invoiceItems, data[0].id);
+      await this.toastService.presentToast({
+          message: 'Factura guardada exitosamente!'
+        });
+    }
+    await this.getInvoices();
+  }
+
+  private async storeInvoiceItems(invoiceItems: InvoiceItems[], invoiceId: number) {
+    if (invoiceItems.length <= 0) {
+      return;
+    }
+
+    invoiceItems.forEach( iitem => {
+      iitem.prepareToStore(invoiceId, iitem.item.id);
+    });
+
+    const{ error, data } = await StaticSupabase.supabaseClient
+    .from('invoice_item')
+    .insert(
+      invoiceItems
+    );
     if (error) {
       await this.toastService.presentToast({
       message: 'Error inesperado, por favor vuelva a intentar más tarde'
@@ -109,7 +140,7 @@ export class InvoiceService {
   }
 
   // TODO: Check this method
-  async updateInvoice(invoice: Invoice, invoiceId: number) {
+  private async updateInvoice(invoice: Invoice, invoiceId: number) {
     invoice.addUserId(this.authService.user.id);
     const{ error, data } = await StaticSupabase.supabaseClient
     .from('invoices')
@@ -123,24 +154,6 @@ export class InvoiceService {
     } else {
       await this.toastService.presentToast({
         message: 'Factura actualizada exitosamente!'
-        });
-    }
-    await this.getInvoices();
-  }
-
-  async storeInvoiceItems(invoiceItems: InvoiceItems[]) {
-    const{ error, data } = await StaticSupabase.supabaseClient
-    .from('invoice_item')
-    .insert(
-      invoiceItems
-    );
-    if (error) {
-      await this.toastService.presentToast({
-      message: 'Error inesperado, por favor vuelva a intentar más tarde'
-      });
-    } else {
-      await this.toastService.presentToast({
-        message: 'Factura guardada exitosamente!'
         });
     }
     await this.getInvoices();
