@@ -45,7 +45,7 @@
             </div>
             <ion-label slot="end">{{ item.units * item.price | currency: 'Bs ': 'symbol': '.2-2'}}</ion-label>
           </div>
-          <ion-label class="description">{{ item.item.description | uppercase }}</ion-label>
+          <ion-text class="description">{{ item.item.description | uppercase }}</ion-text>
         </div>
       </ion-item>
       <ion-item lines="full" *ngIf="item.discount">

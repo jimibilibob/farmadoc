@@ -83,7 +83,7 @@ export class ItemsPage implements OnInit, OnDestroy {
 
   onBackButton() {
     console.log('On back button', this.isSelectingItems);
-    this.router.navigate( [ this.navParams ? '/invoice' : '/home' ] );
+    this.router.navigate( [ this.navParams ? '/invoice-creation' : '/home' ] );
   }
 
   private setTitle() {

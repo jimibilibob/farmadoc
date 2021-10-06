@@ -3,6 +3,15 @@
   font-weight: 900;
 }
 
+.card-section.name-description {
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.description {
+  font-size: x-small;
+}
+
 .title-row {
   align-items: center;
   font-weight: 900;

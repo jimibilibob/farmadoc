@@ -21,9 +21,10 @@
         <ion-input class="name" type="text" inputmode="text" readonly>{{ selectedItem.provider | uppercase}}</ion-input>
       </ion-item>
 
-      <ion-item lines="none">
-        <div class="card-section">
-          <ion-label slot="end">{{ selectedItem.generic_name | uppercase }}</ion-label>
+      <ion-item lines="none" class="ion-text-wrap">
+        <div class="card-section name-description">
+          <ion-label>{{ selectedItem.generic_name | uppercase }}</ion-label>
+          <ion-text  class="description">{{ selectedItem.description| uppercase }}</ion-text>
         </div>
       </ion-item>
 
