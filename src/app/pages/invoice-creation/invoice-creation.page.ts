@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faCalendarDay, faPills } from '@fortawesome/free-solid-svg-icons';
+import { AlertController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Invoice, InvoiceItems } from 'src/app/models';
 import { InvoiceService, NavService } from 'src/app/services';
@@ -20,6 +21,7 @@ export class InvoiceCreationPage implements OnInit, OnDestroy {
   calendarIcon = faCalendarDay;
 
   constructor(
+    private alertController: AlertController,
     private router: Router,
     private navService: NavService,
     private invoiceService: InvoiceService
@@ -57,9 +59,28 @@ export class InvoiceCreationPage implements OnInit, OnDestroy {
     this.navService.pushToNextScreenWithParams('/items', 'Seleccione un Producto');
   }
 
-  removeInvoiceItems(invoiceItem: InvoiceItems) {
-    this.selectedInvoice.removeItem(invoiceItem);
-    this.invoiceService.setSelectedInvoice(this.selectedInvoice);
+  async removeInvoiceItems(invoiceItem: InvoiceItems) {
+    const alert = await this.alertController.create({
+      // cssClass: 'alert-class',
+      // header: 'Invoice',
+      message: `Está seguro que desea eliminar <strong>${invoiceItem.details.commercial_name.toLocaleUpperCase()}</strong> 
+      de la lista de productos?`,
+      buttons: [
+        {
+          text: 'CANCELAR',
+          role: 'cancel',
+          // cssClass: 'secondary',
+          handler: () => null
+        }, {
+          text: 'CONFIRMAR',
+          handler: () => {
+            this.selectedInvoice.removeItem(invoiceItem);
+            this.invoiceService.setSelectedInvoice(this.selectedInvoice);
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
   private invoiceSub(): Subscription {
