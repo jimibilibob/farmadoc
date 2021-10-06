@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faCalendarDay, faPills } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
-import { Invoice } from 'src/app/models';
+import { Invoice, InvoiceItems } from 'src/app/models';
 import { InvoiceService, NavService } from 'src/app/services';
 
 @Component({
@@ -16,9 +16,6 @@ export class InvoiceCreationPage implements OnInit, OnDestroy {
   invoiceForm: FormGroup;
   selectedInvoice: Invoice;
   subs: Subscription;
-  buttonLabel: string;
-  isInfo: boolean;
-  pageName: any;
   itemIcon = faPills;
   calendarIcon = faCalendarDay;
 
@@ -36,7 +33,6 @@ export class InvoiceCreationPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.setTitle();
     this.subs.add(this.invoiceSub());
   }
 
@@ -52,24 +48,17 @@ export class InvoiceCreationPage implements OnInit, OnDestroy {
     this.navService.pushToNextScreenWithParams('/items', 'Seleccione un Producto');
   }
 
+  removeInvoiceItems(invoiceItem: InvoiceItems) {
+    this.selectedInvoice.removeItem(invoiceItem);
+    this.invoiceService.setSelectedInvoice(this.selectedInvoice);
+  }
+
   private invoiceSub(): Subscription {
     return this.invoiceService.getSelectedInvoiceObservable().subscribe( res => {
       console.log(res);
       this.selectedInvoice = res;
+      this.selectedInvoice.updateTotal();
     });
-  }
-
-  private setTitle() {
-    const navParams = this.router.getCurrentNavigation().extras.state;
-    if (navParams) {
-      this.pageName = navParams;
-      this.isInfo = true;
-      this.buttonLabel = 'Guardar Cambios';
-    } else {
-      this.pageName = 'Agregar Nueva Factura';
-      this.isInfo = false;
-      this.buttonLabel = 'Agregar Factura';
-    }
   }
 
 }

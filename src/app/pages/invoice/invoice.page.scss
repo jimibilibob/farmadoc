@@ -1,7 +1,15 @@
+.item-section {
+  width: 100%;
+}
+
 .detail {
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+.description {
+  font-size: x-small;
 }
 
 fa-icon {

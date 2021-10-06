@@ -1,3 +1,5 @@
+import { InvoiceItems } from '.';
+
 /* eslint-disable @typescript-eslint/naming-convention */
 export class Item {
   id: number;
@@ -26,6 +28,17 @@ export class Item {
     } else {
       this.init();
     }
+  }
+
+  castToInvoiceItems(): InvoiceItems {
+    return new InvoiceItems({
+      item: this,
+      details: {
+        commercial_name: this.commercial_name,
+        generic_name: this.generic_name,
+        description: this.description
+      }
+    }, true);
   }
 
   addUserId(userId: string) {

@@ -8,8 +8,8 @@ interface Details {
 }
 
 export class InvoiceItems {
-  id: number;
-  invoice_id: string;
+  id?: number;
+  invoice_id?: string;
   item: Item;
   price: number;
   discount: number;

@@ -1,8 +1,8 @@
-import { InvoiceItems } from '.';
+import { InvoiceItems, Item } from '.';
 
 /* eslint-disable @typescript-eslint/naming-convention */
 export class Invoice {
-  id: number;
+  id?: number;
   name: string;
   total: number;
   items: InvoiceItems[];
@@ -34,6 +34,28 @@ export class Invoice {
 
   addUserId(userId: string) {
     this.user_id = userId;
+  }
+
+  removeItem(item: InvoiceItems) {
+    const index = this.items.indexOf(item);
+    if (index > -1) {
+      this.items.splice(index, 1);
+    }
+  }
+
+  addItem(newItem: InvoiceItems) {
+    console.log('Sub ITEM invoice ts:', newItem.discount);
+    newItem.total_sub = (newItem.discount == null || newItem.discount <= 0) ?
+      (newItem.price * newItem.units) : (newItem.price * newItem.units) * (newItem.discount / 100);
+    this.items.push(newItem);
+  }
+
+  updateTotal() {
+    this.total = 0;
+    this.items.map( item => {
+      console.log('Sub total:', item.total_sub);
+      this.total = this.total + item.total_sub;
+    });
   }
 
   private init() {
