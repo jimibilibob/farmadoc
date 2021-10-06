@@ -5,7 +5,7 @@ import { faCalendarDay, faPills } from '@fortawesome/free-solid-svg-icons';
 import { AlertController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Invoice, InvoiceItems } from 'src/app/models';
-import { InvoiceService, NavService } from 'src/app/services';
+import { InvoiceService, LoadingService, NavService } from 'src/app/services';
 
 @Component({
   selector: 'app-invoice-creation',
@@ -21,6 +21,7 @@ export class InvoiceCreationPage implements OnInit, OnDestroy {
   calendarIcon = faCalendarDay;
 
   constructor(
+    private loadingService: LoadingService,
     private alertController: AlertController,
     private router: Router,
     private navService: NavService,
@@ -48,10 +49,12 @@ export class InvoiceCreationPage implements OnInit, OnDestroy {
           formControl.markAsTouched();
         });
     } else {
+      await this.loadingService.presentLoading('Cargando, espere por favor...');
       this.invoiceForm.value.exp_date = new Date(this.invoiceForm.value.exp_date);
       this.selectedInvoice.name = this.invoiceForm.value.name;
       await this.invoiceService.storeInvoice(this.selectedInvoice);
-      this.router.navigate(['/invoices']);
+      await this.router.navigate(['/invoices']);
+      await this.loadingService.dismissLoading();
     }
   }
 

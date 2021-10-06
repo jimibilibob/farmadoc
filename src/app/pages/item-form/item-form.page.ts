@@ -5,7 +5,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Item } from 'src/app/models';
-import { ItemService } from 'src/app/services';
+import { ItemService, LoadingService } from 'src/app/services';
 
 @Component({
   selector: 'app-item-form',
@@ -23,7 +23,8 @@ export class ItemFormPage implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private itemService: ItemService
+    private itemService: ItemService,
+    private loadingService: LoadingService
   ) {
     this.setTitle();
     this.subs = new Subscription();
@@ -75,6 +76,7 @@ export class ItemFormPage implements OnInit, OnDestroy {
           formControl.markAsTouched();
         });
     } else {
+      await this.loadingService.presentLoading('Cargando, espere por favor...');
       this.itemForm.value.exp_date = new Date(this.itemForm.value.exp_date);
       const newItem = new Item(this.itemForm.value, true);
       if (this.isEdition) {
@@ -82,7 +84,8 @@ export class ItemFormPage implements OnInit, OnDestroy {
       } else {
         await this.itemService.storeItem(newItem);
       }
-      this.router.navigate(['/items']);
+      await this.router.navigate(['/items']);
+      await this.loadingService.dismissLoading();
     }
   }
 

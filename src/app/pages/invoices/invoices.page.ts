@@ -5,7 +5,7 @@ import { faFileInvoice } from '@fortawesome/free-solid-svg-icons';
 import { of, Subscription } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { Invoice } from 'src/app/models';
-import { InvoiceService, NavService } from 'src/app/services';
+import { InvoiceService } from 'src/app/services';
 
 @Component({
   selector: 'app-invoices',
@@ -21,7 +21,6 @@ export class InvoicesPage implements OnInit, OnDestroy {
   subs: Subscription;
 
   constructor(
-    private navService: NavService,
     private router: Router,
     private invoiceService: InvoiceService
   ) {

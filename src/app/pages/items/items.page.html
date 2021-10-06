@@ -32,12 +32,12 @@
     <ion-card button *ngFor="let item of filteredItems">
       <ion-card-content (click)="onItemCardClick(item)">
         <div class="main-row">
-          <div class="row">
+          <div>
             <ion-label class="ion-text-left ion-text-uppercase title">{{ item.generic_name | uppercase }}</ion-label>
             <ion-label class="ion-text-left ion-text-uppercase sub-title">{{ item.commercial_name | uppercase }}</ion-label>
-            <ion-label class="ion-text-left ion-text-uppercase description">{{ item.description | uppercase }}</ion-label>
+            <ion-label class="ion-text-left ion-text-uppercase description" style="width: 95%;">{{ item.description | uppercase }}</ion-label>
           </div>
-          <div class="row right-col">
+          <div class="right-col">
             <ion-label class="ion-text-left price" color="primary">{{ item.provider | uppercase }}</ion-label>
           <ion-label class="ion-text-left price">{{ item.price | currency: 'Bs ' : 'symbol' : '.2-2' }}</ion-label>
           </div>
