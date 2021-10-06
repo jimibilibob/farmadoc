@@ -25,7 +25,7 @@
 
   <!--  -->
   
-  <ion-refresher slot="fixed" (ionRefresh)="getInvoices($event)">
+  <ion-refresher slot="fixed" (ionRefresh)="getInvoices($event)" *ngIf="filteredInvoices">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <ion-list lines="none">
@@ -39,11 +39,9 @@
       <div class="main-row">
         <div class="row">
           <ion-label class="ion-text-left ion-text-uppercase sub-title">{{ invoice.name }}</ion-label>
-          <!-- <ion-label class="ion-text-center ion-text-uppercase description">{{ invoice.id }}</ion-label> -->
         </div>
         <div class="row right-col">
           <ion-label class="ion-text-left price" color="primary">{{ invoice.total | currency: 'Bs' }}</ion-label>
-        <!-- <ion-label class="ion-text-left price"></ion-label> -->
         </div>
       </div>
     </ion-card-content>
@@ -54,7 +52,32 @@
     <ion-label>{{ emptyAccountsMessage }}</ion-label>
   </div> -->
   
-  <!--  -->
+  <!-- SKELETON LOADING -->
+  <div *ngIf="!filteredInvoices">
+    <ion-list lines="none">
+      <ion-card *ngFor="let dummy of ' '.repeat(8).split(''), let x = index">
+  
+        <div class="title-row">
+          <ion-skeleton-text animated style="width: 10%"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 25%"></ion-skeleton-text>
+        </div>
+        <ion-card-content>
+          <div class="main-row">
+            <div class="row" style="width: 100%;">
+              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            </div>
+            <div class="row right-col">
+              <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+            </div>
+          </div>
+        </ion-card-content>
+  
+      </ion-card>
+    </ion-list>
+  </div>
+
+  <!-- END SKELETON LOADING -->
+
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
       <ion-fab-button (click)="goToInvoiceForm()">
       <ion-icon name="add"></ion-icon>

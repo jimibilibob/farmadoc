@@ -23,6 +23,13 @@ ion-card {
 
 .description {
   font-weight: lighter;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-height: 16px;
+  // max-height: 32px;
+  -webkit-box-orient: vertical;
   font-size: 12px;
 }
 

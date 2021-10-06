@@ -28,7 +28,7 @@
   <ion-refresher slot="fixed" (ionRefresh)="getItems($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ion-list lines="none">
+  <ion-list lines="none" *ngIf="filteredItems">
     <ion-card button *ngFor="let item of filteredItems">
       <ion-card-content (click)="onItemCardClick(item)">
         <div class="main-row">
@@ -50,6 +50,32 @@
   </div> -->
   
   <!--  -->
+
+  <!-- SKELETON LOADING -->
+  <div *ngIf="!filteredItems">
+    <ion-list lines="none">
+      <ion-card *ngFor="let dummy of ' '.repeat(8).split(''), let x = index">
+  
+        <ion-card-content>
+          <div class="main-row">
+            <div class="row" style="width: 100%;">
+              <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+              <ion-skeleton-text animated style="width: 25%"></ion-skeleton-text>
+              <ion-skeleton-text animated style="width: 95%"></ion-skeleton-text>
+              <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+            </div>
+            <div class="row right-col">
+              <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+              <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+            </div>
+          </div>
+        </ion-card-content>
+
+      </ion-card>
+    </ion-list>
+  </div>
+
+  <!-- END SKELETON LOADING -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
       <ion-fab-button routerLink="/item-form">
       <ion-icon name="add"></ion-icon>
