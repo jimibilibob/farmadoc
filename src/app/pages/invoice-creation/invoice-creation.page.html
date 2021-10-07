@@ -20,6 +20,9 @@
         <ion-label position="stacked" class="required">Proovedor</ion-label>
         <ion-input class="name" type="text" inputmode="text" formControlName="name"></ion-input>
       </ion-item>
+
+      <app-error formName="invoiceForm" [control]="{name: invoiceForm.get('name')}">
+      </app-error>
       
     </ion-card>
 

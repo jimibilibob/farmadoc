@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faCalendarDay, faPills } from '@fortawesome/free-solid-svg-icons';
 import { AlertController } from '@ionic/angular';
@@ -30,7 +30,9 @@ export class InvoiceCreationPage implements OnInit, OnDestroy {
     this.selectedInvoice = new Invoice();
     this.subs = new Subscription();
     this.invoiceForm = new FormGroup({
-      name: new FormControl('')
+      name: new FormControl('', Validators.compose([
+        Validators.required
+      ]))
     });
   }
 

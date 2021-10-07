@@ -8,6 +8,7 @@ import { InvoiceCreationPageRoutingModule } from './invoice-creation-routing.mod
 
 import { InvoiceCreationPage } from './invoice-creation.page';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     FormsModule,
     IonicModule,
     InvoiceCreationPageRoutingModule,
+    ComponentsModule,
     ReactiveFormsModule,
     FontAwesomeModule
   ],
