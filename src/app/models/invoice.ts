@@ -1,4 +1,4 @@
-import { InvoiceItems, Item } from '.';
+import { InvoiceItems } from '.';
 
 /* eslint-disable @typescript-eslint/naming-convention */
 export class Invoice {
@@ -7,6 +7,7 @@ export class Invoice {
   total: number;
   items: InvoiceItems[];
   created_at: Date;
+  invoice_number: string;
   user_id?: string;
 
   constructor(attributes?: any, matchData?: boolean) {
@@ -70,5 +71,6 @@ export class Invoice {
     this.total = 0;
     this.created_at = new Date();
     this.items = [];
+    this.invoice_number = '';
   }
 }

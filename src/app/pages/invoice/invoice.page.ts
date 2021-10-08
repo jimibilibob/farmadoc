@@ -1,9 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { faPills, faCalendarDay } from '@fortawesome/free-solid-svg-icons';
-import { Router } from '@angular/router';
-import { InvoiceService, ItemService, NavService } from 'src/app/services';
+import { faPills, faCalendarDay, faFileInvoice } from '@fortawesome/free-solid-svg-icons';
+import { InvoiceService, NavService } from 'src/app/services';
 import { Invoice, Item } from 'src/app/models';
 
 @Component({
@@ -17,8 +16,9 @@ export class InvoicePage implements OnInit, OnDestroy {
   selectedInvoice: Invoice;
   selectedItem: Item;
   subs: Subscription;
-  itemIcon = faPills;
+  invoiceIcon = faFileInvoice;
   calendarIcon = faCalendarDay;
+  itemIcon = faPills;
 
   constructor(
     private navService: NavService,

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -32,6 +33,9 @@ export class InvoiceCreationPage implements OnInit, OnDestroy {
     this.invoiceForm = new FormGroup({
       name: new FormControl('', Validators.compose([
         Validators.required
+      ])),
+      invoice_number: new FormControl('', Validators.compose([
+        Validators.required
       ]))
     });
   }
@@ -54,6 +58,7 @@ export class InvoiceCreationPage implements OnInit, OnDestroy {
       await this.loadingService.presentLoading('Cargando, espere por favor...');
       this.invoiceForm.value.exp_date = new Date(this.invoiceForm.value.exp_date);
       this.selectedInvoice.name = this.invoiceForm.value.name;
+      this.selectedInvoice.invoice_number = this.invoiceForm.value.invoice_number;
       await this.invoiceService.storeInvoice(this.selectedInvoice);
       await this.router.navigate(['/invoices']);
       await this.loadingService.dismissLoading();

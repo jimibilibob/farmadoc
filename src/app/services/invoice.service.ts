@@ -61,6 +61,7 @@ export class InvoiceService {
   .select(`id,
     name,
     total,
+    invoice_number,
     items:invoice_item(
       id,
       invoice_id,

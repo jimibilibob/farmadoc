@@ -17,11 +17,19 @@
       </div>
 
       <ion-item lines="none">
-        <ion-label position="stacked" class="required">Proovedor</ion-label>
+        <ion-label position="stacked" class="required">Proveedor</ion-label>
         <ion-input class="name" type="text" inputmode="text" formControlName="name"></ion-input>
       </ion-item>
 
       <app-error formName="invoiceForm" [control]="{name: invoiceForm.get('name')}">
+      </app-error>
+
+      <ion-item lines="none">
+        <ion-label position="stacked" class="required">N° Factura</ion-label>
+        <ion-input class="name" type="text" inputmode="text" formControlName="invoice_number"></ion-input>
+      </ion-item>
+
+      <app-error formName="invoiceForm" [control]="{invoice_number: invoiceForm.get('invoice_number')}">
       </app-error>
       
     </ion-card>
