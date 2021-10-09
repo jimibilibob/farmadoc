@@ -26,6 +26,7 @@ export class InvoiceService {
     word = word.toLocaleLowerCase();
     return invoices.filter( inv =>
       inv.name.toLocaleLowerCase().includes(word) ||
+      inv.invoice_number.toLocaleLowerCase().includes(word) ||
       this.searchInvoiceItems(inv.items, word).length > 0
       );
   }
