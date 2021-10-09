@@ -13,7 +13,10 @@
               <ion-img src="assets/img/default-avatar.png"></ion-img>
             </ion-avatar>
             <ion-chip>
-              <ion-label>{{ currentUser?.email }}</ion-label>
+              <ion-label *ngIf="email else otherEmail">{{ email }}</ion-label>
+              <ng-template #otherEmail>
+                <ion-label>{{ currentUser?.email }}</ion-label>
+              </ng-template>
             </ion-chip>
           </div>
         </ion-menu-toggle>

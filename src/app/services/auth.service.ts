@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { StaticSupabase } from './common/static_supabase';
+import { Storage } from '@ionic/storage';
 
 const EMPTY_USER = {
   email: 'farmadoc@gmail.com',
@@ -18,9 +19,11 @@ interface FarmaDocUser {
 export class AuthService {
 
   private currentUser: BehaviorSubject<FarmaDocUser>;
+  private storage = new Storage();
 
   constructor() {
     this.currentUser = new BehaviorSubject<FarmaDocUser>(EMPTY_USER);
+    this.storage.create();
   }
 
   async signUp(user: FarmaDocUser) {
@@ -28,6 +31,7 @@ export class AuthService {
   }
 
   async signIn(user: FarmaDocUser) {
+    await this.storage.set('email', user.email);
     console.log('signIn USER', user.email);
     this.currentUser.next({
       email: user.email,
@@ -36,7 +40,12 @@ export class AuthService {
     return await StaticSupabase.supabaseClient.auth.signIn(user);
   }
 
+  async getEmail() {
+    return await this.storage.get('email');
+  }
+
   async signOut() {
+    await this.storage.clear();
     await StaticSupabase.supabaseClient.auth.signOut();
   }
 

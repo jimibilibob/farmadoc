@@ -10,13 +10,16 @@ import { AuthService } from 'src/app/services';
 export class SideMenuComponent implements OnInit, OnDestroy {
 
   @Input() currentUser: any;
+  email: string;
 
   constructor(
     private router: Router,
     private authService: AuthService
   ) {}
 
-  ngOnInit() {}
+  async ngOnInit() {
+    this.email = await this.authService.getEmail();
+  }
 
   ngOnDestroy() {}
 

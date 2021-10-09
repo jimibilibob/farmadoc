@@ -8,6 +8,7 @@ import { SigninPageRoutingModule } from './signin-routing.module';
 
 import { SigninPage } from './signin.page';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
     FormsModule,
     IonicModule,
     SigninPageRoutingModule,
+    FontAwesomeModule,
     ReactiveFormsModule,
     ComponentsModule
   ],
