@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { faAt, faEye, faEyeSlash, faLock } from '@fortawesome/free-solid-svg-icons';
 import { AuthService, ToastService } from 'src/app/services';
 
 @Component({
@@ -15,6 +15,12 @@ export class SignupPage implements OnInit {
   showPassword = false;
   eyeIcon = faEye;
   eyeSlashIcon = faEyeSlash;
+  lockIcon = faLock;
+  atIcon = faAt;
+  icons = {
+    email: false,
+    password: false
+  };
 
   constructor(
     private toastService: ToastService,
@@ -65,6 +71,8 @@ export class SignupPage implements OnInit {
   async goToSignin() {
     this.router.navigate(['/signin']);
     this.signupForm.reset();
+    this.icons.email = false;
+    this.icons.password = false;
   }
 
   async passwordToogle() {

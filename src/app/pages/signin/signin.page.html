@@ -1,55 +1,43 @@
 <ion-content color="light">
   <div class="flex-content" slot="fixed">
-    <ion-img slot="start" src="assets/img/farmadoc_logo.png" class="ion-padding-end"></ion-img>
+    <div class="header-img">
+      <ion-img slot="start" src="assets/img/farmadoc_logo.png" class="ion-padding-end"></ion-img>
+    </div>
     <ion-card>
       <ion-card-header>
-        <ion-title>Inicio de sesión</ion-title>
+        <ion-title class="ion-text-center">Inicio de sesión</ion-title>
       </ion-card-header>
       <ion-card-content>
         <form [formGroup]="signinForm" (ngSubmit)="signIn()">
           <div class="flex-content">
-            <ion-item>
-              <!-- <ion-icon name="person-outline" [ngClass]="{'active': icons.user.isFocused}"></ion-icon> -->
-              <!-- <ion-icon name="person-outline"></ion-icon> -->
-              <ion-label position="floating">Email</ion-label>
-              <ion-input type="email" formControlName="email"></ion-input>
-            </ion-item>
-            <app-error formName="signinForm" [control]="{email: signinForm.get('email')}">
-            </app-error>
-          </div>
-          <!-- <div class="flex-content">
-            <ion-icon name="lock-closed-outline"></ion-icon>
-            <ion-item class="eye-button">
-              
-              <ion-label position="stacked">Contraseña</ion-label>
-              <ion-input type="password" formControlName="password">
-                <fa-icon [icon]="eyeIcon" color="danger" slot="end"></fa-icon>
-              </ion-input>
-            </ion-item>
-            <app-error formName="signinForm" [control]="{password: signinForm.get('password')}">
-            </app-error>
-          </div> -->
-          <div class="flex-content">
-            <!-- <ion-icon name="lock-closed-outline"></ion-icon> -->
+            <fa-icon [icon]="atIcon" [ngClass]="{'active': icons.email}"></fa-icon>
             <ion-item lines="inset">
-              <ion-label position="floating">Contraseña</ion-label>
-              <ion-input [type]="showPassword ? 'text' : 'password'" (ionBlur)="null"
-                (ionFocus)="null"
-                formControlName="password"></ion-input>
+              <ion-label position="stacked">Email</ion-label>
+              <ion-input type="email" formControlName="email" placeholder="farmadoc@farmadoc.com" (ionFocus)="icons.password = false; icons.email = true"></ion-input>
+            </ion-item>
+          </div>
+          <app-error formName="signinForm" [control]="{email: signinForm.get('email')}">
+          </app-error>
+
+          <div class="flex-content">
+            <fa-icon [icon]="lockIcon" [ngClass]="{'active': icons.password}"></fa-icon>
+            <ion-item lines="inset">
+              <ion-label position="stacked" [ngClass]="{'active': icons.password}">Contraseña</ion-label>
+              <ion-input [type]="showPassword ? 'text' : 'password'" (ionFocus)="icons.password = true; icons.email = false"
+                formControlName="password" placeholder="********"></ion-input>
               <ion-button class="eye-button" slot="end" fill="clear" shape="round" (click)="passwordToogle()">
-                <fa-icon [icon]="showPassword ? eyeIcon: eyeSlashIcon" color="danger"></fa-icon>
-                <!-- <ion-icon [name]="showPassword ? 'eye': 'eye-off'" slot="icon-only"></ion-icon> -->
+                <fa-icon [icon]="showPassword ? eyeIcon: eyeSlashIcon"></fa-icon>
               </ion-button>
             </ion-item>
-            <app-error formName="signinForm" [control]="{password: signinForm.get('password')}">
-            </app-error>
           </div>
+          <app-error formName="signinForm" [control]="{password: signinForm.get('password')}">
+          </app-error>
           <ion-button expand="block" color="primary" type="submit">
             Iniciar Sesión
           </ion-button>
         </form>
       </ion-card-content>
     </ion-card>
-    <ion-label class="signup" color="primary" (click)="goToSignup()" >Aún no tienes cuenta? Crear cuenta.</ion-label>
+    <ion-label class="signin" color="primary" (click)="goToSignup()" >Aún no tienes cuenta? Crear cuenta.</ion-label>
   </div>
 </ion-content>
