@@ -17,7 +17,7 @@
       </div>
 
       <ion-item lines="none">
-        <ion-label position="stacked" class="required">Laboratorio</ion-label>
+        <ion-label position="stacked">Laboratorio</ion-label>
         <ion-input class="name" type="text" inputmode="text" readonly>{{ selectedItem.provider | uppercase}}</ion-input>
       </ion-item>
 
@@ -29,15 +29,15 @@
       </ion-item>
 
       <ion-item lines="none">
-        <ion-label position="stacked">Precio (Bs): </ion-label>
-        <ion-input class="name" type="text" inputmode="numeric" formControlName="price"></ion-input>
+        <ion-label position="stacked" class="required">Precio (Bs): </ion-label>
+        <ion-input class="name" type="number" inputmode="numeric" formControlName="price"></ion-input>
       </ion-item>
       <app-error formName="selectedItemForm" [control]="{price: selectedItemForm.get('price')}">
       </app-error>
 
       <ion-item lines="full">
-        <ion-label position="stacked">Unidades: </ion-label>
-        <ion-input class="name" type="text" inputmode="numeric" formControlName="units"></ion-input>
+        <ion-label position="stacked" class="required">Unidades: </ion-label>
+        <ion-input class="name" type="number" inputmode="numeric" formControlName="units"></ion-input>
       </ion-item>
       <app-error formName="selectedItemForm" [control]="{units: selectedItemForm.get('units')}">
       </app-error>

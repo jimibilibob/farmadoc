@@ -13,6 +13,11 @@
   font-family: monospace;
 }
 
+.required:after {
+  content:" *";
+  color: red;
+}
+
 fa-icon {
   zoom: 1.5;
   color: var(--ion-color-primary);

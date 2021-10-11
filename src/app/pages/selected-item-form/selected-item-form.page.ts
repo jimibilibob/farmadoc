@@ -33,7 +33,7 @@ export class SelectedItemFormPage implements OnInit, OnDestroy {
       ])),
       price: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^([0-9]{0,4}((.)[0-9]{0,2}))$')
+        Validators.pattern('^([0-9]{0,4}((.|,)[0-9]{0,2}))$')
       ]))
     });
   }

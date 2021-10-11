@@ -12,6 +12,11 @@
   font-size: x-small;
 }
 
+.required:after {
+  content:" *";
+  color: red;
+}
+
 .title-row {
   align-items: center;
   font-weight: 900;
