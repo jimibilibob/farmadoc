@@ -16,9 +16,9 @@ export class ItemsPage implements OnInit, OnDestroy {
   showSearchBar: boolean;
   items: Item[];
   filteredItems: Item[];
-  pageName: any;
   isSelectingItems: boolean;
   navParams: any;
+  pageName: any;
   subs: Subscription;
 
   constructor(
@@ -39,6 +39,7 @@ export class ItemsPage implements OnInit, OnDestroy {
 
   async ngOnDestroy() {
     this.subs.unsubscribe();
+    console.log('Selecting items:', this.isSelectingItems);
   }
 
   search(event: any) {
@@ -53,16 +54,6 @@ export class ItemsPage implements OnInit, OnDestroy {
         distinctUntilChanged())
         .subscribe(console.log);
     this.subs.add($inputSub);
-  }
-
-  subItems() {
-    return this.itemService.getItemsObservable().subscribe( rawItems => {
-      if (rawItems !== undefined) {
-        console.log('Items-->', rawItems);
-        this.items = rawItems;
-        this.filteredItems = this.items;
-      }
-    });
   }
 
   async getItems(event?: any) {
@@ -84,6 +75,16 @@ export class ItemsPage implements OnInit, OnDestroy {
   onBackButton() {
     console.log('On back button', this.isSelectingItems);
     this.router.navigate( [ this.navParams ? '/invoice-creation' : '/home' ] );
+  }
+
+  private subItems() {
+    return this.itemService.getItemsObservable().subscribe( rawItems => {
+      if (rawItems !== undefined) {
+        console.log('Items-->', rawItems);
+        this.items = rawItems;
+        this.filteredItems = this.items;
+      }
+    });
   }
 
   private setTitle() {
