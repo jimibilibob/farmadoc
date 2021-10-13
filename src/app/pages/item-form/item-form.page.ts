@@ -36,7 +36,7 @@ export class ItemFormPage implements OnInit, OnDestroy {
         commercial_name: new FormControl('', Validators.compose([
           Validators.required,
         ])),
-        provider: new FormControl('', Validators.compose([
+        laboratory: new FormControl('', Validators.compose([
           Validators.required,
         ])),
         price: new FormControl('', Validators.compose([
@@ -62,7 +62,7 @@ export class ItemFormPage implements OnInit, OnDestroy {
       description: this.selectedItem.description,
       price: this.selectedItem.price,
       exp_date: this.selectedItem.exp_date,
-      provider: this.selectedItem.provider,
+      laboratory: this.selectedItem.laboratory,
     };
     if (this.isEdition) {
       this.itemForm.setValue(itemToEdit);

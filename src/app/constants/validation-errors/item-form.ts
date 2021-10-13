@@ -10,7 +10,7 @@ export const itemFormValidations = {
     { type: 'required', message: 'El precio del producto es obligatorio.' },
     { type: 'pattern', message: 'Debe ingresar un precio válido.' }
   ],
-  provider: [
+  laboratory: [
     { type: 'required', message: 'El laboratorio es obligatorio.' }
   ],
   exp_date: [

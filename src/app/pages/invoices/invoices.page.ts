@@ -58,7 +58,7 @@ export class InvoicesPage implements OnInit, OnDestroy {
 
   goToInvoiceDetails(invoice: any) {
     this.invoiceService.setSelectedInvoice(invoice);
-    this.router.navigate(['/invoice']);
+    this.router.navigate(['/invoice-details']);
   }
 
   goToInvoiceForm() {

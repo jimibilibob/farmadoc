@@ -7,7 +7,7 @@ export class Item {
   commercial_name: string;
   price: number;
   description: string;
-  provider: string;
+  laboratory: string;
   exp_date: string;
   user_id?: string;
 
@@ -51,7 +51,7 @@ export class Item {
     this.commercial_name = '';
     this.price = 0;
     this.description = '';
-    this.provider = '';
+    this.laboratory = '';
     this.exp_date = null;
   }
 }

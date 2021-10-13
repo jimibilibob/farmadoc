@@ -10,7 +10,6 @@ interface Details {
 export class InvoiceItems {
   id?: number;
   invoice_id?: number;
-  item: Item;
   item_id: number;
   price: number;
   discount: number;
@@ -45,14 +44,12 @@ export class InvoiceItems {
   prepareToStore(invoiceId: number, itemId: number) {
     this.invoice_id = invoiceId;
     this.item_id = itemId;
-    delete this.item;
     delete this.details;
   }
 
   private init() {
     this.id = 0;
     this.invoice_id = 0;
-    this.item = new Item();
     this.price = 0;
     this.discount = 0;
     this.units = 0;

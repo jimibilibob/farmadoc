@@ -73,7 +73,7 @@ export class InvoiceService {
       total_sub,
       details:items(
         id,
-        provider,
+        laboratory,
         commercial_name,
         generic_name,
         description
@@ -121,7 +121,7 @@ export class InvoiceService {
     }
 
     invoiceItems.forEach( iitem => {
-      iitem.prepareToStore(invoiceId, iitem.item.id);
+      iitem.prepareToStore(invoiceId, iitem.item_id);
     });
 
     const{ error, data } = await StaticSupabase.supabaseClient

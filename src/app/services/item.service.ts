@@ -27,7 +27,7 @@ export class ItemService {
     return items.filter( i =>
       i.commercial_name.toLocaleLowerCase().includes(word) ||
       i.generic_name.toLocaleLowerCase().includes(word) ||
-      i.provider.toLocaleLowerCase().includes(word));
+      i.laboratory.toLocaleLowerCase().includes(word));
   }
 
   getItemsObservable(): Observable<any> {
@@ -50,7 +50,14 @@ export class ItemService {
   async getItems() {
     const rawItems = await StaticSupabase.supabaseClient
     .from('items')
-    .select(`id, generic_name, commercial_name, description, price, exp_date, provider`)
+    .select(`
+    id,
+    generic_name,
+    commercial_name,
+    description,
+    price,
+    exp_date,
+    laboratory`)
     .eq('user_id', this.authService.user.id)
     .order('id');
 

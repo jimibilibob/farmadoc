@@ -2,15 +2,15 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { faPills, faCalendarDay, faFileInvoice } from '@fortawesome/free-solid-svg-icons';
-import { InvoiceService, NavService } from 'src/app/services';
+import { InvoiceService } from 'src/app/services';
 import { Invoice, Item } from 'src/app/models';
 
 @Component({
   selector: 'app-invoice',
-  templateUrl: './invoice.page.html',
-  styleUrls: ['./invoice.page.scss'],
+  templateUrl: './invoice-details.page.html',
+  styleUrls: ['./invoice-details.page.scss'],
 })
-export class InvoicePage implements OnInit, OnDestroy {
+export class InvoiceDetailsPage implements OnInit, OnDestroy {
 
   invoiceForm: FormGroup;
   selectedInvoice: Invoice;
@@ -21,7 +21,6 @@ export class InvoicePage implements OnInit, OnDestroy {
   itemIcon = faPills;
 
   constructor(
-    private navService: NavService,
     private invoiceService: InvoiceService,
   ) {
     this.selectedInvoice = new Invoice();
@@ -38,10 +37,6 @@ export class InvoicePage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subs.unsubscribe();
-  }
-
-  goToItems() {
-    this.navService.pushToNextScreenWithParams('/items', 'Seleccione un Producto');
   }
 
   private invoiceSub(): Subscription {

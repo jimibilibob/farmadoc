@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button  autoHide="false" menu="first"></ion-back-button>
+      <ion-back-button  autoHide="false" menu="first" routerLink="/home"></ion-back-button>
     </ion-buttons>
     <ion-title>Factura Nueva</ion-title>
   </ion-toolbar>
@@ -56,7 +56,7 @@
             </div>
             <ion-label slot="end">{{ item.units * item.price | currency: 'Bs ': 'symbol': '.2-2'}}</ion-label>
           </div>
-          <ion-text class="description">{{ item.item.description | uppercase }}</ion-text>
+          <ion-text class="description">{{ item.details.description | uppercase }}</ion-text>
         </div>
       </ion-item>
       <ion-item lines="full" *ngIf="item.discount">

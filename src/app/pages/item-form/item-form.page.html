@@ -33,9 +33,9 @@
 
       <ion-item>
         <ion-label position="stacked" class="required">Laboratorio</ion-label>
-        <ion-input placeholder="Escriba el laboratorio" type="text" inputmode="text" formControlName="provider"></ion-input>
+        <ion-input placeholder="Escriba el laboratorio" type="text" inputmode="text" formControlName="laboratory"></ion-input>
       </ion-item>
-      <app-error formName="itemForm" [control]="{provider: itemForm.get('provider')}">
+      <app-error formName="itemForm" [control]="{laboratory: itemForm.get('laboratory')}">
       </app-error>
 
       <div class="calendar">
@@ -51,7 +51,7 @@
   
       <ion-item>
         <ion-label position="stacked">Descripción</ion-label>
-        <ion-textarea placeholder="Escribe los detalles adicionales aquí" type="text" inputmode="text" formControlName="description"></ion-textarea>
+        <ion-textarea rows="4" placeholder="Escribe los detalles adicionales aquí" type="text" inputmode="text" formControlName="description"></ion-textarea>
       </ion-item>
       <ion-button expand="block" color="primary" type="submit">
         {{ buttonLabel | uppercase }}

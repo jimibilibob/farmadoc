@@ -4,9 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { InvoicePageRoutingModule } from './invoice-routing.module';
+import { InvoicePageRoutingModule } from './invoice-details-routing.module';
 
-import { InvoicePage } from './invoice.page';
+import { InvoiceDetailsPage } from './invoice-details.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
@@ -20,6 +20,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ComponentsModule,
     FontAwesomeModule
   ],
-  declarations: [InvoicePage]
+  declarations: [InvoiceDetailsPage]
 })
-export class InvoicePageModule {}
+export class InvoiceDetailsPageModule {}
