@@ -33,14 +33,14 @@
 
       <div class="title-row">
         <fa-icon [icon]="invoiceIcon" color="danger"></fa-icon>
-        <!-- <ion-label class="ion-text-left ion-text-uppercase ion-padding-start title">F#{{ invoice.invoice_number | uppercase }}</ion-label> -->
+        <!-- <ion-label class="ion-text-left ion-text-uppercase ion-padding-start title">#{{ invoice.invoice_number | uppercase }}</ion-label> -->
         <ion-label class="ion-text-left ion-text-uppercase ion-padding-start title">{{ invoice.created_at | date }}</ion-label>
       </div>
       <ion-card-content (click)="null">
       <div class="main-row">
         <div class="row">
           <ion-label class="ion-text-left ion-text-uppercase sub-title">{{ invoice.name }}</ion-label>
-          <ion-label class="ion-text-left ion-text-uppercase">F#{{ invoice.invoice_number | uppercase }}</ion-label>
+          <ion-label class="ion-text-left ion-text-uppercase">#{{ invoice.invoice_number | uppercase }}</ion-label>
         </div>
         <div class="row right-col">
           <ion-label class="ion-text-left price" color="primary">{{ invoice.total | currency: 'Bs' }}</ion-label>
