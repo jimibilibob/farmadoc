@@ -7,7 +7,11 @@ export const itemFormValidations = {
     { type: 'required', message: 'El nombre comercial es obligatorio.' }
   ],
   price: [
-    { type: 'required', message: 'El precio del producto es obligatorio.' },
+    { type: 'required', message: 'El precio de compra producto es obligatorio.' },
+    { type: 'pattern', message: 'Debe ingresar un precio válido.' }
+  ],
+  sale_price: [
+    { type: 'required', message: 'El precio de venta del producto es obligatorio.' },
     { type: 'pattern', message: 'Debe ingresar un precio válido.' }
   ],
   laboratory: [

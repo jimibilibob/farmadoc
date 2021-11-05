@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Item } from '.';
 
 interface Details {
   commercial_name: string;
@@ -12,6 +11,7 @@ export class InvoiceItems {
   invoice_id?: number;
   item_id: number;
   price: number;
+  sale_price: number;
   discount: number;
   units: number;
   total_sub: number;
@@ -49,8 +49,10 @@ export class InvoiceItems {
 
   private init() {
     this.id = 0;
+    this.item_id = 0;
     this.invoice_id = 0;
     this.price = 0;
+    this.sale_price = 0;
     this.discount = 0;
     this.units = 0;
     this.total_sub = null;

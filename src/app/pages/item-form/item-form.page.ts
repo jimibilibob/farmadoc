@@ -43,6 +43,10 @@ export class ItemFormPage implements OnInit, OnDestroy {
           Validators.required,
           Validators.pattern('^([0-9]{0,4}((.)[0-9]{0,2}))$')
         ])),
+        sale_price: new FormControl('', Validators.compose([
+          Validators.required,
+          Validators.pattern('^([0-9]{0,4}((.)[0-9]{0,2}))$')
+        ])),
         exp_date: new FormControl('', Validators.compose([
           Validators.required
         ])),
@@ -61,6 +65,7 @@ export class ItemFormPage implements OnInit, OnDestroy {
       commercial_name: this.selectedItem.commercial_name,
       description: this.selectedItem.description,
       price: this.selectedItem.price,
+      sale_price: this.selectedItem.sale_price,
       exp_date: this.selectedItem.exp_date,
       laboratory: this.selectedItem.laboratory,
     };

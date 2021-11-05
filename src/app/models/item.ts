@@ -1,4 +1,4 @@
-import { InvoiceItems } from '.';
+import { InvoiceItems, TYPE } from '.';
 
 /* eslint-disable @typescript-eslint/naming-convention */
 export class Item {
@@ -6,6 +6,7 @@ export class Item {
   generic_name: string;
   commercial_name: string;
   price: number;
+  sale_price: number;
   description: string;
   laboratory: string;
   exp_date: string;
@@ -32,7 +33,9 @@ export class Item {
 
   castToInvoiceItems(): InvoiceItems {
     return new InvoiceItems({
-      item: this,
+      item_id: this.id,
+      price:  this.price,
+      sale_price: this.sale_price,
       details: {
         commercial_name: this.commercial_name,
         generic_name: this.generic_name,
@@ -50,6 +53,7 @@ export class Item {
     this.generic_name = '';
     this.commercial_name = '';
     this.price = 0;
+    this.sale_price = 0;
     this.description = '';
     this.laboratory = '';
     this.exp_date = null;

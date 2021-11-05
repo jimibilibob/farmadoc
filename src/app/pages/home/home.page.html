@@ -3,6 +3,19 @@
 
     <ion-content>
         <div class="flex-content">
+          <ion-card button routerLink="/sales">
+            <ion-card-content>
+              <ion-img src="assets/img/sales-icon.png"></ion-img>
+              <ion-label class="ion-text-center ion-text-uppercase">Ventas</ion-label>
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card button routerLink="/invoices">
+            <ion-card-content>
+              <fa-icon [icon]="purchaseIcon"></fa-icon>
+              <ion-label class="ion-text-center ion-text-uppercase">Compras</ion-label>
+            </ion-card-content>
+          </ion-card>
           <!-- <ion-card button *ngFor="let option of menu" (click)="redirectTo(option.path, option.reqAuth)"> -->
             <ion-card button button routerLink="/invoices" >
             <ion-card-content>

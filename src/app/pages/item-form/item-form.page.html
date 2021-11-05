@@ -25,10 +25,17 @@
       </app-error>
   
       <ion-item>
-        <ion-label position="stacked" class="required">Precio</ion-label>
+        <ion-label position="stacked" class="required">Precio de Compra</ion-label>
         <ion-input placeholder="Bs 0.00" type="number" inputmode="decimal" formControlName="price"></ion-input>
       </ion-item>
       <app-error formName="itemForm" [control]="{price: itemForm.get('price')}">
+      </app-error>
+
+      <ion-item>
+        <ion-label position="stacked" class="required">Precio de Venta</ion-label>
+        <ion-input placeholder="Bs 0.00" type="number" inputmode="decimal" formControlName="sale_price"></ion-input>
+      </ion-item>
+      <app-error formName="itemForm" [control]="{sale_price: itemForm.get('sale_price')}">
       </app-error>
 
       <ion-item>

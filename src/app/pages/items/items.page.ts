@@ -17,6 +17,7 @@ export class ItemsPage implements OnInit, OnDestroy {
   items: Item[];
   filteredItems: Item[];
   isSelectingItems: boolean;
+  isSale: boolean;
   navParams: any;
   pageName: any;
   subs: Subscription;
@@ -35,6 +36,7 @@ export class ItemsPage implements OnInit, OnDestroy {
   async ngOnInit() {
     await this.getItems();
     this.subs.add(this.subItems());
+    this.subs.add(this.subSaleItem());
   }
 
   async ngOnDestroy() {
@@ -65,7 +67,7 @@ export class ItemsPage implements OnInit, OnDestroy {
     this.itemService.setSelectedItem(item);
     if (this.navParams) {
       this.isSelectingItems = true;
-      this.router.navigate(['/selected-item']);
+      this.router.navigate([ this.isSale ? '/sale-item' : '/selected-item']);
     } else {
       this.navService.pushToNextScreenWithParams('/item-form', 'Editar Producto');
       this.isSelectingItems = false;
@@ -85,6 +87,10 @@ export class ItemsPage implements OnInit, OnDestroy {
         this.filteredItems = this.items;
       }
     });
+  }
+
+  private subSaleItem() {
+    return this.itemService.getIsSale().subscribe( isSale => this.isSale = isSale);
   }
 
   private setTitle() {

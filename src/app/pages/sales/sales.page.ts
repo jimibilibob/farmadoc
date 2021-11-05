@@ -4,28 +4,27 @@ import { Router } from '@angular/router';
 import { faFileInvoice } from '@fortawesome/free-solid-svg-icons';
 import { of, Subscription } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
-import { Invoice } from 'src/app/models';
-import { InvoiceService } from 'src/app/services';
+import { Invoice, TYPE } from 'src/app/models';
+import { InvoiceService, ItemService } from 'src/app/services';
 
 @Component({
-  selector: 'app-invoices',
-  templateUrl: './invoices.page.html',
-  styleUrls: ['./invoices.page.scss'],
+  selector: 'app-sales',
+  templateUrl: './sales.page.html',
+  styleUrls: ['./sales.page.scss'],
 })
-export class InvoicesPage implements OnInit, OnDestroy {
+export class SalesPage implements OnInit, OnDestroy {
 
   showSearchBar = false;
-  invoices: Invoice[];
-  filteredInvoices: Invoice[];
   invoiceIcon = faFileInvoice;
-  subs: Subscription;
+  sales: Invoice[];
+  filteredSales: Invoice[];
+  subs = new Subscription();
 
   constructor(
     private router: Router,
-    private invoiceService: InvoiceService
-  ) {
-    this.subs = new Subscription();
-  }
+    private invoiceService: InvoiceService,
+    private itemService: ItemService
+  ) {}
 
   async ngOnInit() {
     await this.getInvoices();
@@ -37,7 +36,7 @@ export class InvoicesPage implements OnInit, OnDestroy {
   }
 
   async getInvoices(event?: any) {
-    await this.invoiceService.getInvoices();
+    await this.invoiceService.getInvoicesByType(TYPE.sales);
     if (event) event.target.complete();
   }
 
@@ -47,7 +46,7 @@ export class InvoicesPage implements OnInit, OnDestroy {
       of('')
       ),
       map( (word: string) =>
-         this.filteredInvoices = this.invoiceService.searchInvoices(this.invoices, word)
+         this.filteredSales = this.invoiceService.searchInvoices(this.sales, word)
       ),
       debounceTime(1000),
       distinctUntilChanged())
@@ -62,14 +61,15 @@ export class InvoicesPage implements OnInit, OnDestroy {
 
   goToInvoiceForm() {
     this.invoiceService.setSelectedInvoice(new Invoice());
-    this.router.navigate(['/invoice-creation']);
+    this.itemService.setIsSale(true);
+    this.router.navigate(['/sale-form']);
   }
 
   private invoicesSub() {
     return this.invoiceService.getInvoicesObservable().subscribe( res => {
       console.log('FACTURAS:', res);
-      this.invoices = res;
-      this.filteredInvoices = res;
+      this.sales = res;
+      this.filteredSales = res;
     });
   }
 }

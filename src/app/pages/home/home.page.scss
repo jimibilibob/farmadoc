@@ -21,11 +21,17 @@
       padding: 6px 8px 6px 8px;
       fa-icon {
         font-size: 64px;
+        color: var(--ion-color-dark-shade);
+      }
+      ion-img {
+        font-size: 64px;
+        zoom: 0.16;
       }
       ion-label {
         margin: 10px 0 5px 0;
         font-size: 15px;
         font-weight: bold;
+        color: var(--ion-color-dark-tint);
         font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
       }
     }

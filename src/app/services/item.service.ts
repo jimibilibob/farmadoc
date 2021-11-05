@@ -13,6 +13,7 @@ export class ItemService {
 
   private items: BehaviorSubject<Item[]>;
   private selectedItem: BehaviorSubject<Item>;
+  private isSale: BehaviorSubject<boolean>;
 
   constructor(
     private toastService: ToastService,
@@ -20,6 +21,7 @@ export class ItemService {
   ) {
     this.items = new BehaviorSubject<Item[]>([]);
     this.selectedItem = new BehaviorSubject<Item>(new Item());
+    this.isSale = new BehaviorSubject<boolean>(false);
    }
 
   searchItems(items: Item[], word: string) {
@@ -47,6 +49,14 @@ export class ItemService {
     this.selectedItem.next(item);
   }
 
+  setIsSale(isSale: boolean) {
+    this.isSale.next(isSale);
+  }
+
+  getIsSale(): Observable<boolean> {
+    return this.isSale.asObservable();
+  }
+
   async getItems() {
     const rawItems = await StaticSupabase.supabaseClient
     .from('items')
@@ -56,6 +66,7 @@ export class ItemService {
     commercial_name,
     description,
     price,
+    sale_price,
     exp_date,
     laboratory`)
     .eq('user_id', this.authService.user.id)

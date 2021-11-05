@@ -8,11 +8,11 @@ import { Invoice, InvoiceItems, Item } from 'src/app/models';
 import { InvoiceService, ItemService } from 'src/app/services';
 
 @Component({
-  selector: 'app-selected-item-form',
-  templateUrl: './selected-item-form.page.html',
-  styleUrls: ['./selected-item-form.page.scss'],
+  selector: 'app-sale-item',
+  templateUrl: './sale-item.page.html',
+  styleUrls: ['./sale-item.page.scss'],
 })
-export class SelectedItemFormPage implements OnInit, OnDestroy {
+export class SaleItemPage implements OnInit, OnDestroy {
 
   selectedInvoice: Invoice;
   selectedItem: Item;
@@ -31,10 +31,10 @@ export class SelectedItemFormPage implements OnInit, OnDestroy {
         Validators.required,
         Validators.pattern('^([0-9]{1,5})$')
       ])),
-      price: new FormControl('', Validators.compose([
-        Validators.required,
-        Validators.pattern('^([0-9]{0,4}((.|,)[0-9]{0,2}))$')
-      ])),
+      // price: new FormControl('', Validators.compose([
+      //   Validators.required,
+      //   Validators.pattern('^([0-9]{0,4}((.|,)[0-9]{0,2}))$')
+      // ])),
       sale_price: new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^([0-9]{0,4}((.|,)[0-9]{0,2}))$')
@@ -46,7 +46,7 @@ export class SelectedItemFormPage implements OnInit, OnDestroy {
     this.subs.add(this.addItemSub());
     this.subs.add(this.addInvoiceSub());
     this.selectedItemForm.setValue({
-      price: this.selectedItem.price,
+      // price: this.selectedItem.price,
       units: null,
       sale_price: this.selectedItem.sale_price
     });
@@ -67,15 +67,16 @@ export class SelectedItemFormPage implements OnInit, OnDestroy {
       console.log('SelectedItem', this.selectedItem);
       console.log('Form Value', formValue);
       let newInvoiceItems = this.selectedItem.castToInvoiceItems();
+      console.log('NewInvoiceItems addSelectedItem:', newInvoiceItems);
       newInvoiceItems = new InvoiceItems({
         ... newInvoiceItems,
         units: formValue.units,
-        price: formValue.price
+        sale_price: formValue.sale_price
       });
-      console.log('newInvoiceItems:', newInvoiceItems);
+      console.log('newInvoiceItems InvoiceItems():', newInvoiceItems);
       this.selectedInvoice.addItem(newInvoiceItems);
       this.invoiceService.setSelectedInvoice(this.selectedInvoice);
-      this.router.navigate(['/invoice-creation']);
+      this.router.navigate(['/sale-form']);
     }
   }
 
@@ -90,4 +91,5 @@ export class SelectedItemFormPage implements OnInit, OnDestroy {
       this.selectedInvoice = invoice;
     });
   }
+
 }

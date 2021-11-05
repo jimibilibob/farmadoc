@@ -45,6 +45,18 @@ const routes: Routes = [
   {
     path: 'selected-item',
     loadChildren: () => import('./pages/selected-item-form/selected-item-form.module').then( m => m.SelectedItemFormPageModule)
+  },
+  {
+    path: 'sales',
+    loadChildren: () => import('./pages/sales/sales.module').then( m => m.SalesPageModule)
+  },
+  {
+    path: 'sale-form',
+    loadChildren: () => import('./pages/sale-form/sale-form.module').then( m => m.SaleFormPageModule)
+  },
+  {
+    path: 'sale-item',
+    loadChildren: () => import('./pages/sale-item/sale-item.module').then( m => m.SaleItemPageModule)
   }
 ];
 @NgModule({

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthService, ToastService } from '.';
-import { Invoice, InvoiceItems } from '../models';
+import { Invoice, InvoiceItems, TYPE } from '../models';
 import { StaticSupabase } from './common/static_supabase';
 
 @Injectable({
@@ -57,45 +57,44 @@ export class InvoiceService {
   }
 
   async getInvoices() {
-  const rawInvoices = await StaticSupabase.supabaseClient
-  .from('invoices')
-  .select(`id,
-    name,
-    total,
-    invoice_number,
-    items:invoice_item(
-      id,
-      invoice_id,
-      item_id,
-      price,
-      discount,
-      units,
-      total_sub,
-      details:items(
+    const rawInvoices = await StaticSupabase.supabaseClient
+    .from('invoices')
+    .select(`id,
+      name,
+      total,
+      invoice_number,
+      items:invoice_item(
         id,
-        laboratory,
-        commercial_name,
-        generic_name,
-        description
-      )
-    ),
-    created_at`)
-  .eq('user_id', this.authService.user.id)
-  .order('id');
+        invoice_id,
+        item_id,
+        price,
+        discount,
+        units,
+        total_sub,
+        details:items(
+          id,
+          laboratory,
+          commercial_name,
+          generic_name,
+          description
+        )
+      ),
+      created_at`)
+    .eq('user_id', this.authService.user.id)
+    .order('id');
 
-  const invoices = rawInvoices.data.map( invoice => {
-    console.log(invoice);
-    return new Invoice(invoice, true);
-  });
-  this.invoices.next(invoices);
+    const invoices = rawInvoices.data.map( invoice => {
+      console.log(invoice);
+      return new Invoice(invoice, true);
+    });
+    this.invoices.next(invoices);
   }
 
-  // TODO: Check this method
   async storeInvoice(invoice: Invoice) {
     const invoiceItems = invoice.items;
     invoice.addUserId(this.authService.user.id);
     invoice.purgeAttr();
-    console.log(invoice);
+    console.log('storeInvoice Service:', invoice);
     const{ error, data } = await StaticSupabase.supabaseClient
     .from('invoices')
     .upsert([
@@ -115,6 +114,41 @@ export class InvoiceService {
     await this.getInvoices();
   }
 
+  async getInvoicesByType(type: TYPE) {
+    const rawInvoices = await StaticSupabase.supabaseClient
+    .from('invoices')
+    .select(`id,
+      name,
+      total,
+      invoice_number,
+      items:invoice_item(
+        id,
+        invoice_id,
+        item_id,
+        price,
+        discount,
+        units,
+        total_sub,
+        details:items(
+          id,
+          laboratory,
+          commercial_name,
+          generic_name,
+          description
+        )
+      ),
+      created_at`)
+    .eq('user_id', this.authService.user.id)
+    .eq('type_id', type)
+    .order('id');
+
+    const invoices = rawInvoices.data.map( invoice => {
+      console.log(invoice);
+      return new Invoice(invoice, true);
+    });
+    this.invoices.next(invoices);
+  }
+
   private async storeInvoiceItems(invoiceItems: InvoiceItems[], invoiceId: number) {
     if (invoiceItems.length <= 0) {
       return;
@@ -123,6 +157,8 @@ export class InvoiceService {
     invoiceItems.forEach( iitem => {
       iitem.prepareToStore(invoiceId, iitem.item_id);
     });
+
+    console.log('ITEMS:', invoiceItems);
 
     const{ error, data } = await StaticSupabase.supabaseClient
     .from('invoice_item')

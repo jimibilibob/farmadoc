@@ -18,7 +18,7 @@
 
       <ion-item lines="none">
         <ion-label position="stacked">Laboratorio</ion-label>
-        <ion-input class="name" type="text" inputmode="text" readonly>{{ selectedItem.laboratory| uppercase}}</ion-input>
+        <ion-input type="text" inputmode="text" readonly>{{ selectedItem.laboratory| uppercase}}</ion-input>
       </ion-item>
 
       <ion-item lines="none" class="ion-text-wrap">
@@ -30,7 +30,7 @@
 
       <ion-item lines="none">
         <ion-label position="stacked" class="required">Precio de Venta(Bs): </ion-label>
-        <ion-input class="name" type="number" inputmode="numeric" formControlName="sale_price"></ion-input>
+        <ion-input type="number" inputmode="numeric" formControlName="sale_price" readonly></ion-input>
       </ion-item>
       <app-error formName="selectedItemForm" [control]="{sale_price: selectedItemForm.get('sale_price')}">
       </app-error>
@@ -45,7 +45,7 @@
       <ion-item lines="full" class="name">
         <div class="card-section total">
           <ion-label slot="start">TOTAL</ion-label>
-          <ion-label slot="end">{{ selectedItemForm.value.units * selectedItemForm.value.price | currency: 'Bs': 'symbol': '.2-2' }}</ion-label>
+          <ion-label slot="end">{{ selectedItemForm.value.units * selectedItemForm.value.sale_price | currency: 'Bs': 'symbol': '.2-2' }}</ion-label>
         </div>
       </ion-item>
     </ion-card>

@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import {
   invoiceFormValidations, itemFormValidations, selectedItemFormValidations, signinFormValidations, signupFormValidations
  } from 'src/app/constants';
+import { saleFormValidations } from 'src/app/constants/validation-errors/sale-form';
 
 @Component({
   selector: 'app-error',
@@ -24,6 +25,7 @@ export class ErrorComponent implements OnInit {
     this.formControl = new FormControl();
     this.validations = {
       invoiceForm: invoiceFormValidations,
+      saleForm: saleFormValidations,
       itemForm: itemFormValidations,
       selectedItemForm: selectedItemFormValidations,
       signinForm: signinFormValidations,
