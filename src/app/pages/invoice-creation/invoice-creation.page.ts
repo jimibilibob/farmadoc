@@ -60,7 +60,7 @@ export class InvoiceCreationPage implements OnInit, OnDestroy {
       this.selectedInvoice.name = this.invoiceForm.value.name;
       this.selectedInvoice.invoice_number = this.invoiceForm.value.invoice_number;
       await this.invoiceService.storeInvoice(this.selectedInvoice);
-      await this.router.navigate(['/invoices']);
+      await this.router.navigate(['/purchases']);
       await this.loadingService.dismissLoading();
     }
   }

@@ -106,12 +106,12 @@ export class InvoiceService {
       });
     } else {
       console.log('UPSERT INVOICE:', data);
-      await this.storeInvoiceItems(invoiceItems, data[0].id);
+      await this.storeInvoiceItems(invoiceItems, data[0].id, invoice.type_id);
       await this.toastService.presentToast({
           message: 'Factura guardada exitosamente!'
         });
     }
-    await this.getInvoices();
+    await this.getInvoicesByType(invoice.type_id);
   }
 
   async getInvoicesByType(type: TYPE) {
@@ -149,7 +149,7 @@ export class InvoiceService {
     this.invoices.next(invoices);
   }
 
-  private async storeInvoiceItems(invoiceItems: InvoiceItems[], invoiceId: number) {
+  private async storeInvoiceItems(invoiceItems: InvoiceItems[], invoiceId: number, type: TYPE) {
     if (invoiceItems.length <= 0) {
       return;
     }
@@ -174,7 +174,7 @@ export class InvoiceService {
         message: 'Factura guardada exitosamente!'
         });
     }
-    await this.getInvoices();
+    await this.getInvoicesByType(type);
   }
 
   // TODO: Check this method
