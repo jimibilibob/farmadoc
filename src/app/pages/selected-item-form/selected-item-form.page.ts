@@ -48,7 +48,7 @@ export class SelectedItemFormPage implements OnInit, OnDestroy {
     this.selectedItemForm.setValue({
       price: this.selectedItem.price,
       units: null,
-      sale_price: this.selectedItem.sale_price
+      sale_price: this.selectedItem.price
     });
   }
 
