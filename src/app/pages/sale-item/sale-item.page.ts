@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faCalendarDay } from '@fortawesome/free-solid-svg-icons';
+import { AlertController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Invoice, InvoiceItems, Item } from 'src/app/models';
 import { InvoiceService, ItemService } from 'src/app/services';
@@ -23,7 +24,8 @@ export class SaleItemPage implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private itemService: ItemService,
-    private invoiceService: InvoiceService
+    private invoiceService: InvoiceService,
+    private alertController: AlertController
   ) {
     this.subs = new Subscription();
     this.selectedItemForm = new FormGroup({
@@ -56,13 +58,27 @@ export class SaleItemPage implements OnInit, OnDestroy {
     this.subs.unsubscribe();
   }
 
-  addSelectedItem() {
+  async addSelectedItem() {
     if (this.selectedItemForm.invalid) {
       return Object.values(this.selectedItemForm.controls).forEach(
         formControl => {
           formControl.markAsTouched();
         });
     } else {
+      if (this.selectedItemForm.value.sale_price < (this.selectedItem.sale_price - 5)) {
+        const alert = await this.alertController.create({
+          message: `El precio de venta no puede ser menor que ${this.selectedItem.sale_price - 5} BS`,
+          buttons: [
+            {
+              text: 'OK',
+              role: 'cancel',
+              handler: () => null
+            }
+          ]
+        });
+        await alert.present();
+        return;
+      }
       const formValue = this.selectedItemForm.value;
       console.log('SelectedItem', this.selectedItem);
       console.log('Form Value', formValue);

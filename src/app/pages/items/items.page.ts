@@ -78,7 +78,9 @@ export class ItemsPage implements OnInit, OnDestroy {
 
   onBackButton() {
     console.log('On back button', this.isSelectingItems);
-    this.router.navigate( [ this.navParams ? '/invoice-creation' : '/home' ] );
+    this.router.navigate( [ this.navParams ?
+      (this.selectedInvoice.type_id === TYPE.purchases ? '/invoice-creation' : '/sale-form')
+      : '/home' ] );
   }
 
   private subItems() {

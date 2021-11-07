@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button  autoHide="false" menu="first"></ion-back-button>
     </ion-buttons>
-    <ion-title color="primary">Información de la Factura</ion-title>
+    <ion-title>Información de la Factura</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -12,13 +12,13 @@
 
     <ion-card>
       <div class="title-col">
-        <div class="title-row">
+        <div class="title-row {{selectedInvoice.type_id | invoicetype}}">
           <div style="width: 100%;">
-            <fa-icon [icon]="invoiceIcon" color="danger"></fa-icon>
+            <fa-icon  [icon]="invoiceIcon"></fa-icon>
             <ion-label class="ion-text-left ion-text-uppercase">#{{ selectedInvoice.invoice_number | uppercase }}</ion-label>
           </div>
           <div style="width: 100%;">
-            <fa-icon [icon]="calendarIcon" color="danger"></fa-icon>
+            <fa-icon [icon]="calendarIcon"></fa-icon>
             <ion-label class="ion-text-left ion-text-uppercase">{{ selectedInvoice.created_at | date }}</ion-label>
           </div>
         </div>
@@ -31,7 +31,7 @@
     </ion-card>
 
     <ion-card>
-      <div class="title-row">
+      <div class="title-row {{selectedInvoice.type_id | invoicetype}}">
         <ion-label class="products-title">PRODUCTOS</ion-label>
       </div>
 
@@ -41,11 +41,11 @@
             <ion-label slot="start" class="name">{{ item.details.commercial_name | uppercase }}</ion-label>
           </div>
         </ion-item>
-        <ion-item lines="none">
+        <ion-item lines="full">
           <div class="item-section">
             <div class="card-section">
               <div class="detail" slot="start">
-                <fa-icon [icon]="itemIcon" color="danger"></fa-icon>
+                <fa-icon [icon]="itemIcon" [class]="selectedInvoice.type_id | invoicetype"></fa-icon>
                 <ion-label class="ion-text-left ion-text-uppercase ion-padding-start">{{ item.units }} x {{ item.price | currency: 'Bs ': 'symbol': '.2-2' }}</ion-label>
               </div>
               <ion-label slot="end">{{ item.units * item.price | currency: 'Bs ': 'symbol': '.2-2'}}</ion-label>

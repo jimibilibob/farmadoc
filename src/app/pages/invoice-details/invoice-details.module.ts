@@ -9,6 +9,7 @@ import { InvoicePageRoutingModule } from './invoice-details-routing.module';
 import { InvoiceDetailsPage } from './invoice-details.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     InvoicePageRoutingModule,
     ReactiveFormsModule,
     ComponentsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    PipesModule
   ],
   declarations: [InvoiceDetailsPage]
 })
