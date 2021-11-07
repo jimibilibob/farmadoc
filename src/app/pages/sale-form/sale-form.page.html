@@ -17,7 +17,7 @@
       </div>
 
       <ion-item lines="none">
-        <ion-label position="stacked" class="required">Proveedor</ion-label>
+        <ion-label position="stacked" class="required">Nombre del Vendedor(a)</ion-label>
         <ion-input class="name" type="text" inputmode="text" formControlName="name"></ion-input>
       </ion-item>
 
@@ -40,52 +40,52 @@
         <ion-label class="products-title">PRODUCTOS</ion-label>
       </div>
 
-    <div *ngFor="let item of selectedInvoice.items">
-      <ion-item lines="none">
-        <div class="card-section">
-          <ion-label slot="start" class="name">{{ item.details.commercial_name | uppercase }}</ion-label>
-          <ion-icon slot="end" name="trash-outline" color="danger" (click)="removeInvoiceItems(item)"></ion-icon>
-        </div>
-      </ion-item>
-      <ion-item lines="none">
-        <div class="item-section">
+      <div *ngFor="let item of selectedInvoice.items">
+        <ion-item lines="none">
           <div class="card-section">
-            <div class="detail" slot="start">
-              <fa-icon [icon]="itemIcon"></fa-icon>
-              <ion-label class="ion-text-left ion-text-uppercase ion-padding-start">{{ item.units }} x {{ item.sale_price| currency: 'Bs ': 'symbol': '.2-2' }}</ion-label>
-            </div>
-            <ion-label slot="end">{{ item.units * item.sale_price | currency: 'Bs ': 'symbol': '.2-2'}}</ion-label>
+            <ion-label slot="start" class="name">{{ item.details.commercial_name | uppercase }}</ion-label>
+            <ion-icon slot="end" name="trash-outline" color="danger" (click)="removeInvoiceItems(item)"></ion-icon>
           </div>
-          <ion-text class="description">{{ item.details.description | uppercase }}</ion-text>
-        </div>
-      </ion-item>
-      <ion-item lines="full" *ngIf="item.discount">
-        <div class="card-section">
-          <ion-label>Descuento ({{ item.discount | percent }})</ion-label>
-          <ion-label>{{ item.units * item.sale_price * item.discount | currency: 'Bs': 'symbol': '.2-2' }}</ion-label>
-        </div>
-      </ion-item>
-    </div>
+        </ion-item>
+        <ion-item lines="none">
+          <div class="item-section">
+            <div class="card-section">
+              <div class="detail" slot="start">
+                <fa-icon [icon]="itemIcon"></fa-icon>
+                <ion-label class="ion-text-left ion-text-uppercase ion-padding-start">{{ item.units }} x {{ item.sale_price | currency: 'Bs ': 'symbol': '.2-2' }}</ion-label>
+              </div>
+              <ion-label slot="end">{{ item.units * item.sale_price | currency: 'Bs ': 'symbol': '.2-2'}}</ion-label>
+            </div>
+            <ion-text class="description">{{ item.details.description | uppercase }}</ion-text>
+          </div>
+        </ion-item>
+        <ion-item lines="full" *ngIf="item.discount">
+          <div class="card-section">
+            <ion-label>Descuento ({{ item.discount | percent }})</ion-label>
+            <ion-label>{{ item.units * item.sale_price * item.discount | currency: 'Bs': 'symbol': '.2-2' }}</ion-label>
+          </div>
+        </ion-item>
+      </div>
 
-    <!-- TODO: ADD DISCOUNT FROM invoices -->
-    <!-- <ion-item lines="full">
-      <div class="card-section">
-        <ion-label>Descuento Total({{ selectedInvoice.discount | percent }})</ion-label>
-        <ion-label>{{ selectedInvoice.total * selectedInvoice.discount | currency: 'Bs': 'symbol': '.2-2' }}</ion-label>
-      </div>
-    </ion-item> -->
-    <ion-item lines="full" class="name">
-      <div class="card-section total">
-        <ion-label slot="start">TOTAL</ion-label>
-        <ion-label slot="end">{{ selectedInvoice.total| currency: 'Bs': 'symbol': '.2-2' }}</ion-label>
-      </div>
-    </ion-item>
-    <ion-item button (click)="goToItems()">
-      <ion-label class="ion-text-center" color="primary">+ Agregar Productos</ion-label>
+      <!-- TODO: ADD DISCOUNT FROM invoices -->
+      <!-- <ion-item lines="full">
+        <div class="card-section">
+          <ion-label>Descuento Total({{ selectedInvoice.discount | percent }})</ion-label>
+          <ion-label>{{ selectedInvoice.total * selectedInvoice.discount | currency: 'Bs': 'symbol': '.2-2' }}</ion-label>
+        </div>
+      </ion-item> -->
+      <ion-item lines="full" class="name">
+        <div class="card-section total">
+          <ion-label slot="start">TOTAL</ion-label>
+          <ion-label slot="end">{{ selectedInvoice.total| currency: 'Bs': 'symbol': '.2-2' }}</ion-label>
+        </div>
+      </ion-item>
+      <ion-item button (click)="goToItems()">
+        <ion-label class="ion-text-center" color="tertiary">+ Agregar Productos</ion-label>
       </ion-item>
     </ion-card>
 
-    <ion-button expand="block" color="primary" type="submit">
+    <ion-button expand="block" color="tertiary" type="submit">
       AGREGAR FACTURA
     </ion-button>
   </form>

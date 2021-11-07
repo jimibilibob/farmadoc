@@ -60,8 +60,9 @@ export class SalesPage implements OnInit, OnDestroy {
   }
 
   goToInvoiceForm() {
-    this.invoiceService.setSelectedInvoice(new Invoice());
-    this.itemService.setIsSale(true);
+    const newPurchaseInvoice = new Invoice();
+    newPurchaseInvoice.setType(TYPE.purchases);
+    this.invoiceService.setSelectedInvoice(newPurchaseInvoice);
     this.router.navigate(['/sale-form']);
   }
 

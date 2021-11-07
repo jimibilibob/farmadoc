@@ -8,6 +8,7 @@ import { SalesPageRoutingModule } from './sales-routing.module';
 
 import { SalesPage } from './sales.page';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     FormsModule,
     IonicModule,
     SalesPageRoutingModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    PipesModule
   ],
   declarations: [SalesPage]
 })

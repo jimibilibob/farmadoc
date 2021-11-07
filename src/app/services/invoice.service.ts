@@ -63,6 +63,7 @@ export class InvoiceService {
       name,
       total,
       invoice_number,
+      type_id,
       items:invoice_item(
         id,
         invoice_id,
@@ -81,7 +82,8 @@ export class InvoiceService {
       ),
       created_at`)
     .eq('user_id', this.authService.user.id)
-    .order('id');
+    .order('created_at', { ascending: false })
+    .order('type_id');
 
     const invoices = rawInvoices.data.map( invoice => {
       console.log(invoice);
@@ -121,6 +123,7 @@ export class InvoiceService {
       name,
       total,
       invoice_number,
+      type_id,
       items:invoice_item(
         id,
         invoice_id,
@@ -140,7 +143,8 @@ export class InvoiceService {
       created_at`)
     .eq('user_id', this.authService.user.id)
     .eq('type_id', type)
-    .order('id');
+    .order('created_at', { ascending: false })
+    .order('type_id');
 
     const invoices = rawInvoices.data.map( invoice => {
       console.log(invoice);

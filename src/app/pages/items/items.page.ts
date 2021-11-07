@@ -3,8 +3,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { of, Subscription } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
-import { Item } from 'src/app/models';
-import { ItemService, NavService } from 'src/app/services';
+import { Invoice, Item, TYPE } from 'src/app/models';
+import { InvoiceService, ItemService, NavService } from 'src/app/services';
 
 @Component({
   selector: 'app-items',
@@ -17,13 +17,14 @@ export class ItemsPage implements OnInit, OnDestroy {
   items: Item[];
   filteredItems: Item[];
   isSelectingItems: boolean;
-  isSale: boolean;
+  selectedInvoice: Invoice;
   navParams: any;
   pageName: any;
   subs: Subscription;
 
   constructor(
     private itemService: ItemService,
+    private invoiceService: InvoiceService,
     private navService: NavService,
     private router: Router
   ) {
@@ -36,7 +37,7 @@ export class ItemsPage implements OnInit, OnDestroy {
   async ngOnInit() {
     await this.getItems();
     this.subs.add(this.subItems());
-    this.subs.add(this.subSaleItem());
+    this.subs.add(this.subInvoice());
   }
 
   async ngOnDestroy() {
@@ -67,7 +68,8 @@ export class ItemsPage implements OnInit, OnDestroy {
     this.itemService.setSelectedItem(item);
     if (this.navParams) {
       this.isSelectingItems = true;
-      this.router.navigate([ this.isSale ? '/sale-item' : '/selected-item']);
+      this.router.navigate([ (this.selectedInvoice.type_id === TYPE.sales) ?
+        '/sale-item' : '/selected-item']);
     } else {
       this.navService.pushToNextScreenWithParams('/item-form', 'Editar Producto');
       this.isSelectingItems = false;
@@ -89,8 +91,10 @@ export class ItemsPage implements OnInit, OnDestroy {
     });
   }
 
-  private subSaleItem() {
-    return this.itemService.getIsSale().subscribe( isSale => this.isSale = isSale);
+  private subInvoice() {
+    return this.invoiceService.getSelectedInvoiceObservable().subscribe( res => {
+      this.selectedInvoice = res;
+    });
   }
 
   private setTitle() {

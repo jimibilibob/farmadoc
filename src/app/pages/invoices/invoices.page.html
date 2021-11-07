@@ -29,7 +29,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <ion-list lines="none">
-    <ion-card button *ngFor="let invoice of filteredInvoices" (click)="goToInvoiceDetails(invoice)">
+    <ion-card [class]="invoice.type_id | invoicetype" button *ngFor="let invoice of filteredInvoices" (click)="goToInvoiceDetails(invoice)">
 
       <div class="title-row">
         <fa-icon [icon]="invoiceIcon" color="danger"></fa-icon>
@@ -43,7 +43,7 @@
           <ion-label class="ion-text-left ion-text-uppercase">#{{ invoice.invoice_number | uppercase }}</ion-label>
         </div>
         <div class="row right-col">
-          <ion-label class="ion-text-left price" color="primary">{{ invoice.total | currency: 'Bs' }}</ion-label>
+          <ion-label class="ion-text-left">{{ invoice.total | currency: 'Bs' }}</ion-label>
         </div>
       </div>
     </ion-card-content>

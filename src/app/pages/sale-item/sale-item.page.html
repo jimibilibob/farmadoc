@@ -30,7 +30,7 @@
 
       <ion-item lines="none">
         <ion-label position="stacked" class="required">Precio de Venta(Bs): </ion-label>
-        <ion-input type="number" inputmode="numeric" formControlName="sale_price" readonly></ion-input>
+        <ion-input type="number" inputmode="numeric" formControlName="sale_price"></ion-input>
       </ion-item>
       <app-error formName="selectedItemForm" [control]="{sale_price: selectedItemForm.get('sale_price')}">
       </app-error>
@@ -50,7 +50,7 @@
       </ion-item>
     </ion-card>
 
-    <ion-button expand="block" color="primary" type="submit">
+    <ion-button expand="block" color="tertiary" type="submit">
       + Agregar Producto
     </ion-button>
   </form>

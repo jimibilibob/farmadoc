@@ -32,7 +32,9 @@ export class SaleFormPage implements OnInit, OnDestroy {
     console.log(this.selectedInvoice);
     this.subs = new Subscription();
     this.saleForm = new FormGroup({
-      name: new FormControl(''),
+      name: new FormControl('', Validators.compose([
+        Validators.required
+      ])),
       invoice_number: new FormControl('', Validators.compose([
         Validators.required
       ]))

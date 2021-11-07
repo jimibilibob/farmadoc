@@ -2,7 +2,7 @@ ion-fab {
   padding: 0px 10px;
 }
 ion-title {
-  --color: var(--ion-color-primary);
+  // --color: var(--ion-color-primary);
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
@@ -10,6 +10,61 @@ ion-card {
   margin: 6px 10px 6px 10px;
   animation: fadeInDown;
   animation-duration: 0.7s;
+  &.sale {
+    // border-left-style: solid;
+    // border-left-width: 5px;
+    // border-left-color: var(--ion-color-tertiary);
+    div.title-row {
+      align-items: center;
+      min-height: 50px;
+      padding-left: 20px;
+      display: flex;
+      flex-direction: row;
+      background-color: var(--ion-color-tertiary);
+      color: var(--ion-color-light);
+    }
+    div.main-row {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      div.row {
+        padding-left: 15px;
+        &.right-col {
+          min-width: 100px;
+          border-left: 1ch;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+  &.purchase {
+    // border-left-style: solid;
+    // border-left-width: 5px;
+    // border-left-color: var(--ion-color-warning);
+    div.title-row {
+      align-items: center;
+      min-height: 50px;
+      padding-left: 20px;
+      display: flex;
+      flex-direction: row;
+      background-color: var(--ion-color-warning);
+    }
+    div.main-row {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      div.row {
+        padding-left: 15px;
+        &.right-col {
+          min-width: 100px;
+          border-left: 1ch;
+          font-weight: 600;
+        }
+      }
+    }
+  }
 }
 
 .title {
@@ -17,18 +72,9 @@ ion-card {
   font-size: 14px;
 }
 
-.title-row {
-  align-items: center;
-  min-height: 50px;
-  padding-left: 20px;
-  display: flex;
-  flex-direction: row;
-  background-color: rgb(240, 240, 240);
-}
-
 fa-icon {
   zoom: 2;
-  color: var(--ion-color-primary);
+  color: var(--ion-color-light);
 }
 
 .sub-title {
@@ -41,25 +87,8 @@ fa-icon {
   font-size: 12px;
 }
 
-.main-row {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.row {
-  padding-left: 15px;
-}
-
 ion-label {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   margin: 10px 0 10px 0;
-  
-}
-
-.right-col {
-  min-width: 100px;
-  border-left: 1ch;
 }

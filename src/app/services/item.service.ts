@@ -13,7 +13,6 @@ export class ItemService {
 
   private items: BehaviorSubject<Item[]>;
   private selectedItem: BehaviorSubject<Item>;
-  private isSale: BehaviorSubject<boolean>;
 
   constructor(
     private toastService: ToastService,
@@ -21,7 +20,6 @@ export class ItemService {
   ) {
     this.items = new BehaviorSubject<Item[]>([]);
     this.selectedItem = new BehaviorSubject<Item>(new Item());
-    this.isSale = new BehaviorSubject<boolean>(false);
    }
 
   searchItems(items: Item[], word: string) {
@@ -47,14 +45,6 @@ export class ItemService {
 
   setSelectedItem(item: Item) {
     this.selectedItem.next(item);
-  }
-
-  setIsSale(isSale: boolean) {
-    this.isSale.next(isSale);
-  }
-
-  getIsSale(): Observable<boolean> {
-    return this.isSale.asObservable();
   }
 
   async getItems() {
