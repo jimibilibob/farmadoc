@@ -24,15 +24,15 @@
       <app-error formName="itemForm" [control]="{commercial_name: itemForm.get('commercial_name')}">
       </app-error>
   
-      <ion-item>
-        <ion-label position="stacked" class="required">Precio de Compra</ion-label>
+      <ion-item *ngIf="capacitor.isNativePlatform()">
+        <ion-label position="stacked" class="required">Precio de Compra(Bs)</ion-label>
         <ion-input placeholder="Bs 0.00" type="number" inputmode="decimal" formControlName="price"></ion-input>
       </ion-item>
       <app-error formName="itemForm" [control]="{price: itemForm.get('price')}">
       </app-error>
 
       <ion-item>
-        <ion-label position="stacked" class="required">Precio de Venta</ion-label>
+        <ion-label position="stacked" class="required">Precio de Venta(Bs)</ion-label>
         <ion-input placeholder="Bs 0.00" type="number" inputmode="decimal" formControlName="sale_price"></ion-input>
       </ion-item>
       <app-error formName="itemForm" [control]="{sale_price: itemForm.get('sale_price')}">
@@ -60,7 +60,7 @@
         <ion-label position="stacked">Descripción</ion-label>
         <ion-textarea rows="4" placeholder="Escribe los detalles adicionales aquí" type="text" inputmode="text" formControlName="description"></ion-textarea>
       </ion-item>
-      <ion-button expand="block" color="warning" type="submit">
+      <ion-button *ngIf="capacitor.isNativePlatform()" expand="block" color="warning" type="submit">
         {{ buttonLabel | uppercase }}
       </ion-button>
   </form>

@@ -1,6 +1,7 @@
 /* eslint-disable curly */
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Capacitor } from '@capacitor/core';
 import { of, Subscription } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { Invoice, Item, TYPE } from 'src/app/models';
@@ -21,6 +22,7 @@ export class ItemsPage implements OnInit, OnDestroy {
   navParams: any;
   pageName: any;
   subs: Subscription;
+  capacitor = Capacitor;
 
   constructor(
     private itemService: ItemService,

@@ -3,6 +3,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Capacitor } from '@capacitor/core';
 import { Subscription } from 'rxjs';
 import { Item } from 'src/app/models';
 import { ItemService, LoadingService } from 'src/app/services';
@@ -20,6 +21,7 @@ export class ItemFormPage implements OnInit, OnDestroy {
   itemForm: FormGroup;
   selectedItem: Item;
   subs: Subscription;
+  capacitor = Capacitor;
 
   constructor(
     private router: Router,

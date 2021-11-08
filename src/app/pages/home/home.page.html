@@ -10,14 +10,14 @@
             </ion-card-content>
           </ion-card>
 
-          <ion-card button routerLink="/purchases">
+          <ion-card button routerLink="/purchases" *ngIf="capacitor.isNativePlatform()">
             <ion-card-content>
               <fa-icon [icon]="purchaseIcon"></fa-icon>
               <ion-label class="ion-text-center ion-text-uppercase">Compras</ion-label>
             </ion-card-content>
           </ion-card>
           <!-- <ion-card button *ngFor="let option of menu" (click)="redirectTo(option.path, option.reqAuth)"> -->
-            <ion-card button button routerLink="/invoices" >
+            <ion-card button button routerLink="/invoices" *ngIf="capacitor.isNativePlatform()">
             <ion-card-content>
               <fa-icon [icon]="invoiceIcon"></fa-icon>
               <ion-label class="ion-text-center ion-text-uppercase">Facturas</ion-label>
