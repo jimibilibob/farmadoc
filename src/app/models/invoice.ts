@@ -76,6 +76,10 @@ export class Invoice {
     this.type_id = type;
   }
 
+  getTypeString(): string {
+    return this.type_id === TYPE.purchases ? 'Compra' : 'Venta';
+  }
+
   private init() {
     this.id = 0;
     this.name = '';

@@ -16,6 +16,7 @@ ion-card {
     // border-left-color: var(--ion-color-warning);
     div.title-row {
       align-items: center;
+      justify-content: space-between;
       min-height: 50px;
       padding-left: 20px;
       display: flex;

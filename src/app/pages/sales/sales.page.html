@@ -32,9 +32,11 @@
     <ion-card [class]="invoice.type_id | invoicetype" button *ngFor="let invoice of filteredSales" (click)="goToInvoiceDetails(invoice)">
 
       <div class="title-row">
-        <fa-icon [icon]="invoiceIcon" color="danger"></fa-icon>
-        <!-- <ion-label class="ion-text-left ion-text-uppercase ion-padding-start title">#{{ invoice.invoice_number | uppercase }}</ion-label> -->
-        <ion-label class="ion-text-left ion-text-uppercase ion-padding-start title">{{ invoice.created_at | date }}</ion-label>
+        <div class="main-row">
+          <fa-icon [icon]="invoiceIcon"></fa-icon>
+          <ion-label class="ion-text-left ion-text-uppercase ion-padding-start title">{{ invoice.created_at | date }}</ion-label>
+        </div>
+        <ion-label class="ion-text-left ion-text-uppercase ion-padding-end title">{{ invoice.getTypeString() }}</ion-label>
       </div>
       <ion-card-content (click)="null">
       <div class="main-row">
