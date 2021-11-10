@@ -1,3 +1,4 @@
+/* eslint-disable curly */
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable max-len */
 import { Component, OnDestroy, OnInit } from '@angular/core';
@@ -77,6 +78,7 @@ export class ItemFormPage implements OnInit, OnDestroy {
   }
 
   async createOrUpdateItem() {
+    if (!this.capacitor.isNativePlatform()) this.itemForm.removeControl('price');
     if (this.itemForm.invalid) {
       return Object.values(this.itemForm.controls).forEach(
         formControl => {

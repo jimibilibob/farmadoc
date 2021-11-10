@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { faPills, faCalendarDay, faFileInvoice } from '@fortawesome/free-solid-svg-icons';
 import { InvoiceService } from 'src/app/services';
-import { Invoice, Item } from 'src/app/models';
+import { Invoice, Item, TYPE } from 'src/app/models';
 
 @Component({
   selector: 'app-invoice',
@@ -19,6 +19,7 @@ export class InvoiceDetailsPage implements OnInit, OnDestroy {
   invoiceIcon = faFileInvoice;
   calendarIcon = faCalendarDay;
   itemIcon = faPills;
+  invoiceType = TYPE;
 
   constructor(
     private invoiceService: InvoiceService,

@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { faCalendarDay, faPills } from '@fortawesome/free-solid-svg-icons';
 import { AlertController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-import { Invoice, InvoiceItems } from 'src/app/models';
+import { Invoice, InvoiceItems, TYPE } from 'src/app/models';
 import { InvoiceService, LoadingService, NavService } from 'src/app/services';
 
 @Component({
@@ -55,17 +55,32 @@ export class InvoiceCreationPage implements OnInit, OnDestroy {
           formControl.markAsTouched();
         });
     } else {
-      await this.loadingService.presentLoading('Cargando, espere por favor...');
-      this.invoiceForm.value.exp_date = new Date(this.invoiceForm.value.exp_date);
-      this.selectedInvoice.name = this.invoiceForm.value.name;
-      this.selectedInvoice.invoice_number = this.invoiceForm.value.invoice_number;
-      await this.invoiceService.storeInvoice(this.selectedInvoice);
-      await this.router.navigate(['/purchases']);
-      await this.loadingService.dismissLoading();
+      if (this.selectedInvoice.items.length === 0) {
+        const alert = await this.alertController.create({
+          message: `Por favor agregue al menos un producto para poder registrar esta compra.`,
+          buttons: [
+            {
+              text: 'ACEPTAR',
+              role: 'cancel',
+              handler: () => null
+            }
+          ]
+        });
+        await alert.present();
+      } else {
+        await this.loadingService.presentLoading('Cargando, espere por favor...');
+        this.invoiceForm.value.exp_date = new Date(this.invoiceForm.value.exp_date);
+        this.selectedInvoice.setFormData(this.invoiceForm.value.name, this.invoiceForm.value.invoice_number);
+        await this.invoiceService.storeInvoice(this.selectedInvoice);
+        await this.router.navigate(['/purchases']);
+        this.loadingService.dismissLoading();
+      }
     }
   }
 
   goToItems() {
+    this.selectedInvoice.setFormData(this.invoiceForm.value.name, this.invoiceForm.value.invoice_number);
+    this.invoiceService.setSelectedInvoice(this.selectedInvoice);
     this.navService.pushToNextScreenWithParams('/items', 'Seleccione un Producto');
   }
 
@@ -77,16 +92,16 @@ export class InvoiceCreationPage implements OnInit, OnDestroy {
       de la lista de productos?`,
       buttons: [
         {
-          text: 'CANCELAR',
-          role: 'cancel',
-          // cssClass: 'secondary',
-          handler: () => null
-        }, {
           text: 'CONFIRMAR',
           handler: () => {
             this.selectedInvoice.removeItem(invoiceItem);
             this.invoiceService.setSelectedInvoice(this.selectedInvoice);
           }
+        },
+        {
+          text: 'CANCELAR',
+          role: 'cancel',
+          handler: () => null
         }
       ]
     });
@@ -97,7 +112,12 @@ export class InvoiceCreationPage implements OnInit, OnDestroy {
     return this.invoiceService.getSelectedInvoiceObservable().subscribe( res => {
       console.log(res);
       this.selectedInvoice = res;
+      this.selectedInvoice.setType(TYPE.sales);
       this.selectedInvoice.updateTotal();
+      this.invoiceForm.setValue({
+        name: this.selectedInvoice.name,
+        invoice_number: this.selectedInvoice.invoice_number
+      });
     });
   }
 

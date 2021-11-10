@@ -1,3 +1,4 @@
+/* eslint-disable curly */
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -103,15 +104,24 @@ export class InvoiceService {
       invoice
     ]);
     if (error) {
+      let color = 'primary';
+      switch (invoice.type_id) {
+        case TYPE.purchases:
+          color = 'warning';
+          break;
+        case TYPE.sales:
+          color = 'tertiary';
+          break;
+        default:
+          break;
+      }
       await this.toastService.presentToast({
-      message: 'Error inesperado, por favor vuelva a intentar más tarde'
+      message: 'Error inesperado, por favor vuelva a intentar más tarde',
+      color
       });
     } else {
       console.log('UPSERT INVOICE:', data);
       await this.storeInvoiceItems(invoiceItems, data[0].id, invoice.type_id);
-      await this.toastService.presentToast({
-          message: 'Factura guardada exitosamente!'
-        });
     }
     await this.getInvoicesByType(invoice.type_id);
   }
@@ -129,6 +139,7 @@ export class InvoiceService {
         invoice_id,
         item_id,
         price,
+        sale_price,
         discount,
         units,
         total_sub,
@@ -169,15 +180,25 @@ export class InvoiceService {
     .insert(
       invoiceItems
     );
-    if (error) {
-      await this.toastService.presentToast({
-      message: 'Error inesperado, por favor vuelva a intentar más tarde'
-      });
-    } else {
-      await this.toastService.presentToast({
-        message: 'Factura guardada exitosamente!'
-        });
+    let message = 'Error';
+    let color = 'primary';
+    switch (type) {
+      case TYPE.purchases:
+        message = 'Compra guardada exitosamente!';
+        color = 'warning';
+        break;
+      case TYPE.sales:
+        message = 'Venta guardada exitosamente!';
+        color = 'tertiary';
+        break;
+      default:
+        break;
     }
+    if (error) message = 'Error inesperado, por favor vuelva a intentar más tarde';
+    await this.toastService.presentToast({
+      message,
+      color
+    });
     await this.getInvoicesByType(type);
   }
 

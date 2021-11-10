@@ -56,17 +56,32 @@ export class SaleFormPage implements OnInit, OnDestroy {
           formControl.markAsTouched();
         });
     } else {
-      await this.loadingService.presentLoading('Cargando, espere por favor...');
-      this.saleForm.value.exp_date = new Date(this.saleForm.value.exp_date);
-      this.selectedInvoice.name = this.saleForm.value.name;
-      this.selectedInvoice.invoice_number = this.saleForm.value.invoice_number;
-      await this.invoiceService.storeInvoice(this.selectedInvoice);
-      await this.router.navigate(['/sales']);
-      await this.loadingService.dismissLoading();
+      if (this.selectedInvoice.items.length === 0) {
+        const alert = await this.alertController.create({
+          message: `Por favor agregue al menos un producto para poder registrar esta compra.`,
+          buttons: [
+            {
+              text: 'ACEPTAR',
+              role: 'cancel',
+              handler: () => null
+            }
+          ]
+        });
+        await alert.present();
+      } else {
+        await this.loadingService.presentLoading('Cargando, espere por favor...');
+        this.saleForm.value.exp_date = new Date(this.saleForm.value.exp_date);
+        this.selectedInvoice.setFormData(this.saleForm.value.name, this.saleForm.value.invoice_number);
+        await this.invoiceService.storeInvoice(this.selectedInvoice);
+        await this.router.navigate(['/sales']);
+        this.loadingService.dismissLoading();
+      }
     }
   }
 
   goToItems() {
+    this.selectedInvoice.setFormData(this.saleForm.value.name, this.saleForm.value.invoice_number);
+    this.invoiceService.setSelectedInvoice(this.selectedInvoice);
     this.navService.pushToNextScreenWithParams('/items', 'Seleccione un Producto');
   }
 
@@ -78,16 +93,16 @@ export class SaleFormPage implements OnInit, OnDestroy {
       de la lista de productos?`,
       buttons: [
         {
-          text: 'CANCELAR',
-          role: 'cancel',
-          // cssClass: 'secondary',
-          handler: () => null
-        }, {
           text: 'CONFIRMAR',
           handler: () => {
             this.selectedInvoice.removeItem(invoiceItem);
             this.invoiceService.setSelectedInvoice(this.selectedInvoice);
           }
+        },
+        {
+          text: 'CANCELAR',
+          role: 'cancel',
+          handler: () => null
         }
       ]
     });
@@ -100,6 +115,10 @@ export class SaleFormPage implements OnInit, OnDestroy {
       this.selectedInvoice = res;
       this.selectedInvoice.setType(TYPE.sales);
       this.selectedInvoice.updateTotal();
+      this.saleForm.setValue({
+        name: this.selectedInvoice.name,
+        invoice_number: this.selectedInvoice.invoice_number
+      });
     });
   }
 

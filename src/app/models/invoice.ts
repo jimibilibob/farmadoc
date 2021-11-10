@@ -72,6 +72,11 @@ export class Invoice {
     delete this.created_at;
   }
 
+  setFormData(name: string, invoiceNumber: string) {
+    this.name = name;
+    this.invoice_number = invoiceNumber;
+  }
+
   setType(type: TYPE) {
     this.type_id = type;
   }

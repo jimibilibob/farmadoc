@@ -25,7 +25,7 @@
       </div>
       
       <ion-item lines="none">
-        <ion-label position="stacked" class="required">{{selectedInvoice.type_id === 1 ? 'Nombre del vendedor(a)' : 'Proveedor'}}</ion-label>
+        <ion-label position="stacked" class="required">{{selectedInvoice.type_id === invoiceType.sales ? 'Nombre del vendedor(a)' : 'Proveedor'}}</ion-label>
         <ion-input class="name" type="text" inputmode="text" formControlName="name" value="Disable" readonly>{{ selectedInvoice.name | uppercase }}</ion-input>
       </ion-item>
     </ion-card>
@@ -46,9 +46,9 @@
             <div class="card-section">
               <div class="detail" slot="start">
                 <fa-icon [icon]="itemIcon" [class]="selectedInvoice.type_id | invoicetype"></fa-icon>
-                <ion-label class="ion-text-left ion-text-uppercase ion-padding-start">{{ item.units }} x {{ item.price | currency: 'Bs ': 'symbol': '.2-2' }}</ion-label>
+                <ion-label class="ion-text-left ion-text-uppercase ion-padding-start">{{ item.units }} x {{ selectedInvoice.type_id === invoiceType.sales ? item.sale_price : item.price | currency: 'Bs ': 'symbol': '.2-2' }}</ion-label>
               </div>
-              <ion-label slot="end">{{ item.units * item.price | currency: 'Bs ': 'symbol': '.2-2'}}</ion-label>
+              <ion-label slot="end">{{ item.units * ((selectedInvoice.type_id === invoiceType.sales) ? item.sale_price : item.price) | currency: 'Bs ': 'symbol': '.2-2'}}</ion-label>
             </div>
             <ion-text class="description">{{ item.details.description | uppercase }}</ion-text>
           </div>
