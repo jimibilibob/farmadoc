@@ -70,6 +70,7 @@ export class InvoiceService {
         invoice_id,
         item_id,
         price,
+        sale_price,
         discount,
         units,
         total_sub,
