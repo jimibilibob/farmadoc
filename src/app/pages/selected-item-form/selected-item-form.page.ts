@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { faCalendarDay } from '@fortawesome/free-solid-svg-icons';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { faCalendarDay } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
+
+
 import { Invoice, InvoiceItems, Item } from 'src/app/models';
 import { InvoiceService, ItemService } from 'src/app/services';
 
@@ -62,21 +64,17 @@ export class SelectedItemFormPage implements OnInit, OnDestroy {
         formControl => {
           formControl.markAsTouched();
         });
-    } else {
-      const formValue = this.selectedItemForm.value;
-      console.log('SelectedItem', this.selectedItem);
-      console.log('Form Value', formValue);
-      let newInvoiceItems = this.selectedItem.castToInvoiceItems();
-      newInvoiceItems = new InvoiceItems({
-        ... newInvoiceItems,
-        units: formValue.units,
-        price: formValue.price
-      });
-      console.log('newInvoiceItems:', newInvoiceItems);
-      this.selectedInvoice.addItem(newInvoiceItems);
-      this.invoiceService.setSelectedInvoice(this.selectedInvoice);
-      this.router.navigate(['/invoice-creation']);
     }
+    const formValue = this.selectedItemForm.value;
+    let newInvoiceItems = this.selectedItem.castToInvoiceItems();
+    newInvoiceItems = new InvoiceItems({
+      ... newInvoiceItems,
+      units: formValue.units,
+      price: formValue.price
+    });
+    this.selectedInvoice.addItem(newInvoiceItems);
+    this.invoiceService.setSelectedInvoice(this.selectedInvoice);
+    this.router.navigate(['/invoice-creation']);
   }
 
   private addItemSub(): Subscription {

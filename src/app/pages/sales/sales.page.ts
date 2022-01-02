@@ -1,9 +1,11 @@
 /* eslint-disable curly */
+import { catchError, debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { faFileInvoice } from '@fortawesome/free-solid-svg-icons';
 import { of, Subscription } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { Router } from '@angular/router';
+
+
 import { Invoice, TYPE } from 'src/app/models';
 import { InvoiceService, ItemService } from 'src/app/services';
 
@@ -68,7 +70,6 @@ export class SalesPage implements OnInit, OnDestroy {
 
   private invoicesSub() {
     return this.invoiceService.getInvoicesObservable().subscribe( res => {
-      console.log('FACTURAS:', res);
       this.sales = res;
       this.filteredSales = res;
     });

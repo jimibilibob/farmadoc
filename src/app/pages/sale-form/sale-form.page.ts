@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import { AlertController } from '@ionic/angular';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { faCalendarDay, faPills } from '@fortawesome/free-solid-svg-icons';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { faCalendarDay, faPills } from '@fortawesome/free-solid-svg-icons';
-import { AlertController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+
+
 import { Invoice, InvoiceItems, TYPE } from 'src/app/models';
 import { InvoiceService, LoadingService, NavService } from 'src/app/services';
 
@@ -50,12 +52,13 @@ export class SaleFormPage implements OnInit, OnDestroy {
   }
 
   async createInvoice() {
-    if (this.saleForm.invalid) {
-      return Object.values(this.saleForm.controls).forEach(
-        formControl => {
-          formControl.markAsTouched();
-        });
-    } else {
+    try {
+      if (this.saleForm.invalid) {
+        return Object.values(this.saleForm.controls).forEach(
+          formControl => {
+            formControl.markAsTouched();
+          });
+      }
       if (this.selectedInvoice.items.length === 0) {
         const alert = await this.alertController.create({
           message: `Por favor agregue al menos un producto para poder registrar esta compra.`,
@@ -68,14 +71,16 @@ export class SaleFormPage implements OnInit, OnDestroy {
           ]
         });
         await alert.present();
-      } else {
-        await this.loadingService.presentLoading('Cargando, espere por favor...');
-        this.saleForm.value.exp_date = new Date(this.saleForm.value.exp_date);
-        this.selectedInvoice.setFormData(this.saleForm.value.name, this.saleForm.value.invoice_number);
-        await this.invoiceService.storeInvoice(this.selectedInvoice);
-        await this.router.navigate(['/sales']);
-        this.loadingService.dismissLoading();
+        return;
       }
+      await this.loadingService.presentLoading('Cargando, espere por favor...');
+      this.saleForm.value.exp_date = new Date(this.saleForm.value.exp_date);
+      this.selectedInvoice.setFormData(this.saleForm.value.name, this.saleForm.value.invoice_number);
+      await this.invoiceService.storeInvoice(this.selectedInvoice);
+      await this.router.navigate(['/sales']);
+      this.loadingService.dismissLoading();
+    } catch (error) {
+      console.error('Unexpected behavior:', error);
     }
   }
 

@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import { AlertController } from '@ionic/angular';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { faCalendarDay } from '@fortawesome/free-solid-svg-icons';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { faCalendarDay } from '@fortawesome/free-solid-svg-icons';
-import { AlertController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+
+
 import { Invoice, InvoiceItems, Item } from 'src/app/models';
 import { InvoiceService, ItemService } from 'src/app/services';
 
@@ -64,36 +66,32 @@ export class SaleItemPage implements OnInit, OnDestroy {
         formControl => {
           formControl.markAsTouched();
         });
-    } else {
-      if (this.selectedItemForm.value.sale_price < (this.selectedItem.sale_price - 5)) {
-        const alert = await this.alertController.create({
-          message: `El precio de venta no puede ser menor que ${this.selectedItem.sale_price - 5} BS`,
-          buttons: [
-            {
-              text: 'OK',
-              role: 'cancel',
-              handler: () => null
-            }
-          ]
-        });
-        await alert.present();
-        return;
-      }
-      const formValue = this.selectedItemForm.value;
-      console.log('SelectedItem', this.selectedItem);
-      console.log('Form Value', formValue);
-      let newInvoiceItems = this.selectedItem.castToInvoiceItems();
-      console.log('NewInvoiceItems addSelectedItem:', newInvoiceItems);
-      newInvoiceItems = new InvoiceItems({
-        ... newInvoiceItems,
-        units: formValue.units,
-        sale_price: formValue.sale_price
-      });
-      console.log('newInvoiceItems InvoiceItems():', newInvoiceItems);
-      this.selectedInvoice.addItem(newInvoiceItems);
-      this.invoiceService.setSelectedInvoice(this.selectedInvoice);
-      this.router.navigate(['/sale-form']);
     }
+    if (this.selectedItemForm.value.sale_price < (this.selectedItem.sale_price - 5)) {
+      const alert = await this.alertController.create({
+        message: `El precio de venta no puede ser menor que ${this.selectedItem.sale_price - 5} BS`,
+        buttons: [
+          {
+            text: 'OK',
+            role: 'cancel',
+            handler: () => null
+          }
+        ]
+      });
+      await alert.present();
+      return;
+    }
+    const formValue = this.selectedItemForm.value;
+    let newInvoiceItems = this.selectedItem.castToInvoiceItems();
+    console.log('NewInvoiceItems addSelectedItem:', newInvoiceItems);
+    newInvoiceItems = new InvoiceItems({
+      ... newInvoiceItems,
+      units: formValue.units,
+      sale_price: formValue.sale_price
+    });
+    this.selectedInvoice.addItem(newInvoiceItems);
+    this.invoiceService.setSelectedInvoice(this.selectedInvoice);
+    this.router.navigate(['/sale-form']);
   }
 
   private addItemSub(): Subscription {

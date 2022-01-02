@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { faEye, faEyeSlash, faLock, faAt } from '@fortawesome/free-solid-svg-icons';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+
+
 import { AuthService, ToastService } from 'src/app/services';
-import { faEye, faEyeSlash, faLock, faAt } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-signin',
@@ -47,25 +49,23 @@ export class SigninPage implements OnInit {
         formControl => {
           formControl.markAsTouched();
         });
-    } else {
-      const {error, data} = await this.authService.signIn(this.signinForm.value);
-      let message = 'Su email o su contraseña son incorrectos.';
-      if (error) {
-        if (error.message.includes('not confirmed')) {
-          message = 'Su email no ha sido confirmado todavía.';
-        }
-        await this.toastService.presentToast({
-          message
-          });
-      } else {
-        message = 'Bienvenido(a)!';
-        await this.toastService.presentToast({
-          message
-          });
-        this.signinForm.reset();
-        this.router.navigate(['/home']);
-      }
     }
+    const {error, data} = await this.authService.signIn(this.signinForm.value);
+    if (error) {
+      let message = 'Su email o su contraseña son incorrectos.';
+      if (error.message.includes('not confirmed')) {
+        message = 'Su email no ha sido confirmado todavía.';
+      }
+      await this.toastService.presentToast({
+        message
+        });
+      return;
+    }
+    await this.toastService.presentToast({
+      message: 'Bienvenido(a)!'
+      });
+    this.signinForm.reset();
+    this.router.navigate(['/home']);
   }
 
   async goToSignup() {

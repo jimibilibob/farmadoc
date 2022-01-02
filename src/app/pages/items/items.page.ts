@@ -1,9 +1,11 @@
 /* eslint-disable curly */
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
-import { of, Subscription } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { of, Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+
+
 import { Invoice, Item, TYPE } from 'src/app/models';
 import { InvoiceService, ItemService, NavService } from 'src/app/services';
 
@@ -70,18 +72,21 @@ export class ItemsPage implements OnInit, OnDestroy {
     this.itemService.setSelectedItem(item);
     if (this.navParams) {
       this.isSelectingItems = true;
-      this.router.navigate([ (this.selectedInvoice.type_id === TYPE.sales) ?
-        '/sale-item' : '/selected-item']);
-    } else {
-      this.navService.pushToNextScreenWithParams('/item-form', 'Editar Producto');
-      this.isSelectingItems = false;
+      this.router.navigate([ (this.selectedInvoice.type_id === TYPE.sales)
+        ? '/sale-item'
+        : '/selected-item']);
+      return;
     }
+    this.navService.pushToNextScreenWithParams('/item-form', 'Editar Producto');
+    this.isSelectingItems = false;
   }
 
   onBackButton() {
     console.log('On back button', this.isSelectingItems);
-    this.router.navigate( [ this.navParams ?
-      (this.selectedInvoice.type_id === TYPE.purchases ? '/invoice-creation' : '/sale-form')
+    this.router.navigate( [ this.navParams
+      ? ((this.selectedInvoice.type_id === TYPE.purchases)
+        ? '/invoice-creation'
+        : '/sale-form')
       : '/home' ] );
   }
 

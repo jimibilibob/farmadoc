@@ -1,11 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable curly */
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable max-len */
+import { Capacitor } from '@capacitor/core';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Capacitor } from '@capacitor/core';
 import { Subscription } from 'rxjs';
+
+
 import { Item } from 'src/app/models';
 import { ItemService, LoadingService } from 'src/app/services';
 
@@ -78,23 +81,24 @@ export class ItemFormPage implements OnInit, OnDestroy {
   }
 
   async createOrUpdateItem() {
-    if (!this.capacitor.isNativePlatform()) this.itemForm.removeControl('price');
-    if (this.itemForm.invalid) {
-      return Object.values(this.itemForm.controls).forEach(
-        formControl => {
-          formControl.markAsTouched();
-        });
-    } else {
+    try {
+      if (!this.capacitor.isNativePlatform()) this.itemForm.removeControl('price');
+      if (this.itemForm.invalid) {
+        return Object.values(this.itemForm.controls).forEach(
+          formControl => {
+            formControl.markAsTouched();
+          });
+      }
       await this.loadingService.presentLoading('Cargando, espere por favor...');
       this.itemForm.value.exp_date = new Date(this.itemForm.value.exp_date);
       const newItem = new Item(this.itemForm.value, true);
-      if (this.isEdition) {
-        await this.itemService.updateItem({item: newItem, itemId: this.selectedItem.id});
-      } else {
-        await this.itemService.storeItem(newItem);
-      }
+      this.isEdition
+        ? await this.itemService.updateItem({item: newItem, itemId: this.selectedItem.id})
+        : await this.itemService.storeItem(newItem);
       await this.router.navigate(['/items']);
-      await this.loadingService.dismissLoading();
+      this.loadingService.dismissLoading();
+    } catch (error) {
+      console.error('Unexpected behavior:', error);
     }
   }
 
@@ -110,10 +114,10 @@ export class ItemFormPage implements OnInit, OnDestroy {
       this.pageName = navParams;
       this.isEdition = true;
       this.buttonLabel = 'Guardar Cambios';
-    } else {
-      this.pageName = 'Agregar Nuevo Producto';
-      this.isEdition = false;
-      this.buttonLabel = 'Agregar';
+      return;
     }
+    this.pageName = 'Agregar Nuevo Producto';
+    this.isEdition = false;
+    this.buttonLabel = 'Agregar';
   }
 }

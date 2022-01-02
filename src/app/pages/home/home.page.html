@@ -17,7 +17,7 @@
             </ion-card-content>
           </ion-card>
           <!-- <ion-card button *ngFor="let option of menu" (click)="redirectTo(option.path, option.reqAuth)"> -->
-            <ion-card button button routerLink="/invoices" *ngIf="capacitor.isNativePlatform()">
+            <ion-card button button routerLink="/invoices" *ngIf="!capacitor.isNativePlatform()">
             <ion-card-content>
               <fa-icon [icon]="invoiceIcon"></fa-icon>
               <ion-label class="ion-text-center ion-text-uppercase">Facturas</ion-label>

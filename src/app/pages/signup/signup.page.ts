@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { faAt, faEye, faEyeSlash, faLock } from '@fortawesome/free-solid-svg-icons';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { faAt, faEye, faEyeSlash, faLock } from '@fortawesome/free-solid-svg-icons';
+
+
 import { AuthService, ToastService } from 'src/app/services';
 
 @Component({
@@ -49,23 +51,20 @@ export class SignupPage implements OnInit {
         formControl => {
           formControl.markAsTouched();
         });
-    } else {
-      const {error, data} = await this.authService.signUp(this.signupForm.value);
-      console.log('ERROR WHILE SIGNUP:', error);
-      console.log('DATA WHILE SIGNUP:', data);
-      if (error) {
-        await this.toastService.presentToast({
-          message: 'Error inesperado, por favor vuelva a intentar más tarde'
-          });
-      } else {
-        await this.toastService.presentToast({
-          message: `Bienvenido!`,
-          duration: 5000
-          });
-          this.router.navigate(['/home']);
-        }
-      this.signupForm.reset();
     }
+    const {error, data} = await this.authService.signUp(this.signupForm.value);
+    if (error) {
+      await this.toastService.presentToast({
+        message: 'Error inesperado, por favor vuelva a intentar más tarde'
+        });
+      return;
+    }
+    await this.toastService.presentToast({
+      message: `Bienvenido!`,
+      duration: 5000
+      });
+    this.router.navigate(['/home']);
+    this.signupForm.reset();
   }
 
   async goToSignin() {
