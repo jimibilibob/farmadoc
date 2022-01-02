@@ -77,15 +77,15 @@ export class ItemService {
       await this.toastService.presentToast({
       message: 'Error inesperado, por favor vuelva a intentar más tarde'
       });
-    } else {
-      await this.toastService.presentToast({
-        message: 'Producto guardado exitosamente!'
-        });
+      return;
     }
+    await this.toastService.presentToast({
+      message: 'Producto guardado exitosamente!'
+      });
     await this.getItems();
   }
 
-  async updateItem(item: Item, itemId: number) {
+  async updateItem({item, itemId}: UpdateItemsParams) {
     item.addUserId(this.authService.user.id);
     const{ error, data } = await StaticSupabase.supabaseClient
     .from('items')
@@ -96,11 +96,15 @@ export class ItemService {
       await this.toastService.presentToast({
       message: 'Error inesperado, por favor vuelva a intentar más tarde'
       });
-    } else {
-      await this.toastService.presentToast({
-        message: 'Producto actualizado exitosamente!'
-        });
     }
+    await this.toastService.presentToast({
+      message: 'Producto actualizado exitosamente!'
+      });
     await this.getItems();
   }
+}
+
+interface UpdateItemsParams {
+  item: Item;
+  itemId: number;
 }
