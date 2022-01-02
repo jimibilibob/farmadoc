@@ -120,10 +120,9 @@ export class InvoiceService {
       message: 'Error inesperado, por favor vuelva a intentar más tarde',
       color
       });
-    } else {
-      console.log('UPSERT INVOICE:', data);
-      await this.storeInvoiceItems(invoiceItems, data[0].id, invoice.type_id);
     }
+    console.log('UPSERT INVOICE:', data);
+    await this.storeInvoiceItems({invoiceItems, invoiceId: data[0].id, type: invoice.type_id});
     await this.getInvoicesByType(invoice.type_id);
   }
 
@@ -165,7 +164,7 @@ export class InvoiceService {
     this.invoices.next(invoices);
   }
 
-  private async storeInvoiceItems(invoiceItems: InvoiceItems[], invoiceId: number, type: TYPE) {
+  private async storeInvoiceItems({invoiceItems, invoiceId, type}: StoreInvoiceItemsParams) {
     if (invoiceItems.length <= 0) {
       return;
     }
@@ -229,4 +228,10 @@ export class InvoiceService {
       iitem.details.generic_name.toLocaleLowerCase().includes(word) ||
       iitem.details.description.toLocaleLowerCase().includes(word) );
   }
+}
+
+interface StoreInvoiceItemsParams {
+  invoiceItems: InvoiceItems[];
+  invoiceId: number;
+  type: TYPE;
 }

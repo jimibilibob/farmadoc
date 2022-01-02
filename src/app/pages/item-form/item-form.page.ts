@@ -89,7 +89,7 @@ export class ItemFormPage implements OnInit, OnDestroy {
       this.itemForm.value.exp_date = new Date(this.itemForm.value.exp_date);
       const newItem = new Item(this.itemForm.value, true);
       if (this.isEdition) {
-        await this.itemService.updateItem(newItem, this.selectedItem.id);
+        await this.itemService.updateItem({item: newItem, itemId: this.selectedItem.id});
       } else {
         await this.itemService.storeItem(newItem);
       }

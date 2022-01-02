@@ -85,6 +85,7 @@ export class ItemService {
     await this.getItems();
   }
 
+  // parametros nombrados
   async updateItem({item, itemId}: UpdateItemsParams) {
     item.addUserId(this.authService.user.id);
     const{ error, data } = await StaticSupabase.supabaseClient
