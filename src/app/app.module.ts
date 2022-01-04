@@ -21,7 +21,6 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { registerLocaleData } from '@angular/common';
 import locale from '@angular/common/locales/es';
-import { InvoicetypePipe } from './pipes/invoicetype.pipe';
 import { PipesModule } from './pipes/pipes.module';
 
 registerLocaleData(locale, 'es');

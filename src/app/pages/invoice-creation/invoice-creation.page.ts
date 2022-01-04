@@ -115,7 +115,6 @@ export class InvoiceCreationPage implements OnInit, OnDestroy {
 
   private invoiceSub(): Subscription {
     return this.invoiceService.getSelectedInvoiceObservable().subscribe( res => {
-      console.log(res);
       this.selectedInvoice = res;
       this.selectedInvoice.setType(TYPE.sales);
       this.selectedInvoice.updateTotal();

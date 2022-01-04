@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { TYPE } from '../models';
 
 @Pipe({
   name: 'invoicetype'
