@@ -52,7 +52,7 @@ export class SignupPage implements OnInit {
           formControl.markAsTouched();
         });
     }
-    const {error, data} = await this.authService.signUp(this.signupForm.value);
+    const {error} = await this.authService.signUp(this.signupForm.value);
     if (error) {
       await this.toastService.presentToast({
         message: 'Error inesperado, por favor vuelva a intentar más tarde'
