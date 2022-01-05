@@ -50,7 +50,7 @@ export class SigninPage implements OnInit {
           formControl.markAsTouched();
         });
     }
-    const {error, data} = await this.authService.signIn(this.signinForm.value);
+    const {error} = await this.authService.signIn(this.signinForm.value);
     if (error) {
       let message = 'Su email o su contraseña son incorrectos.';
       if (error.message.includes('not confirmed')) {
