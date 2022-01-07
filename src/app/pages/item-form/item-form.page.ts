@@ -3,14 +3,16 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable max-len */
 import { Capacitor } from '@capacitor/core';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { format, parseISO } from 'date-fns';
 
 
 import { Item } from 'src/app/models';
 import { ItemService, LoadingService } from 'src/app/services';
+import { IonDatetime } from '@ionic/angular';
 
 @Component({
   selector: 'app-item-form',
@@ -18,6 +20,8 @@ import { ItemService, LoadingService } from 'src/app/services';
   styleUrls: ['./item-form.page.scss'],
 })
 export class ItemFormPage implements OnInit, OnDestroy {
+
+  @ViewChild(IonDatetime, { static: true }) datetime: IonDatetime;
 
   pageName: any;
   buttonLabel: any;
@@ -106,6 +110,12 @@ export class ItemFormPage implements OnInit, OnDestroy {
     return this.itemService.getItemObservable().subscribe( item => {
       this.selectedItem = item;
     });
+  }
+
+  formatDate() {
+    const date = format(parseISO(this.datetime.value ?? ''), 'MMM dd yyyy');
+    console.log(date);
+    return date;
   }
 
   private setTitle() {
